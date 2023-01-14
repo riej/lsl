@@ -1,0 +1,39 @@
+<idea-plugin>
+    <id>io.github.riej.lsl</id>
+    <name>Linden Script (LSL)</name>
+    <version>0.0.1</version>
+    <vendor email="riejinn@gmail.com">riejinno</vendor>
+
+    <description><![CDATA[
+      Linden Script (LSL) language plugin.<br />
+      See <a href="https://wiki.secondlife.com/wiki/LSL_Portal">official LSL documentation</a>.<br />
+      Uses <a href="https://github.com/Sei-Lisa/kwdb">kwdb</a> database.<br />
+      <br />
+      Second Life (SL) is registered trademark of Linden Labs.<br />
+      The plugin is third-party and does not support by Linden Labs.<br />
+      <br />
+      <b>WARNING:</b> the plugin is in early access and may contain problems.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="LSL file" implementationClass="io.github.riej.lsl.LslFileType" fieldName="INSTANCE" language="LSL" extensions="lsl"/>
+        <lang.parserDefinition language="LSL" implementationClass="io.github.riej.lsl.LslParserDefinition" />
+        <lang.syntaxHighlighterFactory language="LSL" implementationClass="io.github.riej.lsl.syntax.LslSyntaxHighlighterFactory" />
+        <lang.commenter language="LSL" implementationClass="io.github.riej.lsl.syntax.LslCommenter" />
+        <lang.braceMatcher language="LSL" implementationClass="io.github.riej.lsl.syntax.LslPairedBraceMatcher" />
+        <lang.psiStructureViewFactory language="LSL" implementationClass="io.github.riej.lsl.structure.LslStructureViewFactory" />
+        <navbar implementation="io.github.riej.lsl.structure.LslStructureAwareNavBar" />
+        <lang.quoteHandler language="LSL" implementationClass="io.github.riej.lsl.syntax.LslQuoteHandler" />
+        <annotator language="LSL" implementationClass="io.github.riej.lsl.validation.LslAnnotator" />
+        <lang.documentationProvider language="LSL" implementationClass="io.github.riej.lsl.documentation.LslDocumentationProvider" />
+        <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.LslCompletionContributor" />
+        <psi.referenceContributor language="LSL" implementation="io.github.riej.lsl.psi.LslReferenceContributor" />
+
+        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslLValueImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />
+        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslCallExprImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />
+
+        <lang.formatter language="LSL" implementationClass="io.github.riej.lsl.formatting.LslFormattingModelBuilder" />
+    </extensions>
+</idea-plugin>
