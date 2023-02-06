@@ -69,7 +69,7 @@
 
 LslScript ::= GlobalDeclaration* DefaultStateDeclaration StateDeclaration* {pin(".*")=1}
 
-private GlobalDeclaration ::= GlobalVariableDeclaration | FunctionDeclaration {recoverWhile=GlobalDeclarationRecover}
+private GlobalDeclaration ::= GlobalVariableDeclaration | FunctionDeclaration | ';' {recoverWhile=GlobalDeclarationRecover}
 GlobalVariableDeclaration ::= TypeName Identifier ('=' Expression)? ';'  {
                                                                             /*pin(".*")=1*/
                                                                             mixin="io.github.riej.lsl.psi.impl.LslNamedElementImpl"
@@ -136,6 +136,7 @@ Statement ::=
     | ForStatement
     | WhileStatement
     | DoStatement
+    | EmptyStatement
 
 LocalVariableDeclaration ::= TypeName Identifier ('=' ExpressionWithRecover)? ';' {
                                                                                  pin(".*")=1
@@ -157,6 +158,7 @@ ForStatement ::= for '(' ExpressionList? ';' ExpressionWithRecover? ';' Expressi
 WhileStatement ::= while Condition Statement {pin(".*")=1}
 DoStatement ::= do Statement while Condition ';' {pin(".*")=1}
 ExpressionStatement ::= ExpressionWithRecover ';' {pin=2}
+EmptyStatement ::= ';'
 
 private Statements ::= StatementWithRecover*
 private StatementWithRecover ::= Statement { pin=1 recoverWhile=StatementRecover }

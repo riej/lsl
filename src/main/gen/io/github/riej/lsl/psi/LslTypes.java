@@ -20,6 +20,7 @@ public interface LslTypes {
   IElementType DEFAULT_STATE_DECLARATION = new LslElementType("DEFAULT_STATE_DECLARATION");
   IElementType DO_STATEMENT = new LslElementType("DO_STATEMENT");
   IElementType ELSE_STATEMENT = new LslElementType("ELSE_STATEMENT");
+  IElementType EMPTY_STATEMENT = new LslElementType("EMPTY_STATEMENT");
   IElementType EXPRESSION = new LslElementType("EXPRESSION");
   IElementType EXPRESSION_STATEMENT = new LslElementType("EXPRESSION_STATEMENT");
   IElementType FOR_STATEMENT = new LslElementType("FOR_STATEMENT");
@@ -148,6 +149,9 @@ public interface LslTypes {
       }
       else if (type == ELSE_STATEMENT) {
         return new LslElseStatementImpl(node);
+      }
+      else if (type == EMPTY_STATEMENT) {
+        return new LslEmptyStatementImpl(node);
       }
       else if (type == EXPRESSION_STATEMENT) {
         return new LslExpressionStatementImpl(node);

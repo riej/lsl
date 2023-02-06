@@ -14,6 +14,9 @@ public interface LslStatement extends PsiElement {
   LslDoStatement getDoStatement();
 
   @Nullable
+  LslEmptyStatement getEmptyStatement();
+
+  @Nullable
   LslExpressionStatement getExpressionStatement();
 
   @Nullable

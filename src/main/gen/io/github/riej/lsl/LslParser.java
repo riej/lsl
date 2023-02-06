@@ -283,6 +283,18 @@ public class LslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ';'
+  public static boolean EmptyStatement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "EmptyStatement")) return false;
+    if (!nextTokenIs(b, SEMICOLON)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SEMICOLON);
+    exit_section_(b, m, EMPTY_STATEMENT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // ExpressionWithRecover (',' ExpressionWithRecover)*
   static boolean ExpressionList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExpressionList")) return false;
@@ -470,13 +482,14 @@ public class LslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // GlobalVariableDeclaration | FunctionDeclaration
+  // GlobalVariableDeclaration | FunctionDeclaration | ';'
   static boolean GlobalDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "GlobalDeclaration")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_);
     r = GlobalVariableDeclaration(b, l + 1);
     if (!r) r = FunctionDeclaration(b, l + 1);
+    if (!r) r = consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, LslParser::GlobalDeclarationRecover);
     return r;
   }
@@ -846,6 +859,7 @@ public class LslParser implements PsiParser, LightPsiParser {
   //     | ForStatement
   //     | WhileStatement
   //     | DoStatement
+  //     | EmptyStatement
   public static boolean Statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Statement")) return false;
     boolean r;
@@ -861,6 +875,7 @@ public class LslParser implements PsiParser, LightPsiParser {
     if (!r) r = ForStatement(b, l + 1);
     if (!r) r = WhileStatement(b, l + 1);
     if (!r) r = DoStatement(b, l + 1);
+    if (!r) r = EmptyStatement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

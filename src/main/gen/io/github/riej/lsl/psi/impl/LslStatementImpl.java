@@ -41,6 +41,12 @@ public class LslStatementImpl extends ASTWrapperPsiElement implements LslStateme
 
   @Override
   @Nullable
+  public LslEmptyStatement getEmptyStatement() {
+    return findChildByClass(LslEmptyStatement.class);
+  }
+
+  @Override
+  @Nullable
   public LslExpressionStatement getExpressionStatement() {
     return findChildByClass(LslExpressionStatement.class);
   }

@@ -59,6 +59,10 @@ public class LslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEmptyStatement(@NotNull LslEmptyStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitExpression(@NotNull LslExpression o) {
     visitTypedElement(o);
   }
