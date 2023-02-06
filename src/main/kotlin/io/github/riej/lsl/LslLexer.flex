@@ -48,7 +48,7 @@ FLOAT_VALUE = ((({DIGIT}+ "." {DIGIT}*) | ({DIGIT}* "." {DIGIT}+) ) {FLOAT_EXPON
 RAW_IDENTIFIER = {LETTER} ({LETTER} | {DIGIT})*
 
 STRING_QUOTE =      "\""
-STRING_VALUE = {STRING_QUOTE} ( [^\"\\\n\r] | "\\" ("\\" | {STRING_QUOTE} | {ESCAPES} | [0-8xuU] ) )* {STRING_QUOTE}?
+STRING_VALUE = {STRING_QUOTE} ( [^\"\\] | "\\" ("\\" | {STRING_QUOTE} | {ESCAPES} ) )* {STRING_QUOTE}?
 
 ESCAPES = [nt]
 
