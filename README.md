@@ -6,7 +6,7 @@ See [official LSL documentation](https://wiki.secondlife.com/wiki/LSL_Portal).
 
 Uses [kwdb](https://github.com/Sei-Lisa/kwdb) database.
 
-Second Life (SL) is registered trademark of Linden Labs.
+Second Life (SL) and Second Life Eye-in-Hand Logo are registered trademarks of Linden Labs.
 
 The plugin is third-party and does not support by Linden Labs.
 
