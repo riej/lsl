@@ -65,7 +65,22 @@ object LslPsiImplUtil {
         val variable: LslTypedElement? = findVariableInScope(l, l.identifierList.first().text)
             ?: (l.containingFile as LslFile).kwdbData.generated.getGlobalVariable(l.identifierList.first().text)
 
-        return variable?.getPrimitiveType() ?: LslPrimitiveType.INVALID
+        val primitiveType = variable?.getPrimitiveType() ?: LslPrimitiveType.INVALID
+
+        // vector and quaternion items
+        if (l.identifierList.size > 1) {
+            if (primitiveType != LslPrimitiveType.VECTOR && primitiveType != LslPrimitiveType.QUATERNION) {
+                return LslPrimitiveType.INVALID
+            }
+
+            return when (l.identifierList.last().text) {
+                "x", "y", "z" -> LslPrimitiveType.FLOAT
+                "s" -> if (primitiveType == LslPrimitiveType.QUATERNION) LslPrimitiveType.FLOAT else LslPrimitiveType.INVALID
+                else -> LslPrimitiveType.INVALID
+            }
+        }
+
+        return primitiveType
     }
 
     @JvmStatic
@@ -78,15 +93,8 @@ object LslPsiImplUtil {
 
     @JvmStatic
     fun getPrimitiveType(a: LslAssignExpr): LslPrimitiveType {
-        val variable: LslTypedElement? = findVariableInScope(a, a.lValue.identifierList.first().text)
-            ?: (a.containingFile as LslFile).kwdbData.generated.getGlobalVariable(a.lValue.identifierList.first().text)
-
-        if (variable == null) {
-            return LslPrimitiveType.INVALID
-        }
-
         return try {
-            variable.getPrimitiveType().operationTo(a.expression!!.getPrimitiveType(), a.node.getChildren(null).firstOrNull { it is LeafPsiElement && it.text.isNotBlank() }?.elementType)
+            a.lValue.primitiveType.operationTo(a.expression!!.getPrimitiveType(), a.node.getChildren(null).firstOrNull { it is LeafPsiElement && it.text.isNotBlank() }?.elementType)
         } catch (e: LslPrimitiveType.TypeMismatch) {
             LslPrimitiveType.INVALID
         }

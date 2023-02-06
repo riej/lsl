@@ -56,7 +56,7 @@ enum class LslPrimitiveType {
             return STRING
         }
 
-        if (this == INTEGER && other == FLOAT) {
+        if ((this == INTEGER || this == FLOAT) && (other == INTEGER || other == FLOAT)) {
             return FLOAT
         }
 
