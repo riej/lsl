@@ -52,6 +52,11 @@ enum class LslPrimitiveType {
             return this
         }
 
+        // int % int only
+        if (operation == LslTypes.MODULUS || operation == LslTypes.MODULUS_ASSIGN) {
+            return INVALID
+        }
+
         if ((this == STRING || this == KEY) && (other == STRING || other == KEY)) {
             return STRING
         }
