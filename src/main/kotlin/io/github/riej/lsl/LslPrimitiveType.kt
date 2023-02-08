@@ -66,7 +66,8 @@ enum class LslPrimitiveType {
         }
 
         // <1, 2, 3> * 10 == <10, 20, 30>
-        if ((operation == LslTypes.MULTIPLE || operation == LslTypes.MULTIPLE_ASSIGN) && this == VECTOR && (other == INTEGER || other == FLOAT)) {
+        // <10, 20, 30> / 10 == <1, 2, 3>
+        if ((operation == LslTypes.MULTIPLE || operation == LslTypes.MULTIPLE_ASSIGN || operation == LslTypes.DIVIDE || operation == LslTypes.DIVIDE_ASSIGN) && this == VECTOR && (other == INTEGER || other == FLOAT)) {
             return VECTOR
         }
 
