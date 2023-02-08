@@ -29,7 +29,7 @@ object LslLValueValidator {
         }
 
         if (existingIdentifier !is LslGlobalVariableDeclaration && existingIdentifier !is LslLocalVariableDeclaration && existingIdentifier !is LslArgument) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Expected variable, got ${(existingIdentifier as PsiElement).elementType!!.debugName.lowercase().replace('_', ' ').removeSuffix(" declaration")}.")
+            holder.newAnnotation(HighlightSeverity.ERROR, "Expected variable, got ${(existingIdentifier as PsiElement).elementType!!.toString().lowercase().replace('_', ' ').removeSuffix(" declaration")}.")
                 .range(identifier.textRange)
                 .create()
             return

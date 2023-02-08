@@ -21,7 +21,7 @@ object LslJumpStatementValidator {
         }
 
         if (existingIdentifier !is LslLabelStatement) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Expected label, got ${(existingIdentifier as PsiElement).elementType!!.debugName.lowercase().replace('_', ' ').removeSuffix(" declaration")}.")
+            holder.newAnnotation(HighlightSeverity.ERROR, "Expected label, got ${(existingIdentifier as PsiElement).elementType!!.toString().lowercase().replace('_', ' ').removeSuffix(" declaration")}.")
                 .range(identifier.textRange)
                 .create()
             return

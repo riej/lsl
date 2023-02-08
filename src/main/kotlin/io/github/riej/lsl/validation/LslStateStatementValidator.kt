@@ -26,7 +26,7 @@ object LslStateStatementValidator {
             holder.newAnnotation(
                 HighlightSeverity.ERROR,
                 "Expected state, got ${
-                    (existingIdentifier as PsiElement).elementType!!.debugName.lowercase().replace('_', ' ')
+                    (existingIdentifier as PsiElement).elementType!!.toString().lowercase().replace('_', ' ')
                         .removeSuffix(" declaration")
                 }."
             )

@@ -27,7 +27,7 @@ object LslCallExprValidator {
         }
 
         if (existingIdentifier !is LslFunctionDeclaration) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Expected function, got ${(existingIdentifier as PsiElement).elementType!!.debugName.lowercase().replace('_', ' ').removeSuffix(" declaration")}.")
+            holder.newAnnotation(HighlightSeverity.ERROR, "Expected function, got ${(existingIdentifier as PsiElement).elementType!!.toString().lowercase().replace('_', ' ').removeSuffix(" declaration")}.")
                 .range(identifier.textRange)
                 .create()
             return

@@ -29,7 +29,7 @@ enum class LslPrimitiveType {
             else -> INVALID
         }
 
-        fun fromElementType(t: IElementType?) = fromString(t?.debugName)
+        fun fromElementType(t: IElementType?) = fromString(t?.toString())
 
         val AVAILABLE_TYPES = listOf(
             INTEGER,
