@@ -118,106 +118,40 @@ public class LslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // BlockInner
+  // '{' Statements? '}'
   public static boolean Block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Block")) return false;
     if (!nextTokenIs(b, BRACES_LEFT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = BlockInner(b, l + 1);
-    exit_section_(b, m, BLOCK, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // '{' ('}' | (<<withOff Statements "COND" "PAR">> | (!() Statements)) '}')
-  static boolean BlockInner(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockInner")) return false;
-    if (!nextTokenIs(b, BRACES_LEFT)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
+    Marker m = enter_section_(b, l, _NONE_, BLOCK, null);
     r = consumeToken(b, BRACES_LEFT);
     p = r; // pin = 1
-    r = r && BlockInner_1(b, l + 1);
+    r = r && report_error_(b, Block_1(b, l + 1));
+    r = p && consumeToken(b, BRACES_RIGHT) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // '}' | (<<withOff Statements "COND" "PAR">> | (!() Statements)) '}'
-  private static boolean BlockInner_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockInner_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, BRACES_RIGHT);
-    if (!r) r = BlockInner_1_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (<<withOff Statements "COND" "PAR">> | (!() Statements)) '}'
-  private static boolean BlockInner_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockInner_1_1")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
-    r = BlockInner_1_1_0(b, l + 1);
-    p = r; // pin = 1
-    r = r && consumeToken(b, BRACES_RIGHT);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // <<withOff Statements "COND" "PAR">> | (!() Statements)
-  private static boolean BlockInner_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockInner_1_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = withOff(b, l + 1, LslParser::Statements, "COND", "PAR");
-    if (!r) r = BlockInner_1_1_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // !() Statements
-  private static boolean BlockInner_1_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockInner_1_1_0_1")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
-    r = BlockInner_1_1_0_1_0(b, l + 1);
-    p = r; // pin = 1
-    r = r && Statements(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // !()
-  private static boolean BlockInner_1_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "BlockInner_1_1_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !BlockInner_1_1_0_1_0_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ()
-  private static boolean BlockInner_1_1_0_1_0_0(PsiBuilder b, int l) {
+  // Statements?
+  private static boolean Block_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Block_1")) return false;
+    Statements(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // '(' <<enterMode "COND">> Expression <<exitModeSafe "COND">> ')'
+  // '(' Expression ')'
   static boolean Condition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Condition")) return false;
     if (!nextTokenIs(b, PARENTHESES_LEFT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, PARENTHESES_LEFT);
-    r = r && enterMode(b, l + 1, "COND");
-    r = r && Expression(b, l + 1, -1);
-    r = r && exitModeSafe(b, l + 1, "COND");
-    r = r && consumeToken(b, PARENTHESES_RIGHT);
-    exit_section_(b, m, null, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, Expression(b, l + 1, -1));
+    r = p && consumeToken(b, PARENTHESES_RIGHT) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -1206,7 +1140,7 @@ public class LslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // '(' <<enterMode "PAR">> Expression <<exitModeSafe "PAR">> ')'
+  // '(' Expression ')'
   public static boolean ParenthesesExpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ParenthesesExpr")) return false;
     if (!nextTokenIsSmart(b, PARENTHESES_LEFT)) return false;
@@ -1214,9 +1148,7 @@ public class LslParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, PARENTHESES_EXPR, null);
     r = consumeTokenSmart(b, PARENTHESES_LEFT);
     p = r; // pin = 1
-    r = r && report_error_(b, enterMode(b, l + 1, "PAR"));
-    r = p && report_error_(b, Expression(b, l + 1, -1)) && r;
-    r = p && report_error_(b, exitModeSafe(b, l + 1, "PAR")) && r;
+    r = r && report_error_(b, Expression(b, l + 1, -1));
     r = p && consumeToken(b, PARENTHESES_RIGHT) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;

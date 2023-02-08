@@ -111,8 +111,7 @@ StateEvent ::= Identifier '(' ArgumentsList? ')' Block {
                                                            implements="io.github.riej.lsl.psi.LslNamedElement"
                                                        }
 
-Block ::= BlockInner
-private BlockInner ::= '{' ('}' | (<<withOff Statements "COND" "PAR">> | (!() Statements)) '}') {pin(".*")=1}
+Block ::= '{' Statements? '}' {pin(".*")=1}
 
 TypeName ::=
     integer
@@ -161,10 +160,10 @@ ExpressionStatement ::= ExpressionWithRecover ';' {pin=2}
 EmptyStatement ::= ';'
 
 private Statements ::= StatementWithRecover*
-private StatementWithRecover ::= Statement { pin=1 recoverWhile=StatementRecover }
+private StatementWithRecover ::= Statement { recoverWhile=StatementRecover }
 private StatementRecover ::= !('!' | '~' | '(' | '+' | '-' | ';' | '{' | '}' | '@' | '<' | jump | state | return | if | else | for | while | do | TypeName | print | raw_identifier)
 
-private Condition ::= '(' <<enterMode "COND">> Expression <<exitModeSafe "COND">> ')'
+private Condition ::= '(' Expression ')' {pin(".*")=1}
 
 private ExpressionList ::= ExpressionWithRecover (',' ExpressionWithRecover)* {pin(".*")=1}
 private ExpressionWithRecover ::= Expression {recoverWhile=ExpressionListRecover}
@@ -197,10 +196,7 @@ AddExpr ::= Expression AddOp Expression
 MulExpr ::= Expression MulOp Expression
 AssignExpr ::= LValue AssignOp Expression { methods=[getPrimitiveType] rightAssociative=true }
 ConversionExpr ::= '(' TypeName ')' Expression { methods=[getPrimitiveType] }
-ParenthesesExpr ::= '(' <<enterMode "PAR">> Expression <<exitModeSafe "PAR">> ')' {
-                                                                                      pin(".*")=1
-                                                                                      methods=[getPrimitiveType]
-                                                                                  }
+ParenthesesExpr ::= '(' Expression ')' { pin(".*")=1 methods=[getPrimitiveType] }
 
 private MaxGroup ::=
     PrintExpr
