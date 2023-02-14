@@ -1,24 +1,34 @@
 package io.github.riej.lsl.psi
 
 import com.intellij.extapi.psi.PsiFileBase
+import com.intellij.icons.AllIcons
+import com.intellij.navigation.ItemPresentation
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
-import com.intellij.psi.PsiElement
-import com.intellij.psi.ResolveState
-import com.intellij.psi.scope.PsiScopeProcessor
+import com.intellij.psi.PsiReference
 import io.github.riej.lsl.KwdbData
 import io.github.riej.lsl.LslFileType
+import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.LslLanguage
+import io.github.riej.lsl.references.LslVariableReference
+import javax.swing.Icon
 
-class LslFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, LslLanguage.INSTANCE) {
+class LslFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, LslLanguage.INSTANCE), ItemPresentation {
     override fun getFileType(): FileType = LslFileType.INSTANCE
     override fun toString() = "LSL file"
 
+    override fun getPresentableText(): String = name
+
+    override fun getIcon(unused: Boolean): Icon = LslIcons.FILE
+
     val kwdbData: KwdbData by lazy { KwdbData(project) }
 
-    fun getGlobalVariable(name: String): LslGlobalVariableDeclaration? =
-        children.firstOrNull { (it is LslGlobalVariableDeclaration) && (it.getIdentifier().text == name) } as LslGlobalVariableDeclaration?
+    fun getGlobalVariable(name: String): LslGlobalVariable? =
+        children.firstOrNull { (it is LslGlobalVariable) && (it.name == name) } as LslGlobalVariable?
 
-    fun getFunction(name: String): LslFunctionDeclaration? =
-        children.firstOrNull { (it is LslFunctionDeclaration) && (it.getIdentifier().text == name) } as LslFunctionDeclaration?
+    fun getFunction(name: String): LslFunction? =
+        children.firstOrNull { (it is LslFunction) && (it.name == name) } as LslFunction?
+
+    fun getState(name: String): LslState? =
+        children.firstOrNull { (it is LslState) && (it.name == name) } as LslState?
 }

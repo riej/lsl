@@ -12,14 +12,13 @@ class LslStructureViewElement(val element: NavigatablePsiElement) : StructureVie
     override fun getPresentation(): ItemPresentation = element.presentation ?: PresentationData()
 
     override fun getChildren(): Array<TreeElement> {
-        if (element is LslFile || element is LslDefaultStateDeclaration || element is LslStateDeclaration) {
+        if (element is LslFile || element is LslState) {
             return element.children.mapNotNull {
                 when (it) {
-                    is LslGlobalVariableDeclaration -> LslStructureViewElement(it)
-                    is LslFunctionDeclaration -> LslStructureViewElement(it)
-                    is LslDefaultStateDeclaration -> LslStructureViewElement(it)
-                    is LslStateDeclaration -> LslStructureViewElement(it)
-                    is LslStateEvent -> LslStructureViewElement(it)
+                    is LslGlobalVariable -> LslStructureViewElement(it)
+                    is LslFunction -> LslStructureViewElement(it)
+                    is LslState -> LslStructureViewElement(it)
+                    is LslEvent -> LslStructureViewElement(it)
                     else -> null
                 }
             }.toTypedArray()

@@ -1,11 +1,7 @@
 package io.github.riej.lsl;
 
-import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import io.github.riej.lsl.psi.LslTypes;
-import com.intellij.psi.TokenType;
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
-import static io.github.riej.lsl.LslParserDefinition.*;
 
 %%
 

@@ -13,16 +13,15 @@ class LslStructureViewModel(editor: Editor?, psiFile: PsiFile) :
     override fun getSorters(): Array<Sorter> = arrayOf(Sorter.ALPHA_SORTER)
 
     override fun isAlwaysShowsPlus(element: StructureViewTreeElement): Boolean =
-        (element.value is LslDefaultStateDeclaration) || (element.value is LslStateDeclaration)
+        element.value is LslState
 
     override fun isAlwaysLeaf(element: StructureViewTreeElement): Boolean =
-        (element is LslGlobalVariableDeclaration) || (element.value is LslFunctionDeclaration) || (element.value is LslStateEvent)
+        (element.value is LslGlobalVariable) || (element.value is LslFunction) || (element.value is LslEvent)
 
     override fun getSuitableClasses(): Array<Class<*>> = arrayOf(
-        LslGlobalVariableDeclaration::class.java,
-        LslFunctionDeclaration::class.java,
-        LslDefaultStateDeclaration::class.java,
-        LslStateDeclaration::class.java,
-        LslStateEvent::class.java,
+        LslGlobalVariable::class.java,
+        LslFunction::class.java,
+        LslState::class.java,
+        LslEvent::class.java,
     )
 }

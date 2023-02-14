@@ -2,17 +2,12 @@ package io.github.riej.lsl
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VfsUtil
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ResourceUtil
 import com.intellij.xml.util.XmlUtil
-import io.github.riej.lsl.psi.LslDefaultStateDeclaration
-import io.github.riej.lsl.psi.LslFile
-import io.github.riej.lsl.psi.LslNamedElement
-import io.github.riej.lsl.psi.LslStateEvent
-import io.github.riej.lsl.psi.impl.LslElementFactory
+import io.github.riej.lsl.psi.*
 
 
 class KwdbData(project: Project) {
@@ -25,7 +20,7 @@ class KwdbData(project: Project) {
         val file = VfsUtil.findFileByURL(resource)
         data = PsiManager.getInstance(project).findFile(file!!) as XmlFile
 
-        generated = LslElementFactory.createFile(project, generateSource())
+        generated = io.github.riej.lsl.psi.LslElementFactory.createFile(project, generateSource())
     }
 
     fun commentDescription(description: String): String =
@@ -100,13 +95,14 @@ class KwdbData(project: Project) {
         return sb.toString()
     }
 
-    val availableEvents: Map<String, LslStateEvent> by lazy {
+    val availableEvents: Map<String, io.github.riej.lsl.psi.LslEvent> by lazy {
         generated.children
-            .firstOrNull { it is LslDefaultStateDeclaration }
-            ?.children?.filter { it is LslStateEvent }
-            ?.map {
-                it as LslStateEvent
-            }?.associateBy { it.getIdentifier().text }.orEmpty()
+            .firstOrNull { it is LslStateDefault }
+            ?.children
+            ?.filter { it is io.github.riej.lsl.psi.LslEvent }
+            ?.map {it as io.github.riej.lsl.psi.LslEvent }
+            ?.associateBy { it.name!! }
+            .orEmpty()
     }
 
     fun findElementByName(name: String?): LslNamedElement? {
@@ -119,6 +115,6 @@ class KwdbData(project: Project) {
             return event
         }
 
-        return generated.children.firstOrNull { (it is LslNamedElement) && (it.getIdentifier()?.text == name) } as LslNamedElement?
+        return generated.children.firstOrNull { (it is LslNamedElement) && (it.getName() == name) } as LslNamedElement?
     }
 }

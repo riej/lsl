@@ -5,12 +5,25 @@ import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
-import io.github.riej.lsl.LslParserDefinition
+import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import io.github.riej.lsl.psi.*
 
 object DocumentationUtils {
-
+    /**
+     * Collects prepending comments and comments from the same line.
+     *
+     * Example:
+     * <code>
+     *
+     *     // some comment
+     *     // prepending to func
+     *     integer SomeFunc() { return 0; }
+     *
+     *     integer SomeVar; // some comment
+     *
+     * </code>
+     */
     fun commentsToDescription(element: PsiElement): String {
         val sb = StringBuilder()
         var el: PsiElement? = element
@@ -21,8 +34,8 @@ object DocumentationUtils {
             sb.append("<p>")
 
             when (el.tokenType) {
-                LslParserDefinition.LINE_COMMENT -> sb.append(el.text.trimStart('/'))
-                LslParserDefinition.MULTILINE_COMMENT -> sb.append(el.text.trim('/', '*'))
+                LslTypes.LINE_COMMENT -> sb.append(el.text.trimStart('/'))
+                LslTypes.BLOCK_COMMENT -> sb.append(el.text.trim('/', '*'))
                 else -> sb.append(el.text)
             }
 
@@ -42,8 +55,8 @@ object DocumentationUtils {
                     sb.append("<p>")
 
                     when (el.tokenType) {
-                        LslParserDefinition.LINE_COMMENT -> sb.append(el.text.trimStart('/'))
-                        LslParserDefinition.MULTILINE_COMMENT -> sb.append(el.text.trim('/', '*'))
+                        LslTypes.LINE_COMMENT -> sb.append(el.text.trimStart('/'))
+                        LslTypes.BLOCK_COMMENT -> sb.append(el.text.trim('/', '*'))
                         else -> sb.append(el.text)
                     }
 
@@ -60,7 +73,10 @@ object DocumentationUtils {
     fun getUrlFor(name: String?): String? =
         if (name != null) "https://wiki.secondlife.com/wiki/$name" else null
 
-    fun documentateArguments(argumentList: List<LslArgument>, sb: StringBuilder) {
+    /**
+     * Generates documentation for function and event arguments lists.
+     */
+    fun makeDocumentationForArguments(argumentList: List<LslArgument>, sb: StringBuilder) {
         HtmlSyntaxInfoUtil.appendStyledSpan(
             sb,
             LslSyntaxHighlighter.PARENTHESES,
@@ -83,10 +99,10 @@ object DocumentationUtils {
                 HtmlSyntaxInfoUtil.appendStyledSpan(
                     sb,
                     LslSyntaxHighlighter.TYPENAME,
-                    argument.typeName.text,
+                    argument.lslType.toString(),
                     DocumentationSettings.getHighlightingSaturation(true)
                 )
-                sb.append(" ${argument.getIdentifier()?.text}")
+                sb.append(" ${argument.name}")
             }
 
             sb.append("\n")

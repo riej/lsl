@@ -19,20 +19,19 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="LSL file" implementationClass="io.github.riej.lsl.LslFileType" fieldName="INSTANCE" language="LSL" extensions="lsl"/>
-        <lang.parserDefinition language="LSL" implementationClass="io.github.riej.lsl.LslParserDefinition" />
+        <lang.parserDefinition language="LSL" implementationClass="io.github.riej.lsl.parser.LslParserDefinition" />
         <lang.syntaxHighlighterFactory language="LSL" implementationClass="io.github.riej.lsl.syntax.LslSyntaxHighlighterFactory" />
         <lang.commenter language="LSL" implementationClass="io.github.riej.lsl.syntax.LslCommenter" />
         <lang.braceMatcher language="LSL" implementationClass="io.github.riej.lsl.syntax.LslPairedBraceMatcher" />
         <lang.psiStructureViewFactory language="LSL" implementationClass="io.github.riej.lsl.structure.LslStructureViewFactory" />
         <navbar implementation="io.github.riej.lsl.structure.LslStructureAwareNavBar" />
         <lang.quoteHandler language="LSL" implementationClass="io.github.riej.lsl.syntax.LslQuoteHandler" />
-        <annotator language="LSL" implementationClass="io.github.riej.lsl.validation.LslAnnotator" />
+        <annotator language="LSL" implementationClass="io.github.riej.lsl.annotation.LslAnnotationProvider" />
         <lang.documentationProvider language="LSL" implementationClass="io.github.riej.lsl.documentation.LslDocumentationProvider" />
         <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.LslCompletionContributor" />
-        <psi.referenceContributor language="LSL" implementation="io.github.riej.lsl.psi.LslReferenceContributor" />
 
-        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslLValueImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />
-        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslCallExprImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />
+<!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslLValueImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
+<!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslCallExprImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
 
         <lang.formatter language="LSL" implementationClass="io.github.riej.lsl.formatting.LslFormattingModelBuilder" />
     </extensions>

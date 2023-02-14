@@ -6,8 +6,10 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.TokenType
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.formatter.FormatterUtil
-import io.github.riej.lsl.psi.*
-import io.github.riej.lsl.psi.LslBlock as PsiLslBlock
+import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.psi.LslEvent
+import io.github.riej.lsl.psi.LslFile
+import io.github.riej.lsl.psi.LslStatementBlock
 
 class LslBlock(
     val parent: LslBlock?,
@@ -27,7 +29,7 @@ class LslBlock(
             .filterNot { isWhitespaceOrBlank(it) }
             .map {
                 when {
-                    it.psi is LslStateEvent -> LslBlock(
+                    it.psi is LslEvent -> LslBlock(
                         this,
                         it,
                         codeStyleSettings,
@@ -36,7 +38,8 @@ class LslBlock(
                         Wrap.createWrap(WrapType.NORMAL, false),
                         spacingBuilder
                     )
-                    _node.psi is PsiLslBlock && (it.elementType != LslTypes.BRACES_LEFT && it.elementType != LslTypes.BRACES_RIGHT) -> LslBlock(
+
+                    _node.psi is LslStatementBlock && (it.elementType != LslTypes.BRACE_LEFT && it.elementType != LslTypes.BRACE_RIGHT) -> LslBlock(
                         this,
                         it,
                         codeStyleSettings,
@@ -45,15 +48,7 @@ class LslBlock(
                         Wrap.createWrap(WrapType.NORMAL, false),
                         spacingBuilder
                     )
-//                    _node.psi is LslIfStatement && it.psi is LslStatement -> LslBlock(
-//                        this,
-//                        it,
-//                        codeStyleSettings,
-//                        null,
-//                        Indent.getNormalIndent(true),
-//                        Wrap.createWrap(WrapType.NORMAL, false),
-//                        spacingBuilder
-//                    )
+
                     else -> LslBlock(this, it, codeStyleSettings, null, Indent.getNoneIndent(), null, spacingBuilder)
                 }
             }
@@ -75,7 +70,7 @@ class LslBlock(
             return ChildAttributes(Indent.getNoneIndent(), null)
         }
 
-        if (_node.psi is PsiLslBlock) {
+        if (_node.psi is LslStatementBlock) {
             return ChildAttributes(Indent.getNormalIndent(), null)
         }
 

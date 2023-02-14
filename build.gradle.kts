@@ -13,6 +13,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation("org.antlr:antlr4-runtime:4.11.1")
+}
+
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {

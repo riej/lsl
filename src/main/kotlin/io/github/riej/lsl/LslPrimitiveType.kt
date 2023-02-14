@@ -1,7 +1,7 @@
 package io.github.riej.lsl
 
 import com.intellij.psi.tree.IElementType
-import io.github.riej.lsl.psi.LslTypes
+import io.github.riej.lsl.parser.LslTypes
 
 enum class LslPrimitiveType {
     VOID, // functions result type only
@@ -77,7 +77,7 @@ enum class LslPrimitiveType {
         }
 
         // list a; a += 10;
-        if (operation == LslTypes.PLUS_ASSIGN && (this == LIST)) {
+        if (this == LIST && (operation == LslTypes.PLUS_ASSIGN || operation == LslTypes.PLUS)) {
             return LIST
         }
 
