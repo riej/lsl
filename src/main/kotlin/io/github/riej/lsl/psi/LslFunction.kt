@@ -24,7 +24,8 @@ import io.github.riej.lsl.references.LslFunctionReference
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
-class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement, LslAnnotatedElement,
+class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement,
+    LslAnnotatedElement,
     LslDocumentedElement, ItemPresentation {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)

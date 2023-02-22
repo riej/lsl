@@ -7,7 +7,9 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ResourceUtil
 import com.intellij.xml.util.XmlUtil
-import io.github.riej.lsl.psi.*
+import io.github.riej.lsl.psi.LslFile
+import io.github.riej.lsl.psi.LslNamedElement
+import io.github.riej.lsl.psi.LslStateDefault
 
 
 class KwdbData(project: Project) {
@@ -96,13 +98,13 @@ class KwdbData(project: Project) {
     }
 
     val availableEvents: Map<String, io.github.riej.lsl.psi.LslEvent> by lazy {
-        generated.children
+        val orEmpty = generated.children
             .firstOrNull { it is LslStateDefault }
             ?.children
-            ?.filter { it is io.github.riej.lsl.psi.LslEvent }
-            ?.map {it as io.github.riej.lsl.psi.LslEvent }
+            ?.filterIsInstance<io.github.riej.lsl.psi.LslEvent>()
             ?.associateBy { it.name!! }
             .orEmpty()
+        orEmpty
     }
 
     fun findElementByName(name: String?): LslNamedElement? {

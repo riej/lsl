@@ -1,7 +1,9 @@
 package io.github.riej.lsl
 
 import com.intellij.psi.PsiElement
-import io.github.riej.lsl.psi.*
+import io.github.riej.lsl.psi.LslEvent
+import io.github.riej.lsl.psi.LslFile
+import io.github.riej.lsl.psi.LslNamedElement
 
 object LslScopeUtils {
     fun findElementByName(currElement: PsiElement, name: String?): LslNamedElement? {

@@ -6,7 +6,10 @@ import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.Sorter
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
-import io.github.riej.lsl.psi.*
+import io.github.riej.lsl.psi.LslEvent
+import io.github.riej.lsl.psi.LslFunction
+import io.github.riej.lsl.psi.LslGlobalVariable
+import io.github.riej.lsl.psi.LslState
 
 class LslStructureViewModel(editor: Editor?, psiFile: PsiFile) :
     StructureViewModelBase(psiFile, editor, LslStructureViewElement(psiFile)), StructureViewModel.ElementInfoProvider {

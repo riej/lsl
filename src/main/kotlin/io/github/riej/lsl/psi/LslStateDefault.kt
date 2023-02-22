@@ -3,7 +3,8 @@ package io.github.riej.lsl.psi
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiReference
 import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.references.LslStateReference
@@ -13,8 +14,7 @@ class LslStateDefault(node: ASTNode) : ASTWrapperPsiElement(node), LslState, Ite
     override fun setName(name: String): PsiElement =
         this
 
-    override fun getNameIdentifier(): PsiElement?
-        = this.findChildByType(LslTypes.DEFAULT)
+    override fun getNameIdentifier(): PsiElement? = this.findChildByType(LslTypes.DEFAULT)
 
     override fun getReference(): PsiReference = LslStateReference(this)
 

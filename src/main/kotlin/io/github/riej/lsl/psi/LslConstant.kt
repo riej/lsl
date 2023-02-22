@@ -6,8 +6,8 @@ import com.intellij.psi.PsiElement
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.parser.LslTypes
 
-class LslConstant(node: ASTNode) : ASTWrapperPsiElement(node), io.github.riej.lsl.psi.LslExpression,
-    io.github.riej.lsl.psi.LslTypedElement {
+class LslConstant(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression,
+    LslTypedElement {
     val integerValue: PsiElement?
         get() = findChildByType(LslTypes.INTEGER_CONSTANT)
 

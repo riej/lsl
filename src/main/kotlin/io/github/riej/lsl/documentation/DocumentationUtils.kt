@@ -6,8 +6,8 @@ import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import io.github.riej.lsl.psi.*
+import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 
 object DocumentationUtils {
     /**

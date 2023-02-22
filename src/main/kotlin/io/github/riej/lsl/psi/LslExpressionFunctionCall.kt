@@ -5,7 +5,9 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
+import com.intellij.psi.NavigatablePsiElement
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiReference
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslPrimitiveType
@@ -33,8 +35,7 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
     override val lslType: LslPrimitiveType
         get() = function?.lslType ?: LslPrimitiveType.INVALID
 
-    override fun getReference(): PsiReference
-        = LslExpressionFunctionCallReference(this)
+    override fun getReference(): PsiReference = LslExpressionFunctionCallReference(this)
 
     override fun annotate(holder: AnnotationHolder) {
         val existingIdentifier = LslScopeUtils.findElementByName(this, functionName)
@@ -74,7 +75,10 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
                     HighlightSeverity.ERROR,
                     "Wrong arguments count (expected ${existingIdentifier.arguments.size}, got ${expressions.size})"
                 )
-                    .range(parenthesesRightEl?.textRange ?: expressions.lastOrNull()?.textRange ?: parenthesesLeftEl?.textRange ?: textRange)
+                    .range(
+                        parenthesesRightEl?.textRange ?: expressions.lastOrNull()?.textRange
+                        ?: parenthesesLeftEl?.textRange ?: textRange
+                    )
                     .create()
             } else if (expressions.size > existingIdentifier.arguments.size) {
                 val range = TextRange.create(
@@ -86,7 +90,10 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
                 )
                 val elementsToRemove = children.filter { range.contains(it.textRange) }
 
-                holder.newAnnotation(HighlightSeverity.ERROR, "Wrong arguments count (expected ${existingIdentifier.arguments.size}, got ${expressions.size})")
+                holder.newAnnotation(
+                    HighlightSeverity.ERROR,
+                    "Wrong arguments count (expected ${existingIdentifier.arguments.size}, got ${expressions.size})"
+                )
                     .range(range)
                     .withFix(DeleteElementsFix(elementsToRemove, "Remove extra arguments"))
                     .create()

@@ -1,16 +1,13 @@
 package io.github.riej.lsl.psi
 
 import com.intellij.extapi.psi.PsiFileBase
-import com.intellij.icons.AllIcons
 import com.intellij.navigation.ItemPresentation
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
-import com.intellij.psi.PsiReference
 import io.github.riej.lsl.KwdbData
 import io.github.riej.lsl.LslFileType
 import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.LslLanguage
-import io.github.riej.lsl.references.LslVariableReference
 import javax.swing.Icon
 
 class LslFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, LslLanguage.INSTANCE), ItemPresentation {

@@ -18,6 +18,7 @@ class LslSyntaxHighlighter : SyntaxHighlighterBase() {
             LslTypes.DEFAULT, LslTypes.STATE, LslTypes.JUMP, LslTypes.RETURN, LslTypes.IF, LslTypes.ELSE, LslTypes.FOR, LslTypes.DO, LslTypes.WHILE, LslTypes.PRINT -> arrayOf(
                 KEYWORD
             )
+
             LslTypes.STRING_CONSTANT, LslTypes.UNCLOSED_STRING_CONSTANT -> arrayOf(STRING)
             LslTypes.BLOCK_COMMENT -> arrayOf(BLOCK_COMMENT)
             LslTypes.LINE_COMMENT -> arrayOf(LINE_COMMENT)
@@ -43,14 +44,18 @@ class LslSyntaxHighlighter : SyntaxHighlighterBase() {
     }
 
     companion object {
-        val IDENTIFIER = TextAttributesKey.createTextAttributesKey("IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER)
+        val IDENTIFIER =
+            TextAttributesKey.createTextAttributesKey("IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER)
         val NUMBER = TextAttributesKey.createTextAttributesKey("NUMBER", DefaultLanguageHighlighterColors.NUMBER)
         val KEYWORD = TextAttributesKey.createTextAttributesKey("KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
         val STRING = TextAttributesKey.createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING)
-        val BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey("BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT)
-        val LINE_COMMENT = TextAttributesKey.createTextAttributesKey("LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
+        val BLOCK_COMMENT =
+            TextAttributesKey.createTextAttributesKey("BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT)
+        val LINE_COMMENT =
+            TextAttributesKey.createTextAttributesKey("LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
 
-        val OPERATION_SIGN = TextAttributesKey.createTextAttributesKey("OPERATION_SIGN", DefaultLanguageHighlighterColors.OPERATION_SIGN)
+        val OPERATION_SIGN =
+            TextAttributesKey.createTextAttributesKey("OPERATION_SIGN", DefaultLanguageHighlighterColors.OPERATION_SIGN)
         val BRACES = TextAttributesKey.createTextAttributesKey("BRACES", DefaultLanguageHighlighterColors.BRACES)
         val DOT = TextAttributesKey.createTextAttributesKey("DOT", DefaultLanguageHighlighterColors.DOT)
         val SEMICOLON =

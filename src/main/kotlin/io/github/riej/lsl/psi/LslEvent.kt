@@ -1,6 +1,5 @@
 package io.github.riej.lsl.psi
 
-import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
@@ -9,7 +8,8 @@ import com.intellij.lang.documentation.DocumentationSettings
 import com.intellij.navigation.ItemPresentation
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
+import com.intellij.psi.NavigatablePsiElement
+import com.intellij.psi.PsiElement
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslIcons
@@ -25,7 +25,8 @@ import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 import kotlin.math.min
 
-class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement, ItemPresentation, LslAnnotatedElement {
+class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement,
+    ItemPresentation, LslAnnotatedElement {
     val arguments: List<LslArgument>
         get() = this.findChildrenByType(LslTypes.ARGUMENT)
 
@@ -78,8 +79,14 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
         val parenthesesRightEl = findChildByType<PsiElement>(LslTypes.PARENTHESES_RIGHT)
 
         if (arguments.size < definition.arguments.size) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Wrong arguments count (expected ${definition.arguments.size}, got ${arguments.size})")
-                .range(parenthesesRightEl?.textRange ?: arguments.lastOrNull()?.textRange ?: parenthesesLeftEl?.textRange ?: textRange)
+            holder.newAnnotation(
+                HighlightSeverity.ERROR,
+                "Wrong arguments count (expected ${definition.arguments.size}, got ${arguments.size})"
+            )
+                .range(
+                    parenthesesRightEl?.textRange ?: arguments.lastOrNull()?.textRange ?: parenthesesLeftEl?.textRange
+                    ?: textRange
+                )
                 .create()
         } else if (arguments.size > definition.arguments.size) {
             val range = TextRange.create(
@@ -91,7 +98,10 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
             )
             val elementsToRemove = children.filter { range.contains(it.textRange) }
 
-            holder.newAnnotation(HighlightSeverity.ERROR, "Wrong arguments count (expected ${definition.arguments.size}, got ${arguments.size})")
+            holder.newAnnotation(
+                HighlightSeverity.ERROR,
+                "Wrong arguments count (expected ${definition.arguments.size}, got ${arguments.size})"
+            )
                 .range(range)
                 .withFix(DeleteElementsFix(elementsToRemove, "Remove extra arguments"))
                 .create()
