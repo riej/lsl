@@ -132,6 +132,15 @@ object LslTypes {
         DOT,
     )
 
+    val ASSIGNMENT_OPERATORS = TokenSet.create(
+        ASSIGN,
+        PLUS_ASSIGN,
+        MINUS_ASSIGN,
+        MULTIPLE_ASSIGN,
+        DIVIDE_ASSIGN,
+        MODULUS_ASSIGN,
+    )
+
     val COMPARISON_OPERATORS = TokenSet.create(
         LESS,
         LESS_EQUAL,
@@ -141,6 +150,33 @@ object LslTypes {
         NOT_EQUAL,
         BOOLEAN_AND,
         BOOLEAN_OR,
+    )
+
+    val BINARY_OPERATORS = TokenSet.create(
+        LESS,
+        LESS_EQUAL,
+        GREATER,
+        GREATER_EQUAL,
+        EQUAL,
+        NOT_EQUAL,
+        SHIFT_LEFT,
+        SHIFT_RIGHT,
+        PLUS,
+        MINUS,
+        MULTIPLE,
+        DIVIDE,
+        MODULUS,
+        BOOLEAN_AND,
+        BOOLEAN_OR,
+        BITWISE_AND,
+        BITWISE_OR,
+        BITWISE_XOR,
+        ASSIGN,
+        PLUS_ASSIGN,
+        MINUS_ASSIGN,
+        MULTIPLE_ASSIGN,
+        DIVIDE_ASSIGN,
+        MODULUS_ASSIGN,
     )
 
     fun getLslTokenTypeForAntlrToken(token: Token): IElementType? =
@@ -278,10 +314,10 @@ object LslTypes {
             when (node?.elementType) {
                 GLOBAL_VARIABLE -> LslGlobalVariable(node)
                 FUNCTION -> LslFunction(node)
-                ARGUMENT -> io.github.riej.lsl.psi.LslArgument(node)
+                ARGUMENT -> LslArgument(node)
                 DEFAULT_STATE_DECLARATION -> LslStateDefault(node)
                 STATE_DECLARATION -> LslStateCustom(node)
-                EVENT -> io.github.riej.lsl.psi.LslEvent(node)
+                EVENT -> LslEvent(node)
 
                 STATEMENT_EMPTY -> LslStatementEmpty(node)
                 STATEMENT_BLOCK -> LslStatementBlock(node)

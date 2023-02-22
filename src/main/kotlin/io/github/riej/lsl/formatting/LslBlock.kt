@@ -2,86 +2,55 @@ package io.github.riej.lsl.formatting
 
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
-import com.intellij.openapi.util.TextRange
 import com.intellij.psi.TokenType
-import com.intellij.psi.codeStyle.CodeStyleSettings
-import com.intellij.psi.formatter.FormatterUtil
+import com.intellij.psi.formatter.common.AbstractBlock
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.psi.LslEvent
-import io.github.riej.lsl.psi.LslFile
-import io.github.riej.lsl.psi.LslStatementBlock
 
 class LslBlock(
-    val parent: LslBlock?,
-    val _node: ASTNode,
-    val codeStyleSettings: CodeStyleSettings,
-    val _alignment: Alignment?,
-    val _indent: Indent,
-    val _wrap: Wrap?,
+    node: ASTNode, wrap: Wrap?, alignment: Alignment?,
     val spacingBuilder: SpacingBuilder
-) : ASTBlock {
+) : AbstractBlock(node, wrap, alignment) {
+    override fun getSpacing(child1: Block?, child2: Block): Spacing? = spacingBuilder.getSpacing(this, child1, child2)
 
-    override fun getTextRange(): TextRange =
-        _node.textRange
+    override fun isLeaf(): Boolean = node.firstChildNode == null
 
-    override fun getSubBlocks(): List<Block> =
-        _node.getChildren(null)
-            .filterNot { isWhitespaceOrBlank(it) }
-            .map {
-                when {
-                    it.psi is LslEvent -> LslBlock(
-                        this,
-                        it,
-                        codeStyleSettings,
-                        null,
-                        Indent.getNormalIndent(),
-                        Wrap.createWrap(WrapType.NORMAL, false),
-                        spacingBuilder
-                    )
-
-                    _node.psi is LslStatementBlock && (it.elementType != LslTypes.BRACE_LEFT && it.elementType != LslTypes.BRACE_RIGHT) -> LslBlock(
-                        this,
-                        it,
-                        codeStyleSettings,
-                        null,
-                        Indent.getNormalIndent(),
-                        Wrap.createWrap(WrapType.NORMAL, false),
-                        spacingBuilder
-                    )
-
-                    else -> LslBlock(this, it, codeStyleSettings, null, Indent.getNoneIndent(), null, spacingBuilder)
-                }
-            }
+    override fun buildChildren(): MutableList<Block> =
+        node.getChildren(null).filterNot { isWhitespaceOrBlank(it) }.map { LslBlock(it, null, null, spacingBuilder) }
+            .toMutableList()
 
     private fun isWhitespaceOrBlank(n: ASTNode) =
         n.elementType == TokenType.WHITE_SPACE || n.text.isBlank()
 
-    override fun getWrap(): Wrap? = _wrap
+    override fun getIndent(): Indent? {
+        val parentType = node.treeParent?.elementType
+        val type = node.elementType
 
-    override fun getIndent(): Indent = _indent
+        return when {
+            listOf(
+                LslTypes.FUNCTION,
+                LslTypes.EVENT,
+                LslTypes.STATEMENT_BLOCK,
+            ).contains(parentType) && !listOf(
+                LslTypes.TYPE_NAME,
+                LslTypes.IDENTIFIER,
+                LslTypes.BRACE_LEFT,
+                LslTypes.BRACE_RIGHT,
+                LslTypes.PARENTHESES_LEFT,
+                LslTypes.PARENTHESES_RIGHT,
+            ).contains(type) -> Indent.getNormalIndent()
 
-    override fun getAlignment(): Alignment? = _alignment
+            listOf(
+                LslTypes.STATE_DECLARATION,
+                LslTypes.DEFAULT_STATE_DECLARATION,
+            ).contains(parentType) && !listOf(
+                LslTypes.DEFAULT,
+                LslTypes.STATE,
+                LslTypes.IDENTIFIER,
+                LslTypes.BRACE_LEFT,
+                LslTypes.BRACE_RIGHT,
+            ).contains(type) -> Indent.getNormalIndent()
 
-    override fun getSpacing(child1: Block?, child2: Block): Spacing? =
-        spacingBuilder.getSpacing(this, child1, child2)
-
-    override fun getChildAttributes(newChildIndex: Int): ChildAttributes {
-        if (_node.psi is LslFile) {
-            return ChildAttributes(Indent.getNoneIndent(), null)
+            else -> Indent.getNoneIndent()
         }
-
-        if (_node.psi is LslStatementBlock) {
-            return ChildAttributes(Indent.getNormalIndent(), null)
-        }
-
-        return ChildAttributes(null, null)
     }
-
-    override fun isIncomplete(): Boolean =
-        FormatterUtil.isIncomplete(_node)
-
-    override fun isLeaf(): Boolean =
-        _node.firstChildNode == null
-
-    override fun getNode(): ASTNode = _node
 }

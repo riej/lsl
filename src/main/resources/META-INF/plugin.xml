@@ -29,6 +29,7 @@
         <annotator language="LSL" implementationClass="io.github.riej.lsl.annotation.LslAnnotationProvider" />
         <lang.documentationProvider language="LSL" implementationClass="io.github.riej.lsl.documentation.LslDocumentationProvider" />
         <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.LslCompletionContributor" />
+        <langCodeStyleSettingsProvider implementation="io.github.riej.lsl.formatting.LslLanguageCodeStyleSettingsProvider" />
 
 <!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslLValueImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
 <!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslCallExprImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
