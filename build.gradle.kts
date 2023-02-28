@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.riej"
-version = "0.1.0"
+version = "0.1.1"
 
 sourceSets["main"].java.srcDirs("src/main/gen")
 
