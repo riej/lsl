@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>io.github.riej.lsl</id>
     <name>Linden Script (LSL)</name>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <vendor email="riejinn@gmail.com">riejinno</vendor>
 
     <description><![CDATA[
