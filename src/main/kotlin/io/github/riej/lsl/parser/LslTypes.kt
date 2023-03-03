@@ -263,6 +263,8 @@ object LslTypes {
     val STATEMENT_FOR = LslTokenType("statementFor")
     val STATEMENT_EXPRESSION = LslTokenType("statementExpression")
 
+    val STATEMENT_ELSE = LslTokenType("statementElse") // not a real statement
+
     val EXPRESSION_ASSIGNMENT = LslTokenType("expressionAssignment")
     val EXPRESSION_BINARY = LslTokenType("expressionBinary")
     val EXPRESSION_UNARY_PREFIX = LslTokenType("expressionUnaryPrefix")
@@ -290,6 +292,13 @@ object LslTypes {
         STATEMENT_DO,
         STATEMENT_FOR,
         STATEMENT_EXPRESSION,
+    )
+
+    val GLOBAL_DECLARATIONS = TokenSet.create(
+        GLOBAL_VARIABLE,
+        FUNCTION,
+        DEFAULT_STATE_DECLARATION,
+        STATE_DECLARATION,
     )
 
     val EXPRESSIONS = TokenSet.create(
@@ -331,6 +340,8 @@ object LslTypes {
                 STATEMENT_DO -> LslStatementDo(node)
                 STATEMENT_FOR -> LslStatementFor(node)
                 STATEMENT_EXPRESSION -> LslStatementExpression(node)
+
+                STATEMENT_ELSE -> LslStatementElse(node)
 
                 EXPRESSION_ASSIGNMENT -> LslExpressionAssignment(node)
                 EXPRESSION_BINARY -> LslExpressionBinary(node)

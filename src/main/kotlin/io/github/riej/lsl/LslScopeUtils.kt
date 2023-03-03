@@ -29,5 +29,5 @@ object LslScopeUtils {
     }
 
     fun getEventByName(currElement: PsiElement, name: String?): LslEvent? =
-        (currElement.containingFile as LslFile).kwdbData.availableEvents[name]
+        (currElement.containingFile as LslFile).kwdbData.events[name]
 }

@@ -40,11 +40,15 @@ statement
     | Jump Identifier ';' # StatementJump
     | State (Identifier | Default) ';' # StatementState
     | Return expression? ';' # StatementReturn
-    | If '(' expression ')' statement (Else statement)? # StatementIf
+    | If '(' expression ')' statement statementElse? # StatementIf
     | While '(' expression ')' statement # StatementWhile
     | Do statement While '(' expression ')' ';' # StatementDo
     | For '(' expressions ';' expression ';' expressions ')' statement # StatementFor
     | expression ';' # StatementExpression
+    ;
+
+statementElse
+    : Else statement
     ;
 
 //expression

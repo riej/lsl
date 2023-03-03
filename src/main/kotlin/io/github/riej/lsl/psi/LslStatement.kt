@@ -1,4 +1,6 @@
 package io.github.riej.lsl.psi
 
-interface LslStatement {
+import com.intellij.psi.PsiElement
+
+interface LslStatement : PsiElement {
 }

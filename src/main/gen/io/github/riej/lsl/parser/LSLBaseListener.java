@@ -257,6 +257,18 @@ public class LSLBaseListener implements LSLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatementElse(LSLParser.StatementElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatementElse(LSLParser.StatementElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpressionTypeCast(LSLParser.ExpressionTypeCastContext ctx) { }
 	/**
 	 * {@inheritDoc}

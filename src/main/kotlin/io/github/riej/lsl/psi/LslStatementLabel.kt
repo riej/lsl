@@ -17,7 +17,7 @@ class LslStatementLabel(node: ASTNode) : ASTWrapperLslNamedElement(node), LslSta
     override fun getReference(): PsiReference = LslStatementLabelReference(this)
 
     override fun annotate(holder: AnnotationHolder) {
-        if ((containingFile as? LslFile)?.kwdbData?.availableEvents?.get(name) != null) {
+        if ((containingFile as? LslFile)?.kwdbData?.events?.get(name) != null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Reserved identifier")
                 .create()
             return

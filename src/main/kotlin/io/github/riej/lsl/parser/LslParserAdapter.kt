@@ -209,6 +209,14 @@ class LslParserAdapter : PsiParser {
             stack.pop().done(LslTypes.STATEMENT_EXPRESSION)
         }
 
+        override fun enterStatementElse(ctx: LSLParser.StatementElseContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitStatementElse(ctx: LSLParser.StatementElseContext?) {
+            stack.pop().done(LslTypes.STATEMENT_ELSE)
+        }
+
         override fun enterExpressionTypeCast(ctx: LSLParser.ExpressionTypeCastContext?) {
             stack.push(builder.mark())
         }

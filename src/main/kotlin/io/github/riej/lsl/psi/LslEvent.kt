@@ -109,7 +109,7 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
     }
 
     override fun generateDocumentation(): String {
-        val eventDeclaration = (containingFile as LslFile).kwdbData.availableEvents[name] ?: return ""
+        val eventDeclaration = (containingFile as LslFile).kwdbData.events[name] ?: return ""
 
         val sb = StringBuilder()
 

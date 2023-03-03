@@ -15,10 +15,10 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
         return SpacingBuilder(settings, LslLanguage.INSTANCE)
             .after(LslTypes.LINE_COMMENT).lineBreakInCode()
 
-            .after(LslTypes.GLOBAL_VARIABLE).lineBreakInCode()
-            .aroundInside(LslTypes.STATEMENTS, LslTypes.FUNCTION).lineBreakInCode()
-            .aroundInside(LslTypes.STATEMENTS, LslTypes.EVENT).lineBreakInCode()
-            .aroundInside(LslTypes.STATEMENTS, LslTypes.STATEMENT_BLOCK).lineBreakInCode()
+//            .after(LslTypes.GLOBAL_VARIABLE).lineBreakInCode()
+//            .aroundInside(LslTypes.STATEMENTS, LslTypes.FUNCTION).lineBreakInCode()
+//            .aroundInside(LslTypes.STATEMENTS, LslTypes.EVENT).lineBreakInCode()
+//            .aroundInside(LslTypes.STATEMENTS, LslTypes.STATEMENT_BLOCK).lineBreakInCode()
 
             .before(LslTypes.SEMICOLON).none()
             .around(LslTypes.KEYWORDS).spaceIf(true)
@@ -66,6 +66,7 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
         FormattingModelProvider.createFormattingModelForPsiFile(
             formattingContext.containingFile,
             LslBlock(
+                null,
                 formattingContext.node,
                 null,
                 null,

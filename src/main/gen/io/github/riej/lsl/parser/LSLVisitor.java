@@ -143,6 +143,12 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatementExpression(LSLParser.StatementExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LSLParser#statementElse}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementElse(LSLParser.StatementElseContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExpressionTypeCast}
 	 * labeled alternative in {@link LSLParser#expression}.
 	 * @param ctx the parse tree

@@ -31,14 +31,14 @@ enum class LslPrimitiveType {
 
         fun fromElementType(t: IElementType?) = fromString(t?.toString())
 
-        val AVAILABLE_TYPES = listOf(
-            INTEGER,
-            FLOAT,
-            STRING,
-            KEY,
-            VECTOR,
-            QUATERNION,
-            LIST,
+        val AVAILABLE_TYPE_NAMES = listOf(
+            "integer",
+            "float",
+            "string",
+            "key",
+            "vector",
+            "rotation", "quaternion",
+            "list",
         )
     }
 

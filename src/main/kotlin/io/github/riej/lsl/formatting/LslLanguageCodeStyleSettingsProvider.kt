@@ -1,5 +1,6 @@
 package io.github.riej.lsl.formatting
 
+import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.lang.Language
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider
@@ -21,12 +22,5 @@ default {
     }
 }
     """.trimIndent()
-
-    override fun customizeDefaults(
-        commonSettings: CommonCodeStyleSettings,
-        indentOptions: CommonCodeStyleSettings.IndentOptions
-    ) {
-        // somehow it's making extra indent on new line without it
-        indentOptions.CONTINUATION_INDENT_SIZE = indentOptions.INDENT_SIZE
-    }
+    override fun getIndentOptionsEditor() = SmartIndentOptionsEditor()
 }

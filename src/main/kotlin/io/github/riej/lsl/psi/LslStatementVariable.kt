@@ -37,7 +37,7 @@ class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Lsl
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Variable
 
     override fun annotate(holder: AnnotationHolder) {
-        if ((containingFile as? LslFile)?.kwdbData?.availableEvents?.get(name) != null) {
+        if ((containingFile as? LslFile)?.kwdbData?.events?.get(name) != null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Reserved identifier")
                 .create()
             return
