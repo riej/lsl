@@ -4,4 +4,6 @@ import com.intellij.navigation.ItemPresentation
 
 interface LslVariable : LslNamedElement, LslTypedElement, ItemPresentation {
     override fun getPresentableText(): String = "$lslType $name"
+
+    val expression: LslExpression?
 }

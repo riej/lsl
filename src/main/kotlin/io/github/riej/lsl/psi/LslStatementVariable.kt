@@ -29,7 +29,7 @@ class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Lsl
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 
-    val expression: LslExpression?
+    override val expression: LslExpression?
         get() = this.findChildByType(LslTypes.EXPRESSIONS)
 
     override fun getReference(): PsiReference = LslVariableReference(this)

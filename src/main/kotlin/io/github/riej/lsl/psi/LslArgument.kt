@@ -28,6 +28,8 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 
     override fun getReference(): PsiReference = LslVariableReference(this)
+    override val expression: LslExpression?
+        get() = null
 
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Variable
 

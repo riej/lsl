@@ -3,7 +3,10 @@ package io.github.riej.lsl.completion
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
+import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.codeInsight.lookup.LookupElementPresentation
+import com.intellij.codeInsight.lookup.LookupElementRenderer
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import io.github.riej.lsl.psi.LslFile
@@ -17,12 +20,22 @@ class FunctionCompletionProvider : CompletionProvider<CompletionParameters>() {
     ) {
         result.addAllElements(
             PsiTreeUtil.collectElements(parameters.originalFile) { it is LslFunction }
-                .map{it as LslFunction }
+                .map { it as LslFunction }
                 .plus(
                     (parameters.originalFile as LslFile).kwdbData.functions.values
                 )
-                .mapNotNull { it.name }
-                .map { LookupElementBuilder.create(it) }
+                .mapNotNull {
+                    if (it.name != null) LookupElementBuilder.create(it.name!!).withRenderer(Renderer(it)) else null
+                }
         )
+    }
+
+    class Renderer(val function: LslFunction) : LookupElementRenderer<LookupElement>() {
+        override fun renderElement(element: LookupElement, presentation: LookupElementPresentation) {
+            presentation.icon = function.getIcon(false)
+            presentation.itemText = function.name
+            presentation.typeText = function.lslType.toString()
+            presentation.setTailText("(${function.arguments.joinToString { "${it.lslType} ${it.name}" }})", true)
+        }
     }
 }

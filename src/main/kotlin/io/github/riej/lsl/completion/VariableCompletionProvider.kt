@@ -3,7 +3,10 @@ package io.github.riej.lsl.completion
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
+import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.codeInsight.lookup.LookupElementPresentation
+import com.intellij.codeInsight.lookup.LookupElementRenderer
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import io.github.riej.lsl.psi.LslFile
@@ -17,12 +20,24 @@ class VariableCompletionProvider : CompletionProvider<CompletionParameters>() {
     ) {
         result.addAllElements(
             PsiTreeUtil.collectElements(parameters.originalFile) { it is LslVariable }
-                .map{it as LslVariable }
+                .map { it as LslVariable }
                 .plus(
                     (parameters.originalFile as LslFile).kwdbData.constants.values
                 )
-                .mapNotNull { it.name }
-                .map { LookupElementBuilder.create(it) }
+                .mapNotNull {
+                    if (it.name != null) LookupElementBuilder.create(it.name!!).withRenderer(Renderer(it)) else null
+                }
         )
+    }
+
+    class Renderer(val variable: LslVariable) : LookupElementRenderer<LookupElement>() {
+        override fun renderElement(element: LookupElement, presentation: LookupElementPresentation) {
+            presentation.icon = variable.getIcon(false)
+            presentation.itemText = variable.name
+            presentation.typeText = variable.lslType.toString()
+            if (variable.expression != null) {
+                presentation.setTailText(" = ${variable.expression!!.text}", true)
+            }
+        }
     }
 }
