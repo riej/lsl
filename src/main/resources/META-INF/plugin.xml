@@ -28,7 +28,7 @@
         <lang.quoteHandler language="LSL" implementationClass="io.github.riej.lsl.syntax.LslQuoteHandler" />
         <annotator language="LSL" implementationClass="io.github.riej.lsl.annotation.LslAnnotationProvider" />
         <lang.documentationProvider language="LSL" implementationClass="io.github.riej.lsl.documentation.LslDocumentationProvider" />
-        <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.LslCompletionContributor" />
+        <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.completion.LslCompletionContributor" />
         <langCodeStyleSettingsProvider implementation="io.github.riej.lsl.formatting.LslLanguageCodeStyleSettingsProvider" />
 
 <!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslLValueImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
