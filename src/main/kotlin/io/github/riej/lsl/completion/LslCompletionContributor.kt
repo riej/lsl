@@ -19,8 +19,8 @@ class LslCompletionContributor : CompletionContributor() {
         extend(CompletionType.BASIC, lValueIdentifierScopePlace(), VariableCompletionProvider())
 
         // at new line there's no function call yet, it will be detected as lvalue
-        extend(CompletionType.BASIC, lValueIdentifierScopePlace(), FunctionCompletionProvider())
-        extend(CompletionType.BASIC, functionCallScopePlace(), FunctionCompletionProvider())
+        extend(CompletionType.BASIC, lValueIdentifierScopePlace(), FunctionCompletionProvider(true))
+        extend(CompletionType.BASIC, functionCallScopePlace(), FunctionCompletionProvider(false))
 
         extend(CompletionType.BASIC, eventIdentifierScopePlace(), EventNameCompletionProvider())
     }

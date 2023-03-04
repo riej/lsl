@@ -7,6 +7,8 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.codeInsight.lookup.LookupElementPresentation
 import com.intellij.codeInsight.lookup.LookupElementRenderer
+import com.intellij.codeInsight.template.TemplateManager
+import com.intellij.codeInsight.template.impl.ConstantNode
 import com.intellij.util.ProcessingContext
 import io.github.riej.lsl.psi.LslEvent
 import io.github.riej.lsl.psi.LslFile
@@ -22,7 +24,29 @@ class EventNameCompletionProvider : CompletionProvider<CompletionParameters>() {
                 .kwdbData
                 .events
                 .values
-                .map { LookupElementBuilder.create(it.name!!).withRenderer(Renderer(it)) }
+                .map { 
+                    LookupElementBuilder
+                        .create(it.name!!)
+                        .withRenderer(Renderer(it))
+                        .withInsertHandler { context, item ->
+                            val templateManager = TemplateManager.getInstance(context.project)
+
+                            val template = templateManager.createTemplate(it.name!!, "lsl")
+                            template.addTextSegment("(")
+                            it.arguments.forEachIndexed { index, lslArgument ->
+                                let {
+                                    if (index != 0) template.addTextSegment(", ")
+                                    template.addTextSegment("${lslArgument.lslType} ${lslArgument.name}")
+                                }
+                            }
+                            template.addTextSegment(") {\n")
+                            template.addEndVariable()
+                            template.addTextSegment("\n}")
+                            template.isToReformat = true
+
+                            templateManager.startTemplate(context.editor, template)
+                        }
+                }
         )
     }
 
