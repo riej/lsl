@@ -25,10 +25,12 @@ class LslCompletionContributor : CompletionContributor() {
         // at new line there's no function call yet, it will be detected as lvalue
         extend(CompletionType.BASIC, lValueIdentifierScopePlace(), FunctionCompletionProvider())
         extend(CompletionType.BASIC, functionCallScopePlace(), FunctionCompletionProvider())
+
+        extend(CompletionType.BASIC, eventIdentifierScopePlace(), EventNameCompletionProvider())
     }
 
     fun globalScopePlace(): PsiElementPattern.Capture<PsiElement> =
-        psiElement().inside(LslFile::class.java)
+        psiElement().withParent(LslFile::class.java)
 
     fun argumentScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.ARGUMENT)
@@ -41,6 +43,9 @@ class LslCompletionContributor : CompletionContributor() {
 
     fun lValueIdentifierScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslLValue::class.java))
+
+    fun eventIdentifierScopePlace(): PsiElementPattern.Capture<PsiElement> =
+        psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslEvent::class.java))
 
     class GlobalKeywordCompletionProvider : CompletionProvider<CompletionParameters>() {
         override fun addCompletions(
@@ -98,6 +103,22 @@ class LslCompletionContributor : CompletionContributor() {
                         (parameters.originalFile as LslFile).kwdbData.constants.values
                     )
                     .mapNotNull { it.name }
+                    .map { LookupElementBuilder.create(it) }
+            )
+        }
+    }
+
+    class EventNameCompletionProvider : CompletionProvider<CompletionParameters>() {
+        override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext,
+            result: CompletionResultSet
+        ) {
+            result.addAllElements(
+                (parameters.originalFile as LslFile)
+                    .kwdbData
+                    .events
+                    .keys
                     .map { LookupElementBuilder.create(it) }
             )
         }
