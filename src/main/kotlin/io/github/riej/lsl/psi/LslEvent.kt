@@ -28,10 +28,13 @@ import kotlin.math.min
 class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement,
     ItemPresentation, LslAnnotatedElement {
     val arguments: List<LslArgument>
-        get() = this.findChildrenByType(LslTypes.ARGUMENT)
+        get() = argumentsEl?.arguments.orEmpty()
 
-    val statements: List<LslStatement>
-        get() = this.findChildrenByType(LslTypes.STATEMENTS)
+    val argumentsEl: LslArguments?
+        get() = this.findChildByType(LslTypes.ARGUMENTS)
+
+    val body: LslStatement?
+        get() = this.findChildByType(LslTypes.STATEMENT_BLOCK)
 
     override fun getPresentableText(): String = "$name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }

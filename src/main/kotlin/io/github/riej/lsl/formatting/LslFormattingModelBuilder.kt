@@ -70,6 +70,7 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
                 formattingContext.node,
                 null,
                 null,
+                Indent.getNoneIndent(),
                 createSpacingBuilder(formattingContext.codeStyleSettings)
             ),
             formattingContext.codeStyleSettings,

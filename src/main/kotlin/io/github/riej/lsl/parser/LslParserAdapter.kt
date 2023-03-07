@@ -84,9 +84,11 @@ class LslParserAdapter : PsiParser {
         }
 
         override fun enterArguments(ctx: LSLParser.ArgumentsContext?) {
+            stack.push(builder.mark())
         }
 
         override fun exitArguments(ctx: LSLParser.ArgumentsContext?) {
+            stack.pop().done(LslTypes.ARGUMENTS)
         }
 
         override fun enterDefaultStateDeclaration(ctx: LSLParser.DefaultStateDeclarationContext?) {
@@ -113,12 +115,26 @@ class LslParserAdapter : PsiParser {
             stack.pop().done(LslTypes.EVENT)
         }
 
+        override fun enterEvents(ctx: LSLParser.EventsContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitEvents(ctx: LSLParser.EventsContext?) {
+            stack.pop().done(LslTypes.EVENTS)
+        }
+
         override fun enterStatementEmpty(ctx: LSLParser.StatementEmptyContext?) {
             stack.push(builder.mark())
         }
 
         override fun exitStatementEmpty(ctx: LSLParser.StatementEmptyContext?) {
             stack.pop().done(LslTypes.STATEMENT_EMPTY)
+        }
+
+        override fun enterStatementBlock2(ctx: LSLParser.StatementBlock2Context?) {
+        }
+
+        override fun exitStatementBlock2(ctx: LSLParser.StatementBlock2Context?) {
         }
 
         override fun enterStatementBlock(ctx: LSLParser.StatementBlockContext?) {

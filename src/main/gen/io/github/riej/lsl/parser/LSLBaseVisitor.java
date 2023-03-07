@@ -74,6 +74,13 @@ public class LSLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LS
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitEvents(LSLParser.EventsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitStatementEmpty(LSLParser.StatementEmptyContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -81,7 +88,7 @@ public class LSLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LS
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStatementBlock(LSLParser.StatementBlockContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStatementBlock2(LSLParser.StatementBlock2Context ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -159,6 +166,13 @@ public class LSLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LS
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitStatementElse(LSLParser.StatementElseContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStatementBlock(LSLParser.StatementBlockContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

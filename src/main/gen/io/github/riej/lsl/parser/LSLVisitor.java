@@ -59,6 +59,12 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEvent(LSLParser.EventContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LSLParser#events}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEvents(LSLParser.EventsContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code StatementEmpty}
 	 * labeled alternative in {@link LSLParser#statement}.
 	 * @param ctx the parse tree
@@ -66,12 +72,12 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatementEmpty(LSLParser.StatementEmptyContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code StatementBlock}
+	 * Visit a parse tree produced by the {@code StatementBlock2}
 	 * labeled alternative in {@link LSLParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatementBlock(LSLParser.StatementBlockContext ctx);
+	T visitStatementBlock2(LSLParser.StatementBlock2Context ctx);
 	/**
 	 * Visit a parse tree produced by the {@code StatementVariable}
 	 * labeled alternative in {@link LSLParser#statement}.
@@ -148,6 +154,12 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatementElse(LSLParser.StatementElseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LSLParser#statementBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementBlock(LSLParser.StatementBlockContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExpressionTypeCast}
 	 * labeled alternative in {@link LSLParser#expression}.

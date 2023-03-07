@@ -6,5 +6,8 @@ import com.intellij.psi.PsiNameIdentifierOwner
 
 interface LslState : PsiElement, PsiNameIdentifierOwner, NavigatablePsiElement {
     val events: List<LslEvent>
-        get() = this.children.mapNotNull { it as? LslEvent }
+        get() = eventsEl?.events.orEmpty()
+
+    val eventsEl: LslEvents?
+        get() = this.children.firstNotNullOfOrNull { it as? LslEvents }
 }

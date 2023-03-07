@@ -113,6 +113,18 @@ public class LSLBaseListener implements LSLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEvents(LSLParser.EventsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEvents(LSLParser.EventsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStatementEmpty(LSLParser.StatementEmptyContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -125,13 +137,13 @@ public class LSLBaseListener implements LSLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatementBlock(LSLParser.StatementBlockContext ctx) { }
+	@Override public void enterStatementBlock2(LSLParser.StatementBlock2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatementBlock(LSLParser.StatementBlockContext ctx) { }
+	@Override public void exitStatementBlock2(LSLParser.StatementBlock2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -264,6 +276,18 @@ public class LSLBaseListener implements LSLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStatementElse(LSLParser.StatementElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStatementBlock(LSLParser.StatementBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatementBlock(LSLParser.StatementBlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -9,7 +9,7 @@ globalVariable
     ;
 
 function
-    : TypeName? Identifier '(' arguments ')' '{' statement* '}'
+    : TypeName? Identifier '(' arguments ')' statementBlock
     ;
 
 argument
@@ -25,16 +25,20 @@ defaultStateDeclaration
     ;
 
 stateDeclaration
-    : State Identifier '{' event* '}'
+    : State Identifier '{' events '}'
     ;
 
 event
-    : Identifier '(' arguments ')' '{' statement* '}'
+    : Identifier '(' arguments ')' statementBlock
+    ;
+
+events
+    : event*
     ;
 
 statement
     : ';' # StatementEmpty
-    | '{' statement* '}' # StatementBlock
+    | statementBlock # StatementBlock2
     | TypeName Identifier ('=' expression)? ';' # StatementVariable
     | '@' Identifier ';' # StatementLabel
     | Jump Identifier ';' # StatementJump
@@ -49,6 +53,10 @@ statement
 
 statementElse
     : Else statement
+    ;
+
+statementBlock
+    : '{' statement* '}'
     ;
 
 //expression

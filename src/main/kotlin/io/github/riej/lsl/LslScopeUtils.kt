@@ -3,6 +3,7 @@ package io.github.riej.lsl
 import com.intellij.psi.PsiElement
 import io.github.riej.lsl.psi.LslEvent
 import io.github.riej.lsl.psi.LslFile
+import io.github.riej.lsl.psi.LslFunction
 import io.github.riej.lsl.psi.LslNamedElement
 
 object LslScopeUtils {
@@ -13,8 +14,12 @@ object LslScopeUtils {
 
         var parent: PsiElement? = currElement.parent
         while (parent != null) {
-            val element =
-                parent.children.firstOrNull { (it is LslNamedElement) && (it.getName() == name) } as LslNamedElement?
+            val element = when (parent) {
+                is LslFunction -> parent.arguments.firstOrNull { it.name == name }
+                is LslEvent -> parent.arguments.firstOrNull { it.name == name }
+                else -> parent.children.filterIsInstance<LslNamedElement>().firstOrNull { (it.getName() == name) }
+            }
+
             if (element != null) {
                 return element
             }

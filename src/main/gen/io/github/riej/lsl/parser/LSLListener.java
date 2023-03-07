@@ -88,6 +88,16 @@ public interface LSLListener extends ParseTreeListener {
 	 */
 	void exitEvent(LSLParser.EventContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LSLParser#events}.
+	 * @param ctx the parse tree
+	 */
+	void enterEvents(LSLParser.EventsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LSLParser#events}.
+	 * @param ctx the parse tree
+	 */
+	void exitEvents(LSLParser.EventsContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code StatementEmpty}
 	 * labeled alternative in {@link LSLParser#statement}.
 	 * @param ctx the parse tree
@@ -100,17 +110,17 @@ public interface LSLListener extends ParseTreeListener {
 	 */
 	void exitStatementEmpty(LSLParser.StatementEmptyContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code StatementBlock}
+	 * Enter a parse tree produced by the {@code StatementBlock2}
 	 * labeled alternative in {@link LSLParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatementBlock(LSLParser.StatementBlockContext ctx);
+	void enterStatementBlock2(LSLParser.StatementBlock2Context ctx);
 	/**
-	 * Exit a parse tree produced by the {@code StatementBlock}
+	 * Exit a parse tree produced by the {@code StatementBlock2}
 	 * labeled alternative in {@link LSLParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatementBlock(LSLParser.StatementBlockContext ctx);
+	void exitStatementBlock2(LSLParser.StatementBlock2Context ctx);
 	/**
 	 * Enter a parse tree produced by the {@code StatementVariable}
 	 * labeled alternative in {@link LSLParser#statement}.
@@ -241,6 +251,16 @@ public interface LSLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatementElse(LSLParser.StatementElseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LSLParser#statementBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatementBlock(LSLParser.StatementBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LSLParser#statementBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatementBlock(LSLParser.StatementBlockContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExpressionTypeCast}
 	 * labeled alternative in {@link LSLParser#expression}.

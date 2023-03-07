@@ -31,10 +31,13 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 
     val arguments: List<LslArgument>
-        get() = this.findChildrenByType(LslTypes.ARGUMENT)
+        get() = argumentsEl?.arguments.orEmpty()
 
-    val statements: List<LslStatement>
-        get() = this.findChildrenByType(LslTypes.STATEMENTS)
+    val argumentsEl: LslArguments?
+        get() = this.findChildByType(LslTypes.ARGUMENTS)
+
+    val body: LslStatement?
+        get() = this.findChildByType(LslTypes.STATEMENT_BLOCK)
 
     override fun getReference(): PsiReference = LslFunctionReference(this)
 

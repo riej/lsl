@@ -245,10 +245,14 @@ object LslTypes {
     // List of available PSI elements
     val GLOBAL_VARIABLE = LslTokenType("globalVariable")
     val FUNCTION = LslTokenType("function")
-    val ARGUMENT = LslTokenType("argument")
     val DEFAULT_STATE_DECLARATION = LslTokenType("defaultStateDeclaration")
     val STATE_DECLARATION = LslTokenType("stateDeclaration")
+
     val EVENT = LslTokenType("event")
+    val EVENTS = LslTokenType("events")
+
+    val ARGUMENT = LslTokenType("argument")
+    val ARGUMENTS = LslTokenType("arguments")
 
     val STATEMENT_EMPTY = LslTokenType("statementEmpty")
     val STATEMENT_BLOCK = LslTokenType("statementBlock")
@@ -323,10 +327,14 @@ object LslTypes {
             when (node?.elementType) {
                 GLOBAL_VARIABLE -> LslGlobalVariable(node)
                 FUNCTION -> LslFunction(node)
-                ARGUMENT -> LslArgument(node)
                 DEFAULT_STATE_DECLARATION -> LslStateDefault(node)
                 STATE_DECLARATION -> LslStateCustom(node)
+
                 EVENT -> LslEvent(node)
+                EVENTS -> LslEvents(node)
+
+                ARGUMENT -> LslArgument(node)
+                ARGUMENTS -> LslArguments(node)
 
                 STATEMENT_EMPTY -> LslStatementEmpty(node)
                 STATEMENT_BLOCK -> LslStatementBlock(node)
