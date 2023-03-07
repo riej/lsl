@@ -18,9 +18,8 @@ class LslCompletionContributor : CompletionContributor() {
 
         extend(CompletionType.BASIC, lValueIdentifierScopePlace(), VariableCompletionProvider())
 
-        // at new line there's no function call yet, it will be detected as lvalue
-        extend(CompletionType.BASIC, lValueIdentifierScopePlace(), FunctionCompletionProvider(true))
-        extend(CompletionType.BASIC, functionCallScopePlace(), FunctionCompletionProvider(false))
+        extend(CompletionType.BASIC, functionCallAsStatementScopePlace(), FunctionCompletionProvider(true))
+        extend(CompletionType.BASIC, functionCallInsideExpressionScopePlace(), FunctionCompletionProvider(false))
 
         extend(CompletionType.BASIC, eventIdentifierScopePlace(), EventNameCompletionProvider())
     }
@@ -34,8 +33,11 @@ class LslCompletionContributor : CompletionContributor() {
     fun statementScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement().atStartOf(psiElement(LslStatement::class.java))
 
-    fun functionCallScopePlace(): PsiElementPattern.Capture<PsiElement> =
-        psiElement(LslTypes.IDENTIFIER).inside(LslExpressionFunctionCall::class.java)
+    fun functionCallAsStatementScopePlace(): PsiElementPattern.Capture<PsiElement> =
+        psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslStatement::class.java))
+
+    fun functionCallInsideExpressionScopePlace(): PsiElementPattern.Capture<PsiElement> =
+        psiElement(LslTypes.IDENTIFIER).inside(LslExpression::class.java)
 
     fun lValueIdentifierScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslLValue::class.java))
