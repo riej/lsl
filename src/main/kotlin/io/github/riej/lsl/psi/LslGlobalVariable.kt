@@ -36,6 +36,20 @@ class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Naviga
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Gvariable
 
     override fun annotate(holder: AnnotationHolder) {
+        if (expression != null) {
+            val resultType = try {
+                lslType.operationTo(expression!!.lslType, LslTypes.ASSIGN)
+            } catch (e: LslPrimitiveType.TypeMismatch) {
+                LslPrimitiveType.INVALID
+            }
+
+            if (resultType == LslPrimitiveType.INVALID) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Invalid expression type.")
+                    .range(expression!!.textRange)
+                    .create()
+            }
+        }
+
         if ((containingFile as? LslFile)?.kwdbData?.events?.get(name) != null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Reserved identifier")
                 .create()
