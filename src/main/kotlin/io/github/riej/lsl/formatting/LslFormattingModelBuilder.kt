@@ -15,12 +15,8 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
         return SpacingBuilder(settings, LslLanguage.INSTANCE)
             .after(LslTypes.LINE_COMMENT).lineBreakInCode()
 
-//            .after(LslTypes.GLOBAL_VARIABLE).lineBreakInCode()
-//            .aroundInside(LslTypes.STATEMENTS, LslTypes.FUNCTION).lineBreakInCode()
-//            .aroundInside(LslTypes.STATEMENTS, LslTypes.EVENT).lineBreakInCode()
-//            .aroundInside(LslTypes.STATEMENTS, LslTypes.STATEMENT_BLOCK).lineBreakInCode()
-
             .before(LslTypes.SEMICOLON).none()
+            .between(LslTypes.SEMICOLON, LslTypes.EXPRESSIONS).spaceIf(true)
             .around(LslTypes.KEYWORDS).spaceIf(true)
 
             .aroundInside(LslTypes.OPERATORS, LslTypes.GLOBAL_VARIABLE).spaceIf(true)
@@ -52,9 +48,8 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
             .aroundInside(LslTypes.IDENTIFIER, LslTypes.DEFAULT_STATE_DECLARATION).spaceIf(true)
             .aroundInside(LslTypes.IDENTIFIER, LslTypes.STATE_DECLARATION).spaceIf(true)
 
-            .between(LslTypes.PARENTHESES_RIGHT, LslTypes.BRACE_LEFT).spaceIf(true)
+            .between(LslTypes.PARENTHESES_RIGHT, LslTypes.STATEMENTS).spaceIf(true)
 
-            .betweenInside(LslTypes.PARENTHESES_RIGHT, LslTypes.STATEMENT_BLOCK, LslTypes.STATEMENT_IF).spaceIf(true)
             .betweenInside(LslTypes.STATEMENT_BLOCK, LslTypes.ELSE, LslTypes.STATEMENT_IF).spaceIf(true)
             .betweenInside(LslTypes.ELSE, LslTypes.STATEMENT_BLOCK, LslTypes.STATEMENT_IF).spaceIf(true)
 
