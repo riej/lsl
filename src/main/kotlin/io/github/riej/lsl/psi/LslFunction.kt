@@ -12,6 +12,7 @@ import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
+import com.intellij.psi.util.PsiTreeUtil
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
@@ -28,7 +29,10 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     LslAnnotatedElement,
     LslDocumentedElement, ItemPresentation {
     override val lslType: LslPrimitiveType
-        get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
+        get() = LslPrimitiveType.fromString(typeNameEl?.text)
+
+    val typeNameEl: PsiElement?
+        get() = findChildByType(LslTypes.TYPE_NAME)
 
     val arguments: List<LslArgument>
         get() = argumentsEl?.arguments.orEmpty()
@@ -48,6 +52,13 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Function
 
     override fun annotate(holder: AnnotationHolder) {
+        if (body != null && lslType != LslPrimitiveType.VOID && PsiTreeUtil.findChildOfType(body, LslStatementReturn::class.java) == null) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Missing return statement")
+                .highlightType(ProblemHighlightType.ERROR)
+                .range(body!!.node.lastChildNode.textRange)
+                .create()
+        }
+
         if ((containingFile as? LslFile)?.kwdbData?.events?.get(name) != null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Reserved identifier")
                 .create()
