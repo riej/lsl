@@ -11,6 +11,7 @@ import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
+import com.intellij.psi.util.parentsOfType
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
@@ -52,10 +53,19 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             builder.create()
         }
 
-        if (reference.resolve() == null && identifyingElement != null && parent !is LslEvent) {
-            holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused variable")
+        if (reference.resolve() == null && identifyingElement != null && this.parentsOfType<LslEvent>().none()) {
+            val parentChildren = parent.node.getChildren(null).toList()
+            val elementsToDelete = listOfNotNull(
+                parentChildren
+                    .subList(0, parentChildren.indexOf(node))
+                    .findLast { it.elementType == LslTypes.COMMA }
+                    ?.psi,
+                this
+            )
+
+            holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused argument")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-                .withFix(DeleteElementsFix(listOf(this), "Remove state"))
+                .withFix(DeleteElementsFix(elementsToDelete, "Remove unused argument"))
                 .range(identifyingElement!!.textRange)
                 .create()
         }
