@@ -3,14 +3,10 @@ package io.github.riej.lsl.formatting
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiComment
-import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.TokenType
 import com.intellij.psi.formatter.common.AbstractBlock
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.psi.LslExpression
-import io.github.riej.lsl.psi.LslStatement
-import io.github.riej.lsl.psi.LslStatementBlock
 
 // TODO: rewrite it in some better way
 class LslBlock(

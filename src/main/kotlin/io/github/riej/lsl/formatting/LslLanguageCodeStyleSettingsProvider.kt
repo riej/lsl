@@ -2,7 +2,6 @@ package io.github.riej.lsl.formatting
 
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.lang.Language
-import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider
 import io.github.riej.lsl.LslLanguage
 
@@ -22,5 +21,6 @@ default {
     }
 }
     """.trimIndent()
+
     override fun getIndentOptionsEditor() = SmartIndentOptionsEditor()
 }

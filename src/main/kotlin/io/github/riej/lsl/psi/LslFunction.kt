@@ -52,7 +52,11 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Function
 
     override fun annotate(holder: AnnotationHolder) {
-        if (body != null && lslType != LslPrimitiveType.VOID && PsiTreeUtil.findChildOfType(body, LslStatementReturn::class.java) == null) {
+        if (body != null && lslType != LslPrimitiveType.VOID && PsiTreeUtil.findChildOfType(
+                body,
+                LslStatementReturn::class.java
+            ) == null
+        ) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Missing return statement")
                 .highlightType(ProblemHighlightType.ERROR)
                 .range(body!!.node.lastChildNode.textRange)

@@ -8,7 +8,6 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.codeInsight.lookup.LookupElementPresentation
 import com.intellij.codeInsight.lookup.LookupElementRenderer
 import com.intellij.codeInsight.template.TemplateManager
-import com.intellij.codeInsight.template.impl.ConstantNode
 import com.intellij.util.ProcessingContext
 import io.github.riej.lsl.psi.LslEvent
 import io.github.riej.lsl.psi.LslFile
@@ -24,7 +23,7 @@ class EventNameCompletionProvider : CompletionProvider<CompletionParameters>() {
                 .kwdbData
                 .events
                 .values
-                .map { 
+                .map {
                     LookupElementBuilder
                         .create(it.name!!)
                         .withRenderer(Renderer(it))
