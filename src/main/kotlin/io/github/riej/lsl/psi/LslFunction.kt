@@ -11,7 +11,6 @@ import com.intellij.navigation.ItemPresentation
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiReference
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.LslScopeUtils
@@ -21,13 +20,11 @@ import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.references.LslFunctionReference
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement,
-    LslAnnotatedElement,
-    LslDocumentedElement, ItemPresentation {
+    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(typeNameEl?.text)
 
@@ -43,7 +40,10 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     val body: LslStatement?
         get() = this.findChildByType(LslTypes.STATEMENT_BLOCK)
 
-    override fun getReference(): PsiReference = LslFunctionReference(this)
+    val usages: List<PsiElement>
+        get() = PsiTreeUtil.collectElements(containingFile) {
+            (it is LslExpressionFunctionCall) && (it.function == this)
+        }.toList()
 
     override fun getPresentableText(): String = "$lslType $name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }
@@ -77,7 +77,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             builder.create()
         }
 
-        if (reference.resolve() == null && identifyingElement != null) {
+        if (identifyingElement != null && usages.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused function")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(DeleteElementsFix(listOf(this), "Remove function"))

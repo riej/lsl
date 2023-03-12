@@ -10,7 +10,6 @@ import com.intellij.lang.documentation.DocumentationSettings
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiReference
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
@@ -19,7 +18,6 @@ import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.references.LslVariableReference
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
@@ -31,8 +29,6 @@ class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Lsl
 
     override val expression: LslExpression?
         get() = this.findChildByType(LslTypes.EXPRESSIONS)
-
-    override fun getReference(): PsiReference = LslVariableReference(this)
 
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Variable
 
@@ -69,7 +65,7 @@ class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Lsl
             builder.create()
         }
 
-        if (reference.resolve() == null && identifyingElement != null) {
+        if (identifyingElement != null && usages.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused variable")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(DeleteElementsFix(listOf(this), "Remove state"))

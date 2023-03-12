@@ -10,7 +10,6 @@ import com.intellij.lang.documentation.DocumentationSettings
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiReference
 import com.intellij.psi.util.parentsOfType
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.LslScopeUtils
@@ -19,7 +18,6 @@ import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.references.LslVariableReference
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
@@ -28,7 +26,6 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 
-    override fun getReference(): PsiReference = LslVariableReference(this)
     override val expression: LslExpression?
         get() = null
 
@@ -53,7 +50,7 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             builder.create()
         }
 
-        if (reference.resolve() == null && identifyingElement != null && this.parentsOfType<LslEvent>().none()) {
+        if (identifyingElement != null && usages.isEmpty() && this.parentsOfType<LslEvent>().none()) {
             val parentChildren = parent.node.getChildren(null).toList()
             val elementsToDelete = listOfNotNull(
                 parentChildren

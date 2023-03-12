@@ -31,6 +31,7 @@
         <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.completion.LslCompletionContributor" />
         <langCodeStyleSettingsProvider implementation="io.github.riej.lsl.formatting.LslLanguageCodeStyleSettingsProvider" />
         <lang.foldingBuilder language="LSL" implementationClass="io.github.riej.lsl.structure.LslFoldingBuilder" />
+        <lang.findUsagesProvider language="LSL" implementationClass="io.github.riej.lsl.structure.LslFindUsagesProvider" />
 
 <!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslLValueImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
 <!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslCallExprImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
