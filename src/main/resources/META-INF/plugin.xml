@@ -13,6 +13,8 @@
       The plugin is third-party and does not support by Linden Labs.<br />
       <br />
       <b>WARNING:</b> the plugin is in early access and may contain problems.
+      <br />
+      Please report about issues to <a href="https://github.com/riej/lsl/issues">GitHub</a> or IM/notecard in SecondLife to <a href="https://world.secondlife.com/resident/aa508166-7fcc-491e-977a-93fc3e59f10e">riejinno</a>.
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
