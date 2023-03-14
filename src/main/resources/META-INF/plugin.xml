@@ -37,5 +37,12 @@
 <!--        <lang.elementManipulator forClass="io.github.riej.lsl.psi.impl.LslCallExprImpl" implementationClass="io.github.riej.lsl.psi.LslElementManipulator" />-->
 
         <lang.formatter language="LSL" implementationClass="io.github.riej.lsl.formatting.LslFormattingModelBuilder" />
+
+        <internalFileTemplate name="Linden Script"/>
     </extensions>
+    <actions>
+        <action id="LSL.NewLindenScriptFile" class="io.github.riej.lsl.actions.LslCreateFileAction" text="Linden Script File" description="Create new Linden Script file">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+        </action>
+    </actions>
 </idea-plugin>
