@@ -5,7 +5,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.util.PsiTreeUtil
 
-interface LslState : PsiElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration {
+interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration {
     val events: List<LslEvent>
         get() = eventsEl?.events.orEmpty()
 
