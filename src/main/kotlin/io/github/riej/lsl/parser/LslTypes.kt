@@ -141,42 +141,59 @@ object LslTypes {
         MODULUS_ASSIGN,
     )
 
-    val COMPARISON_OPERATORS = TokenSet.create(
-        LESS,
-        LESS_EQUAL,
-        GREATER,
-        GREATER_EQUAL,
-        EQUAL,
-        NOT_EQUAL,
+    val LOGICAL_OPERATORS = TokenSet.create(
         BOOLEAN_AND,
         BOOLEAN_OR,
     )
 
-    val BINARY_OPERATORS = TokenSet.create(
+    val EQUALITY_OPERATORS = TokenSet.create(
+        EQUAL,
+        NOT_EQUAL,
+    )
+
+    val RELATIONAL_OPERATORS = TokenSet.create(
         LESS,
         LESS_EQUAL,
         GREATER,
         GREATER_EQUAL,
-        EQUAL,
-        NOT_EQUAL,
-        SHIFT_LEFT,
-        SHIFT_RIGHT,
-        PLUS,
-        MINUS,
-        MULTIPLE,
-        DIVIDE,
-        MODULUS,
-        BOOLEAN_AND,
-        BOOLEAN_OR,
+    )
+
+    val COMPARISON_OPERATORS = TokenSet.orSet(LOGICAL_OPERATORS, EQUALITY_OPERATORS, RELATIONAL_OPERATORS)
+
+    val BITWISE_OPERATORS = TokenSet.create(
         BITWISE_AND,
         BITWISE_OR,
         BITWISE_XOR,
-        ASSIGN,
-        PLUS_ASSIGN,
-        MINUS_ASSIGN,
-        MULTIPLE_ASSIGN,
-        DIVIDE_ASSIGN,
-        MODULUS_ASSIGN,
+    )
+
+    val ADDITIVE_OPERATORS = TokenSet.create(
+        PLUS,
+        MINUS,
+    )
+
+    val MULTIPLICATIVE_OPERATORS = TokenSet.create(
+        MULTIPLE,
+        DIVIDE,
+        MODULUS,
+    )
+
+    val SHIFT_OPERATORS = TokenSet.create(
+        SHIFT_LEFT,
+        SHIFT_RIGHT,
+    )
+
+    val BINARY_OPERATORS = TokenSet.orSet(
+        ASSIGNMENT_OPERATORS,
+        COMPARISON_OPERATORS,
+        BITWISE_OPERATORS,
+        ADDITIVE_OPERATORS,
+        MULTIPLICATIVE_OPERATORS,
+        SHIFT_OPERATORS,
+    )
+
+    val PARENTHESES = TokenSet.create(
+        PARENTHESES_LEFT,
+        PARENTHESES_RIGHT,
     )
 
     fun getLslTokenTypeForAntlrToken(token: Token): IElementType? =
