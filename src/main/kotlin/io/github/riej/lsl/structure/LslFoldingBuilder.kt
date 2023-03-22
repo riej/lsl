@@ -20,6 +20,8 @@ class LslFoldingBuilder : FoldingBuilderEx(), DumbAware {
                     LslTypes.DEFAULT_STATE_DECLARATION,
                     LslTypes.STATE_DECLARATION
                 ).contains(it.elementType)
+            }.filterNot {
+                it.textRange.isEmpty
             }.map {
                 FoldingDescriptor(it, it.textRange)
             }
@@ -30,6 +32,8 @@ class LslFoldingBuilder : FoldingBuilderEx(), DumbAware {
                     LslTypes.DEFAULT_STATE_DECLARATION,
                     LslTypes.STATE_DECLARATION
                 ).contains(it.elementType)
+            }.filterNot {
+                it.textRange.isEmpty
             }
             .flatMap { it.children.toList() }
             .filterIsInstance<LslEvent>().map {
