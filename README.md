@@ -1,7 +1,7 @@
 [![Version](https://img.shields.io/jetbrains/plugin/v/21002)](https://plugins.jetbrains.com/plugin/21002-linden-script-lsl-)
 ![GitHub](https://img.shields.io/github/license/riej/lsl)
 
-Linden Script (LSL) language plugin.
+Linden Script (LSL) language plugin for JetBrains IDEs (IntelliJ IDEA, PyCharm, Android Studio etc.)
 
 See [official LSL documentation](https://wiki.secondlife.com/wiki/LSL_Portal).
 
