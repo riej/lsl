@@ -59,25 +59,6 @@ statementBlock
     : '{' statement* '}'
     ;
 
-//expression
-//    : lValue ('=' | '+=' | '-=' | '*=' | '/=' | '%=') expression # ExpressionAssignment
-//    | expression ('+' | '-' | '|' | '^') expression # ExpressionAdd
-//    | expression ('*' | '/' | '%' | '<<' | '>>' | '&') expression # ExpressionMultiple
-//    | expression ('==' | '!=' | '<' | '<=' | '>' | '>=') expression # ExpressionComparison
-//    | expression ('&&' | '||') expression # ExpressionBoolean
-//    | ('++' | '--' | '+' | '-' | '!' | '^' | '~') expression # ExpressionUnaryPrefix
-//    | expression ('++' | '--') # ExpressionUnaryPostfix
-//    | '(' TypeName ')' expression # ExpressionTypeCast
-//    | Identifier '(' expressions ')' # ExpressionFunctionCall
-//    | Print '(' expression ')' # ExpressionPrint
-//    | '[' expressions ']' # ExpressionList
-//    | '<' expression ',' expression ',' expression '>' # ExpressionVector
-//    | '<' expression ',' expression ',' expression ',' expression '>' # ExpressionQuaternion
-//    | '(' expression ')' # ExpressionParentheses
-//    | lValue # ExpressionLValue
-//    | constant # ExpressionConstant
-//    ;
-
 expression
     : '(' expression ')' # ExpressionParentheses
     | '[' expressions ']' # ExpressionList
