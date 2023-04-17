@@ -10,7 +10,9 @@ import com.intellij.psi.PsiNameIdentifierOwner
 interface LslSymbolDeclaration : PsiNameIdentifierOwner, PsiSymbolDeclaration {
     override fun getDeclaringElement(): PsiElement = this
 
-    override fun getRangeInDeclaringElement(): TextRange = identifyingElement!!.textRangeInParent
+    override fun getRangeInDeclaringElement(): TextRange =
+        identifyingElement?.textRangeInParent ?: TextRange.EMPTY_RANGE
+
     override fun getSymbol(): Symbol = PsiSymbolService.getInstance().asSymbol(this)
 
     override fun getOwnDeclarations(): Collection<PsiSymbolDeclaration> = listOf(this)
