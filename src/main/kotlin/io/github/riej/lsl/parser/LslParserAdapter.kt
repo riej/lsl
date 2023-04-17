@@ -4,17 +4,28 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.PsiParser
 import com.intellij.psi.tree.IElementType
-import org.antlr.v4.runtime.CharStreams
+import org.antlr.v4.runtime.CodePointBuffer
+import org.antlr.v4.runtime.CodePointCharStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ErrorNode
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.tree.TerminalNode
+import java.nio.IntBuffer
 import java.util.*
 
 class LslParserAdapter : PsiParser {
     override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
-        val lexer = LSLLexer(CharStreams.fromString(builder.originalText.toString()))
+        // Offsets in this class (startOffset, endOffset, getTokenStart, getTokenEnd) are in chars, not code points.
+        // That's why I wrote such complicated code here.
+        val charStream = CodePointCharStream.fromBuffer(
+            CodePointBuffer.withInts(
+                IntBuffer.wrap(
+                    builder.originalText.toString().chars().toArray()
+                )
+            )
+        )
+        val lexer = LslLexerWrapper(charStream)
         val tokenStream = CommonTokenStream(lexer)
 
         val rootMark = builder.mark()

@@ -2,6 +2,7 @@ package io.github.riej.lsl.parser
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
 import io.github.riej.lsl.psi.*
@@ -198,6 +199,7 @@ object LslTypes {
 
     fun getLslTokenTypeForAntlrToken(token: Token): IElementType? =
         when (token.type) {
+            0 -> TokenType.BAD_CHARACTER
             1 -> DEFAULT
             2 -> STATE
             3 -> JUMP
