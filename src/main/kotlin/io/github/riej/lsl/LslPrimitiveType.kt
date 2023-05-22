@@ -71,6 +71,12 @@ enum class LslPrimitiveType {
             return VECTOR
         }
 
+        // <1, 0, 0> * llEuler2Rot(<0, 0, 45> * DEG_TO_RAD) == <0.707107, 0.707107, 0>
+        // <1, 0, 0> / llEuler2Rot(<0, 0, 45> * DEG_TO_RAD) == <0.707107, -0.707107, 0>
+        if ((operation == LslTypes.MULTIPLE || operation == LslTypes.MULTIPLE_ASSIGN || operation == LslTypes.DIVIDE || operation == LslTypes.DIVIDE_ASSIGN) && this == VECTOR && other == QUATERNION) {
+            return VECTOR
+        }
+
         // 10 * <1, 2, 3> == <10, 20, 30>
         if (operation == LslTypes.MULTIPLE && (this == INTEGER || this == FLOAT) && other == VECTOR) {
             return VECTOR
