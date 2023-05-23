@@ -39,11 +39,12 @@ class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState,
             builder.create()
         }
 
+        val identifyingElement = identifyingElement
         if (identifyingElement != null && usages.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused state")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(DeleteElementsFix(listOf(this), "Remove state"))
-                .range(identifyingElement!!.textRange)
+                .range(identifyingElement.textRange)
                 .create()
         }
     }

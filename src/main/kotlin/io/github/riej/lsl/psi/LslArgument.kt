@@ -63,7 +63,7 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused argument")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(DeleteElementsFix(elementsToDelete, "Remove unused argument"))
-                .range(identifyingElement!!.textRange)
+                .range(identifyingElement?.textRange ?: textRange)
                 .create()
         }
     }

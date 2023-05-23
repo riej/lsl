@@ -29,7 +29,7 @@ class LslStatementReturn(node: ASTNode) : ASTWrapperPsiElement(node), LslStateme
 
             if (resultType == LslPrimitiveType.INVALID) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Invalid expression type.")
-                    .range(expression!!.textRange)
+                    .range(expression?.textRange ?: textRange)
                     .create()
             }
         }

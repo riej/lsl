@@ -32,16 +32,17 @@ class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Naviga
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Gvariable
 
     override fun annotate(holder: AnnotationHolder) {
+        val expression = expression
         if (expression != null) {
             val resultType = try {
-                lslType.operationTo(expression!!.lslType, LslTypes.ASSIGN)
+                lslType.operationTo(expression.lslType, LslTypes.ASSIGN)
             } catch (e: LslPrimitiveType.TypeMismatch) {
                 LslPrimitiveType.INVALID
             }
 
             if (resultType == LslPrimitiveType.INVALID) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Invalid expression type.")
-                    .range(expression!!.textRange)
+                    .range(expression.textRange)
                     .create()
             }
         }
@@ -64,11 +65,12 @@ class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Naviga
             builder.create()
         }
 
+        val identifyingElement = identifyingElement
         if (identifyingElement != null && usages.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused variable")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(DeleteElementsFix(listOf(this), "Remove state"))
-                .range(identifyingElement!!.textRange)
+                .range(identifyingElement.textRange)
                 .create()
         }
     }
@@ -84,8 +86,9 @@ class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Naviga
             DocumentationSettings.getHighlightingSaturation(true)
         )
         sb.append(" $name")
+        val expression = expression
         if (expression != null) {
-            sb.append(" = ${expression!!.text}")
+            sb.append(" = ${expression.text}")
         }
         HtmlSyntaxInfoUtil.appendStyledSpan(
             sb,

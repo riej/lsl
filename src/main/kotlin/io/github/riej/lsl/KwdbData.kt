@@ -47,7 +47,7 @@ class KwdbData(project: Project) {
                     val type = tag.getAttributeValue("type")
                     val value = when (type) {
                         "string", "key" -> "\"${tag.getAttributeValue("value")}\""
-                        "vector", "rotation", "quaternion" -> XmlUtil.unescape(tag.getAttributeValue("value")!!)
+                        "vector", "rotation", "quaternion" -> XmlUtil.unescape(tag.getAttributeValue("value") ?: "")
                         else -> tag.getAttributeValue("value")
                     }
 

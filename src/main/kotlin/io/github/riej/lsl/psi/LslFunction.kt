@@ -52,6 +52,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Function
 
     override fun annotate(holder: AnnotationHolder) {
+        val body = body
         if (body != null && lslType != LslPrimitiveType.VOID && PsiTreeUtil.findChildOfType(
                 body,
                 LslStatementReturn::class.java
@@ -59,7 +60,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         ) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Missing return statement")
                 .highlightType(ProblemHighlightType.ERROR)
-                .range(body!!.node.lastChildNode.textRange)
+                .range(body.node.lastChildNode.textRange)
                 .create()
         }
 
@@ -81,6 +82,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             builder.create()
         }
 
+        val identifyingElement = identifyingElement
         if (identifyingElement != null && usages.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused function")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)

@@ -31,11 +31,12 @@ class LslExpressionTypeCast(node: ASTNode) : ASTWrapperPsiElement(node), LslExpr
         get() = findChildByType(LslTypes.PARENTHESES_RIGHT)
 
     override fun annotate(holder: AnnotationHolder) {
+        val expression = expression
         if (lslType != LslPrimitiveType.INVALID && lslType == expression?.lslType) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Redundant type cast")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-                .withFix(ReplaceElementsFix(this, expression!!, "Remove redundant type cast"))
-                .range(TextRange.create(parenthesesLeftEl!!.startOffset, parenthesesRightEl!!.endOffset))
+                .withFix(ReplaceElementsFix(this, expression, "Remove redundant type cast"))
+                .range(TextRange.create(parenthesesLeftEl?.startOffset ?: startOffset, parenthesesRightEl?.endOffset ?: endOffset))
                 .create()
         }
     }
