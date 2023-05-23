@@ -48,6 +48,10 @@ enum class LslPrimitiveType {
             return INVALID
         }
 
+        if (this == VECTOR && other == VECTOR && operation == LslTypes.MULTIPLE) {
+            return FLOAT
+        }
+
         if (this == other) {
             return this
         }
