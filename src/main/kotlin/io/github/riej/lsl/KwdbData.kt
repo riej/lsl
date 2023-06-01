@@ -8,9 +8,10 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ResourceUtil
 import com.intellij.xml.util.XmlUtil
 import io.github.riej.lsl.psi.*
+import io.github.riej.lsl.scope.LslScope
 
 
-class KwdbData(project: Project) {
+class KwdbData(project: Project) : LslScope {
     val data: XmlFile
     val lang = "en"
     val generated: LslFile
@@ -20,7 +21,7 @@ class KwdbData(project: Project) {
         val file = VfsUtil.findFileByURL(resource)
         data = PsiManager.getInstance(project).findFile(file!!) as XmlFile
 
-        generated = io.github.riej.lsl.psi.LslElementFactory.createFile(project, generateSource())
+        generated = LslElementFactory.createFile(project, generateSource())
     }
 
     fun commentDescription(description: String): String =
@@ -112,7 +113,15 @@ class KwdbData(project: Project) {
             .orEmpty()
     }
 
-    fun findElementByName(name: String?): LslNamedElement? {
+    override val parentScope: LslScope? = null
+
+    override val declaredElements: List<LslNamedElement>
+        get() = generated.declaredElements.filter { it !is LslState }
+
+    override val allDeclaredElements: Map<String, LslNamedElement>
+        get() = declaredElements.associateBy { it.name!! }
+
+    override fun findElementByName(name: String?): LslNamedElement? {
         if (name == null) {
             return null
         }
@@ -122,6 +131,6 @@ class KwdbData(project: Project) {
             return event
         }
 
-        return generated.children.firstOrNull { (it is LslNamedElement) && (it.getName() == name) } as LslNamedElement?
+        return allDeclaredElements[name]
     }
 }

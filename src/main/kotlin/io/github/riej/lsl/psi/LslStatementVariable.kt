@@ -11,10 +11,8 @@ import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
-import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
@@ -22,8 +20,7 @@ import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), LslStatement, NavigatablePsiElement,
-    LslVariable,
-    LslAnnotatedElement, LslDocumentedElement {
+    LslVariable, LslAnnotatedElement, LslDocumentedElement {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 
@@ -54,17 +51,7 @@ class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Lsl
             return
         }
 
-        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
-        if (existingIdentifier != this) {
-            var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
-                .range(identifyingElement?.textRange ?: textRange)
-
-            if (existingIdentifier is NavigatablePsiElement) {
-                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
-            }
-
-            builder.create()
-        }
+        super<LslVariable>.annotate(holder)
 
         val identifyingElement = identifyingElement
         if (identifyingElement != null && usages.isEmpty()) {

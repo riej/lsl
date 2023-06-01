@@ -9,7 +9,7 @@ object LslElementFactory {
     @JvmStatic
     fun createFile(project: Project, text: String): LslFile =
         PsiFileFactory.getInstance(project)
-            .createFileFromText("dummy.lsl", LslFileType.INSTANCE, text) as LslFile
+            .createFileFromText("dummy.lsl", LslFileType.INSTANCE, text, 0, false, true) as LslFile
 
     @JvmStatic
     fun createIdentifier(project: Project, name: String): PsiElement {

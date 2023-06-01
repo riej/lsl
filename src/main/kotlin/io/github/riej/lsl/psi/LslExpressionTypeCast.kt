@@ -36,7 +36,12 @@ class LslExpressionTypeCast(node: ASTNode) : ASTWrapperPsiElement(node), LslExpr
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Redundant type cast")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(ReplaceElementsFix(this, expression, "Remove redundant type cast"))
-                .range(TextRange.create(parenthesesLeftEl?.startOffset ?: startOffset, parenthesesRightEl?.endOffset ?: endOffset))
+                .range(
+                    TextRange.create(
+                        parenthesesLeftEl?.startOffset ?: startOffset,
+                        parenthesesRightEl?.endOffset ?: endOffset
+                    )
+                )
                 .create()
         }
     }

@@ -13,18 +13,18 @@ import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.scope.LslPsiScope
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement,
-    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration {
+    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration, LslPsiScope {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(typeNameEl?.text)
 
@@ -44,6 +44,9 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         get() = PsiTreeUtil.collectElements(containingFile) {
             (it is LslExpressionFunctionCall) && (it.function == this)
         }.toList()
+
+    override val declaredElements: List<LslNamedElement>
+        get() = arguments
 
     override fun getPresentableText(): String = "$lslType $name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }
@@ -70,7 +73,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             return
         }
 
-        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
+        val existingIdentifier = scope?.findElementByName(name)
         if (existingIdentifier != this) {
             var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
                 .range(identifyingElement?.textRange ?: textRange)
@@ -87,7 +90,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused function")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
                 .withFix(DeleteElementsFix(listOf(this), "Remove function"))
-                .range(identifyingElement!!.textRange)
+                .range(identifyingElement.textRange)
                 .create()
         }
     }
@@ -96,7 +99,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         val sb = StringBuilder()
 
         sb.append(DocumentationMarkup.DEFINITION_START)
-        if (lslType != null && lslType != LslPrimitiveType.VOID) {
+        if (lslType != LslPrimitiveType.VOID) {
             HtmlSyntaxInfoUtil.appendStyledSpan(
                 sb,
                 LslSyntaxHighlighter.TYPENAME,

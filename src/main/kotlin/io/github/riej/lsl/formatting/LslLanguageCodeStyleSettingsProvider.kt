@@ -5,7 +5,6 @@ import com.intellij.application.options.CodeStyleAbstractPanel
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.application.options.TabbedLanguageCodeStylePanel
 import com.intellij.lang.Language
-import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.util.NlsContexts
 import com.intellij.psi.codeStyle.CodeStyleConfigurable
 import com.intellij.psi.codeStyle.CodeStyleSettings
@@ -118,10 +117,16 @@ default {
                 consumer.showStandardOptions("SPACE_BEFORE_WHILE_KEYWORD")
 
                 consumer.renameStandardOption("SPACE_WITHIN_METHOD_CALL_PARENTHESES", "Function call parentheses")
-                consumer.renameStandardOption("SPACE_WITHIN_EMPTY_METHOD_CALL_PARENTHESES", "Empty function call parentheses")
+                consumer.renameStandardOption(
+                    "SPACE_WITHIN_EMPTY_METHOD_CALL_PARENTHESES",
+                    "Empty function call parentheses"
+                )
                 consumer.renameStandardOption("SPACE_WITHIN_BRACKETS", "List initializer brackets")
                 consumer.renameStandardOption("SPACE_BEFORE_METHOD_CALL_PARENTHESES", "Function call parentheses")
-                consumer.renameStandardOption("SPACE_BEFORE_METHOD_PARENTHESES", "Function/event declaration parentheses")
+                consumer.renameStandardOption(
+                    "SPACE_BEFORE_METHOD_PARENTHESES",
+                    "Function/event declaration parentheses"
+                )
                 consumer.renameStandardOption("SPACE_BEFORE_CLASS_LBRACE", "State left brace")
                 consumer.renameStandardOption("SPACE_BEFORE_METHOD_LBRACE", "Function/event left brace")
             }

@@ -11,7 +11,6 @@ import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
@@ -53,7 +52,7 @@ class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Naviga
             return
         }
 
-        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
+        val existingIdentifier = scope?.findElementByName(name)
         if (existingIdentifier != this) {
             var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
                 .range(identifyingElement?.textRange ?: textRange)

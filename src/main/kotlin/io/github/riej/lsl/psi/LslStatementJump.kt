@@ -7,7 +7,6 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.parser.LslTypes
@@ -21,12 +20,12 @@ class LslStatementJump(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement
         get() = labelNameIdentifier?.text
 
     val label: LslStatementLabel?
-        get() = LslScopeUtils.findElementByName(this, labelName) as? LslStatementLabel?
+        get() = scope?.findElementByName(labelName) as? LslStatementLabel?
 
     override fun getReference(): PsiReference = LslStatementJumpReference(this)
 
     override fun annotate(holder: AnnotationHolder) {
-        val existingIdentifier = LslScopeUtils.findElementByName(this, labelName)
+        val existingIdentifier = scope?.findElementByName(labelName)
 
         if (existingIdentifier == null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Undeclared identifier").create()

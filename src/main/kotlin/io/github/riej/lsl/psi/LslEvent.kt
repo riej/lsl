@@ -14,19 +14,19 @@ import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.scope.LslPsiScope
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 import kotlin.math.min
 
 class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement,
-    ItemPresentation, LslAnnotatedElement {
+    ItemPresentation, LslAnnotatedElement, LslPsiScope {
     val arguments: List<LslArgument>
         get() = argumentsEl?.arguments.orEmpty()
 
@@ -36,6 +36,9 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
     val body: LslStatement?
         get() = this.findChildByType(LslTypes.STATEMENT_BLOCK)
 
+    override val declaredElements: List<LslNamedElement>
+        get() = arguments
+
     override fun getPresentableText(): String = "$name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }
     })".trim()
@@ -43,7 +46,7 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
     override fun getIcon(unused: Boolean): Icon = LslIcons.EVENT
 
     override fun annotate(holder: AnnotationHolder) {
-        val definition = LslScopeUtils.getEventByName(this, name)
+        val definition = (containingFile as LslFile).kwdbData.events[name]
         if (definition == null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unknown state event")
                 .range(identifyingElement?.textRange ?: textRange)

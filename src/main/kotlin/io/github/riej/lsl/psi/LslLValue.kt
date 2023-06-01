@@ -11,7 +11,6 @@ import com.intellij.psi.PsiReference
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
@@ -31,7 +30,7 @@ class LslLValue(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression, LslA
         get() = findChildrenByType<PsiElement>(LslTypes.IDENTIFIER).map { it.text }
 
     val variable: LslVariable?
-        get() = LslScopeUtils.findElementByName(this, variableName) as? LslVariable?
+        get() = scope?.findElementByName(variableName) as? LslVariable?
 
     override fun getReference(): PsiReference = LslLValueReference(this)
 
@@ -65,7 +64,7 @@ class LslLValue(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression, LslA
         }
 
     override fun annotate(holder: AnnotationHolder) {
-        val existingIdentifier = LslScopeUtils.findElementByName(this, variableName)
+        val existingIdentifier = scope?.findElementByName(variableName)
 
         if (existingIdentifier == null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Undeclared identifier").create()
