@@ -10,7 +10,7 @@ import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import javax.swing.Icon
 
-class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState, LslAnnotatedElement, ItemPresentation {
+class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState, ItemPresentation {
 
     override fun getPresentableText(): String = "state $name"
 
