@@ -1128,7 +1128,7 @@ public class LSLParser extends Parser {
 				setState(124);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (((_la) & ~0x3f) == 0 && ((1L << _la) & 16889358603015168L) != 0) {
+				if (((_la) & ~0x3f) == 0 && ((1L << _la) & 16889358535906304L) != 0) {
 					{
 					setState(123);
 					expression(0);
@@ -1229,7 +1229,6 @@ public class LSLParser extends Parser {
 			case ParenthesesLeft:
 			case BracketLeft:
 			case Less:
-			case Plus:
 			case PlusPlus:
 			case Minus:
 			case MinusMinus:
@@ -1353,7 +1352,7 @@ public class LSLParser extends Parser {
 			setState(171);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 16894856161222588L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 16894856094113724L) != 0) {
 				{
 				{
 				setState(168);
@@ -1462,7 +1461,6 @@ public class LSLParser extends Parser {
 		}
 		public TerminalNode PlusPlus() { return getToken(LSLParser.PlusPlus, 0); }
 		public TerminalNode MinusMinus() { return getToken(LSLParser.MinusMinus, 0); }
-		public TerminalNode Plus() { return getToken(LSLParser.Plus, 0); }
 		public TerminalNode Minus() { return getToken(LSLParser.Minus, 0); }
 		public TerminalNode BooleanNot() { return getToken(LSLParser.BooleanNot, 0); }
 		public TerminalNode BitwiseXor() { return getToken(LSLParser.BitwiseXor, 0); }
@@ -1790,7 +1788,7 @@ public class LSLParser extends Parser {
 				_prevctx = _localctx;
 				setState(189);
 				_la = _input.LA(1);
-				if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 860000092160L) != 0) ) {
+				if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 859932983296L) != 0) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -2173,7 +2171,7 @@ public class LSLParser extends Parser {
 			setState(275);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (((_la) & ~0x3f) == 0 && ((1L << _la) & 16889358603015168L) != 0) {
+			if (((_la) & ~0x3f) == 0 && ((1L << _la) & 16889358535906304L) != 0) {
 				{
 				setState(267);
 				expression(0);
@@ -2398,7 +2396,7 @@ public class LSLParser extends Parser {
 		"\t\r\u0003\r\u0114\b\r\u0001\u000e\u0001\u000e\u0001\u000e\u0003\u000e"+
 		"\u0119\b\u000e\u0001\u000f\u0001\u000f\u0001\u000f\u0000\u0001\u0018\u0010"+
 		"\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a"+
-		"\u001c\u001e\u0000\t\u0002\u0000\u0001\u000122\u0003\u0000\u001a\u001d"+
+		"\u001c\u001e\u0000\t\u0002\u0000\u0001\u000122\u0003\u0000\u001b\u001d"+
 		"##&\'\u0001\u0000+0\u0001\u0000\u001e \u0001\u0000\u0018\u0019\u0001\u0000"+
 		"\u0012\u0015\u0001\u0000\u0016\u0017\u0002\u0000\u001b\u001b\u001d\u001d"+
 		"\u0001\u000035\u013d\u0000$\u0001\u0000\u0000\u0000\u0002.\u0001\u0000"+

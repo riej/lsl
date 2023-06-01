@@ -63,7 +63,7 @@ expression
     : '(' expression ')' # ExpressionParentheses
     | '[' expressions ']' # ExpressionList
     | '(' TypeName ')' expression # ExpressionTypeCast
-    | ('++' | '--' | '+' | '-' | '!' | '^' | '~') expression # ExpressionUnaryPrefix
+    | ('++' | '--' | '-' | '!' | '^' | '~') expression # ExpressionUnaryPrefix
     | expression ('++' | '--') # ExpressionUnaryPostfix
     | expression ('*' | '/' | '%') expression # ExpressionBinary
     | expression '-' expression # ExpressionBinary
