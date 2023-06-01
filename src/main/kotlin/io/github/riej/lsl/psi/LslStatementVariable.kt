@@ -57,7 +57,7 @@ class LslStatementVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Lsl
         if (identifyingElement != null && usages.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused variable")
                 .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-                .withFix(DeleteElementsFix(listOf(this), "Remove state"))
+                .withFix(DeleteElementsFix(listOf(this), "Remove variable"))
                 .range(identifyingElement.textRange)
                 .create()
         }
