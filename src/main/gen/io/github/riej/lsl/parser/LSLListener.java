@@ -358,6 +358,18 @@ public interface LSLListener extends ParseTreeListener {
 	 */
 	void exitExpressionQuaternion(LSLParser.ExpressionQuaternionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExpressionUnaryPrefixLValue}
+	 * labeled alternative in {@link LSLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionUnaryPrefixLValue(LSLParser.ExpressionUnaryPrefixLValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExpressionUnaryPrefixLValue}
+	 * labeled alternative in {@link LSLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionUnaryPrefixLValue(LSLParser.ExpressionUnaryPrefixLValueContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExpressionUnaryPostfix}
 	 * labeled alternative in {@link LSLParser#expression}.
 	 * @param ctx the parse tree

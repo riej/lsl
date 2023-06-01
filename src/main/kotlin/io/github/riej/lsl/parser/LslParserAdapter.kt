@@ -304,6 +304,14 @@ class LslParserAdapter : PsiParser {
             stack.pop().done(LslTypes.EXPRESSION_QUATERNION)
         }
 
+        override fun enterExpressionUnaryPrefixLValue(ctx: LSLParser.ExpressionUnaryPrefixLValueContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitExpressionUnaryPrefixLValue(ctx: LSLParser.ExpressionUnaryPrefixLValueContext?) {
+            stack.pop().done(LslTypes.EXPRESSION_UNARY_PREFIX)
+        }
+
         override fun enterExpressionUnaryPostfix(ctx: LSLParser.ExpressionUnaryPostfixContext?) {
             stack.push(builder.mark())
         }

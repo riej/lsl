@@ -63,8 +63,9 @@ expression
     : '(' expression ')' # ExpressionParentheses
     | '[' expressions ']' # ExpressionList
     | '(' TypeName ')' expression # ExpressionTypeCast
-    | ('++' | '--' | '-' | '!' | '^' | '~') expression # ExpressionUnaryPrefix
-    | expression ('++' | '--') # ExpressionUnaryPostfix
+    | ('++' | '--') lValue # ExpressionUnaryPrefixLValue
+    | ('-' | '!' | '^' | '~') expression # ExpressionUnaryPrefix
+    | lValue ('++' | '--') # ExpressionUnaryPostfix
     | expression ('*' | '/' | '%') expression # ExpressionBinary
     | expression '-' expression # ExpressionBinary
     | expression '+' expression # ExpressionBinary

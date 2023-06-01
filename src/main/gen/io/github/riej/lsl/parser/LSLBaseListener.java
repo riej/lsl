@@ -389,6 +389,18 @@ public class LSLBaseListener implements LSLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpressionUnaryPrefixLValue(LSLParser.ExpressionUnaryPrefixLValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionUnaryPrefixLValue(LSLParser.ExpressionUnaryPrefixLValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpressionUnaryPostfix(LSLParser.ExpressionUnaryPostfixContext ctx) { }
 	/**
 	 * {@inheritDoc}

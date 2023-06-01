@@ -217,6 +217,13 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpressionQuaternion(LSLParser.ExpressionQuaternionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExpressionUnaryPrefixLValue}
+	 * labeled alternative in {@link LSLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionUnaryPrefixLValue(LSLParser.ExpressionUnaryPrefixLValueContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExpressionUnaryPostfix}
 	 * labeled alternative in {@link LSLParser#expression}.
 	 * @param ctx the parse tree
