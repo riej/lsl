@@ -5,7 +5,15 @@ file
     ;
 
 globalVariable
-    : TypeName Identifier ('=' expression)? ';'
+    : TypeName Identifier ('=' globalVariableValue)? ';'
+    ;
+
+// This type is little tricky. Global variables cannot use all expression, but short list of them.
+globalVariableValue
+    : '<' globalVariableValue ',' globalVariableValue ',' globalVariableValue '>' # GlobalVariableValueVector // treat as ExpressionVector
+    | '<' globalVariableValue ',' globalVariableValue ',' globalVariableValue ',' globalVariableValue '>' # GlobalVariableValueQuaternion // treat as ExpressionQuaternion
+    | Identifier # GlobalVariableLValue // treat as ExpressionLValue
+    | constant # GlobalVariableValueConstant // treat as ExpressionConstant
     ;
 
 function
@@ -21,7 +29,7 @@ arguments
     ;
 
 defaultStateDeclaration
-    : Default '{' event* '}'
+    : Default '{' events '}'
     ;
 
 stateDeclaration
@@ -33,7 +41,7 @@ event
     ;
 
 events
-    : event*
+    : event+
     ;
 
 statement
@@ -189,8 +197,8 @@ HexadecimalDigit
     ;
 
 IntegerConstant
-    :   DecimalConstant
-    |   HexadecimalConstant
+    :   '-'? DecimalConstant
+    |   '-'? HexadecimalConstant
     ;
 
 fragment
@@ -210,7 +218,7 @@ FloatingExponent
     ;
 
 FloatingConstant
-    :   (((Digit+ '.' Digit*) | (Digit* '.' Digit+)) FloatingExponent?) | (Digit+ FloatingExponent)
+    :   '-'? (((Digit+ '.' Digit*) | (Digit* '.' Digit+)) FloatingExponent?) | (Digit+ FloatingExponent)
     ;
 
 StringConstant

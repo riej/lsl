@@ -28,6 +28,54 @@ public interface LSLListener extends ParseTreeListener {
 	 */
 	void exitGlobalVariable(LSLParser.GlobalVariableContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code GlobalVariableValueVector}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableValueVector(LSLParser.GlobalVariableValueVectorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GlobalVariableValueVector}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableValueVector(LSLParser.GlobalVariableValueVectorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code GlobalVariableValueQuaternion}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableValueQuaternion(LSLParser.GlobalVariableValueQuaternionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GlobalVariableValueQuaternion}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableValueQuaternion(LSLParser.GlobalVariableValueQuaternionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code GlobalVariableLValue}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GlobalVariableLValue}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code GlobalVariableValueConstant}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableValueConstant(LSLParser.GlobalVariableValueConstantContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GlobalVariableValueConstant}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableValueConstant(LSLParser.GlobalVariableValueConstantContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LSLParser#function}.
 	 * @param ctx the parse tree
 	 */

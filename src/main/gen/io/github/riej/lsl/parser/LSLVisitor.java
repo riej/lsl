@@ -23,6 +23,34 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGlobalVariable(LSLParser.GlobalVariableContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code GlobalVariableValueVector}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalVariableValueVector(LSLParser.GlobalVariableValueVectorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GlobalVariableValueQuaternion}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalVariableValueQuaternion(LSLParser.GlobalVariableValueQuaternionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GlobalVariableLValue}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GlobalVariableValueConstant}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalVariableValueConstant(LSLParser.GlobalVariableValueConstantContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LSLParser#function}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

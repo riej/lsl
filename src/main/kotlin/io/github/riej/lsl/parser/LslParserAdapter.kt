@@ -78,6 +78,36 @@ class LslParserAdapter : PsiParser {
             stack.pop().done(LslTypes.GLOBAL_VARIABLE)
         }
 
+        override fun enterGlobalVariableValueVector(ctx: LSLParser.GlobalVariableValueVectorContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitGlobalVariableValueVector(ctx: LSLParser.GlobalVariableValueVectorContext?) {
+            stack.pop().done(LslTypes.EXPRESSION_VECTOR)
+        }
+
+        override fun enterGlobalVariableValueQuaternion(ctx: LSLParser.GlobalVariableValueQuaternionContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitGlobalVariableValueQuaternion(ctx: LSLParser.GlobalVariableValueQuaternionContext?) {
+            stack.pop().done(LslTypes.EXPRESSION_QUATERNION)
+        }
+
+        override fun enterGlobalVariableLValue(ctx: LSLParser.GlobalVariableLValueContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitGlobalVariableLValue(ctx: LSLParser.GlobalVariableLValueContext?) {
+            stack.pop().done(LslTypes.L_VALUE)
+        }
+
+        override fun enterGlobalVariableValueConstant(ctx: LSLParser.GlobalVariableValueConstantContext?) {
+        }
+
+        override fun exitGlobalVariableValueConstant(ctx: LSLParser.GlobalVariableValueConstantContext?) {
+        }
+
         override fun enterFunction(ctx: LSLParser.FunctionContext?) {
             stack.push(builder.mark())
         }

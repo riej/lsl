@@ -3,6 +3,7 @@ package io.github.riej.lsl
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiManager
+import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ResourceUtil
@@ -16,12 +17,20 @@ class KwdbData(project: Project) : LslScope {
     val lang = "en"
     val generated: LslFile
 
+    val functions: Map<String, LslFunction>
+    val constants: Map<String, LslGlobalVariable>
+    val events: Map<String, LslEvent>
+
     init {
         val resource = ResourceUtil.getResource(javaClass.classLoader, ".", "kwdb.xml")
         val file = VfsUtil.findFileByURL(resource)
         data = PsiManager.getInstance(project).findFile(file!!) as XmlFile
 
         generated = LslElementFactory.createFile(project, generateSource())
+
+        functions = generated.children.filterIsInstance<LslFunction>().associateBy { it.name!! }
+        constants = generated.children.filterIsInstance<LslGlobalVariable>().associateBy { it.name!! }
+        events = PsiTreeUtil.collectElementsOfType(generated, LslEvent::class.java).associateBy { it.name!! }
     }
 
     fun commentDescription(description: String): String =
@@ -94,23 +103,6 @@ class KwdbData(project: Project) : LslScope {
         sb.append("}\n")
 
         return sb.toString()
-    }
-
-    val functions: Map<String, LslFunction> by lazy {
-        generated.children.filterIsInstance<LslFunction>().associateBy { it.name!! }
-    }
-
-    val constants: Map<String, LslGlobalVariable> by lazy {
-        generated.children.filterIsInstance<LslGlobalVariable>().associateBy { it.name!! }
-    }
-
-    val events: Map<String, LslEvent> by lazy {
-        generated.children
-            .firstOrNull { it is LslStateDefault }
-            ?.children
-            ?.filterIsInstance<LslEvent>()
-            ?.associateBy { it.name!! }
-            .orEmpty()
     }
 
     override val parentScope: LslScope? = null
