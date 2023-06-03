@@ -4,10 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.PsiParser
 import com.intellij.psi.tree.IElementType
-import org.antlr.v4.runtime.CodePointBuffer
-import org.antlr.v4.runtime.CodePointCharStream
-import org.antlr.v4.runtime.CommonTokenStream
-import org.antlr.v4.runtime.ParserRuleContext
+import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.tree.ErrorNode
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.tree.TerminalNode
@@ -33,7 +30,10 @@ class LslParserAdapter : PsiParser {
         val parser = LSLParser(tokenStream)
         val parserTreeWaker = ParseTreeWalker()
 
-        parserTreeWaker.walk(LslTreeVisitor(builder), parser.file())
+        val visitor = LslTreeVisitor(builder)
+
+        parser.addErrorListener(visitor)
+        parserTreeWaker.walk(visitor, parser.file())
 
         while (!builder.eof()) builder.advanceLexer()
 
@@ -42,8 +42,22 @@ class LslParserAdapter : PsiParser {
         return builder.treeBuilt
     }
 
-    class LslTreeVisitor(private val builder: PsiBuilder) : LSLListener {
+    class LslTreeVisitor(private val builder: PsiBuilder) : LSLListener, BaseErrorListener() {
         private val stack = Stack<PsiBuilder.Marker>()
+        private val errors = HashMap<RuleContext, String>()
+
+        override fun syntaxError(
+            recognizer: Recognizer<*, *>?,
+            offendingSymbol: Any?,
+            line: Int,
+            charPositionInLine: Int,
+            msg: String?,
+            e: RecognitionException?
+        ) {
+            if (e != null && msg != null) {
+                errors[e.ctx] = "Syntax error: $msg"
+            }
+        }
 
         override fun visitTerminal(node: TerminalNode) {
             builder.advanceLexer()
@@ -62,6 +76,10 @@ class LslParserAdapter : PsiParser {
         }
 
         override fun exitEveryRule(ctx: ParserRuleContext) {
+            val error = errors[ctx]
+            if (error != null) {
+                builder.error(error)
+            }
         }
 
         override fun enterFile(ctx: LSLParser.FileContext?) {
