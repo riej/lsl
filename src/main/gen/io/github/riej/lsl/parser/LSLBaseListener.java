@@ -41,6 +41,18 @@ public class LSLBaseListener implements LSLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGlobalVariableValueList(LSLParser.GlobalVariableValueListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGlobalVariableValueList(LSLParser.GlobalVariableValueListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGlobalVariableValueVector(LSLParser.GlobalVariableValueVectorContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -72,6 +84,18 @@ public class LSLBaseListener implements LSLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGlobalVariableValueConstantNegative(LSLParser.GlobalVariableValueConstantNegativeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGlobalVariableValueConstantNegative(LSLParser.GlobalVariableValueConstantNegativeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -540,6 +564,18 @@ public class LSLBaseListener implements LSLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitConstant(LSLParser.ConstantContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstantNumeric(LSLParser.ConstantNumericContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstantNumeric(LSLParser.ConstantNumericContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

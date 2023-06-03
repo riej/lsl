@@ -78,6 +78,14 @@ class LslParserAdapter : PsiParser {
             stack.pop().done(LslTypes.GLOBAL_VARIABLE)
         }
 
+        override fun enterGlobalVariableValueList(ctx: LSLParser.GlobalVariableValueListContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitGlobalVariableValueList(ctx: LSLParser.GlobalVariableValueListContext?) {
+            stack.pop().done(LslTypes.EXPRESSION_LIST)
+        }
+
         override fun enterGlobalVariableValueVector(ctx: LSLParser.GlobalVariableValueVectorContext?) {
             stack.push(builder.mark())
         }
@@ -100,6 +108,12 @@ class LslParserAdapter : PsiParser {
 
         override fun exitGlobalVariableLValue(ctx: LSLParser.GlobalVariableLValueContext?) {
             stack.pop().done(LslTypes.L_VALUE)
+        }
+
+        override fun enterGlobalVariableValueConstantNegative(ctx: LSLParser.GlobalVariableValueConstantNegativeContext?) {
+        }
+
+        override fun exitGlobalVariableValueConstantNegative(ctx: LSLParser.GlobalVariableValueConstantNegativeContext?) {
         }
 
         override fun enterGlobalVariableValueConstant(ctx: LSLParser.GlobalVariableValueConstantContext?) {
@@ -401,6 +415,14 @@ class LslParserAdapter : PsiParser {
         }
 
         override fun exitConstant(ctx: LSLParser.ConstantContext?) {
+            stack.pop().done(LslTypes.CONSTANT)
+        }
+
+        override fun enterConstantNumeric(ctx: LSLParser.ConstantNumericContext?) {
+            stack.push(builder.mark())
+        }
+
+        override fun exitConstantNumeric(ctx: LSLParser.ConstantNumericContext?) {
             stack.pop().done(LslTypes.CONSTANT)
         }
     }

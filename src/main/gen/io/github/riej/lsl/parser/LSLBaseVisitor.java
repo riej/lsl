@@ -32,6 +32,13 @@ public class LSLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LS
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitGlobalVariableValueList(LSLParser.GlobalVariableValueListContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitGlobalVariableValueVector(LSLParser.GlobalVariableValueVectorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -47,6 +54,13 @@ public class LSLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LS
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitGlobalVariableValueConstantNegative(LSLParser.GlobalVariableValueConstantNegativeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -320,4 +334,11 @@ public class LSLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LS
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitConstant(LSLParser.ConstantContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitConstantNumeric(LSLParser.ConstantNumericContext ctx) { return visitChildren(ctx); }
 }

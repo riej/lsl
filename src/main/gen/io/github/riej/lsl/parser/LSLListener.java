@@ -28,6 +28,18 @@ public interface LSLListener extends ParseTreeListener {
 	 */
 	void exitGlobalVariable(LSLParser.GlobalVariableContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code GlobalVariableValueList}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableValueList(LSLParser.GlobalVariableValueListContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GlobalVariableValueList}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableValueList(LSLParser.GlobalVariableValueListContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code GlobalVariableValueVector}
 	 * labeled alternative in {@link LSLParser#globalVariableValue}.
 	 * @param ctx the parse tree
@@ -63,6 +75,18 @@ public interface LSLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code GlobalVariableValueConstantNegative}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableValueConstantNegative(LSLParser.GlobalVariableValueConstantNegativeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GlobalVariableValueConstantNegative}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableValueConstantNegative(LSLParser.GlobalVariableValueConstantNegativeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code GlobalVariableValueConstant}
 	 * labeled alternative in {@link LSLParser#globalVariableValue}.
@@ -507,4 +531,14 @@ public interface LSLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConstant(LSLParser.ConstantContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LSLParser#constantNumeric}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstantNumeric(LSLParser.ConstantNumericContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LSLParser#constantNumeric}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstantNumeric(LSLParser.ConstantNumericContext ctx);
 }

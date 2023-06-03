@@ -10,9 +10,11 @@ globalVariable
 
 // This type is little tricky. Global variables cannot use all expression, but short list of them.
 globalVariableValue
-    : '<' globalVariableValue ',' globalVariableValue ',' globalVariableValue '>' # GlobalVariableValueVector // treat as ExpressionVector
+    : '[' (globalVariableValue (',' globalVariableValue)*)? ']' # GlobalVariableValueList // treat as ExpressionList
+    | '<' globalVariableValue ',' globalVariableValue ',' globalVariableValue '>' # GlobalVariableValueVector // treat as ExpressionVector
     | '<' globalVariableValue ',' globalVariableValue ',' globalVariableValue ',' globalVariableValue '>' # GlobalVariableValueQuaternion // treat as ExpressionQuaternion
     | Identifier # GlobalVariableLValue // treat as ExpressionLValue
+    | '-' constantNumeric # GlobalVariableValueConstantNegative // treat as ExpressionConstantNegative
     | constant # GlobalVariableValueConstant // treat as ExpressionConstant
     ;
 
@@ -109,6 +111,11 @@ constant
     |   StringConstant
     ;
 
+constantNumeric
+    :   IntegerConstant
+    |   FloatingConstant
+    ;
+
 Default : 'default';
 State : 'state';
 Jump : 'jump';
@@ -197,8 +204,8 @@ HexadecimalDigit
     ;
 
 IntegerConstant
-    :   '-'? DecimalConstant
-    |   '-'? HexadecimalConstant
+    :   DecimalConstant
+    |   HexadecimalConstant
     ;
 
 fragment
@@ -218,7 +225,7 @@ FloatingExponent
     ;
 
 FloatingConstant
-    :   '-'? (((Digit+ '.' Digit*) | (Digit* '.' Digit+)) FloatingExponent?) | (Digit+ FloatingExponent)
+    :   (((Digit+ '.' Digit*) | (Digit* '.' Digit+)) FloatingExponent?) | (Digit+ FloatingExponent)
     ;
 
 StringConstant

@@ -23,6 +23,13 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGlobalVariable(LSLParser.GlobalVariableContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code GlobalVariableValueList}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalVariableValueList(LSLParser.GlobalVariableValueListContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code GlobalVariableValueVector}
 	 * labeled alternative in {@link LSLParser#globalVariableValue}.
 	 * @param ctx the parse tree
@@ -43,6 +50,13 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitGlobalVariableLValue(LSLParser.GlobalVariableLValueContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GlobalVariableValueConstantNegative}
+	 * labeled alternative in {@link LSLParser#globalVariableValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalVariableValueConstantNegative(LSLParser.GlobalVariableValueConstantNegativeContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code GlobalVariableValueConstant}
 	 * labeled alternative in {@link LSLParser#globalVariableValue}.
@@ -304,4 +318,10 @@ public interface LSLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitConstant(LSLParser.ConstantContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LSLParser#constantNumeric}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstantNumeric(LSLParser.ConstantNumericContext ctx);
 }
