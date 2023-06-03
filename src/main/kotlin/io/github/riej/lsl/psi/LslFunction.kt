@@ -13,18 +13,18 @@ import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.riej.lsl.LslPrimitiveType
+import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement,
-    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration, LslPsiScope {
+    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(typeNameEl?.text)
 
@@ -44,9 +44,6 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         get() = PsiTreeUtil.collectElements(containingFile) {
             (it is LslExpressionFunctionCall) && (it.function == this)
         }.toList()
-
-    override val declaredElements: List<LslNamedElement>
-        get() = arguments
 
     override fun getPresentableText(): String = "$lslType $name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }
@@ -73,7 +70,7 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             return
         }
 
-        val existingIdentifier = scope?.findElementByName(name)
+        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
         if (existingIdentifier != this) {
             var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
                 .range(identifyingElement?.textRange ?: textRange)

@@ -11,9 +11,8 @@ import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 
-interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration, LslPsiScope,
+interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration,
     LslAnnotatedElement {
     val events: List<LslEvent>
         get() = eventsEl?.events.orEmpty()
@@ -33,8 +32,6 @@ interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElem
         get() = node.findChildByType(LslTypes.BRACE_RIGHT)?.psi
 
     override fun annotate(holder: AnnotationHolder) {
-        super.annotate(holder)
-
         if (events.isEmpty()) {
             holder.newAnnotation(HighlightSeverity.ERROR, "State is blank")
                 .range(TextRange.create(braceLeftEl?.startOffset ?: startOffset, braceRightEl?.endOffset ?: endOffset))

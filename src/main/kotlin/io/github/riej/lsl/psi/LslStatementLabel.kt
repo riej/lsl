@@ -6,8 +6,10 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiReference
+import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
+import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.references.LslStatementLabelReference
 
 class LslStatementLabel(node: ASTNode) : ASTWrapperLslNamedElement(node), LslStatement, NavigatablePsiElement,
@@ -21,7 +23,19 @@ class LslStatementLabel(node: ASTNode) : ASTWrapperLslNamedElement(node), LslSta
             return
         }
 
-        super.annotate(holder)
+        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
+
+        if (existingIdentifier != this) {
+            var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
+                .range(identifyingElement?.textRange ?: textRange)
+
+            if (existingIdentifier is NavigatablePsiElement) {
+                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
+            }
+
+            builder.create()
+            return
+        }
 
         if (reference.resolve() == null) {
             holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Unused label")

@@ -12,8 +12,10 @@ import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.parentsOfType
 import io.github.riej.lsl.LslPrimitiveType
+import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
+import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
@@ -36,7 +38,17 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
             return
         }
 
-        super<LslVariable>.annotate(holder)
+        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
+        if (existingIdentifier != this) {
+            var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
+                .range(identifyingElement?.textRange ?: textRange)
+
+            if (existingIdentifier is NavigatablePsiElement) {
+                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
+            }
+
+            builder.create()
+        }
 
         if (identifyingElement != null && usages.isEmpty() && parentsOfType<LslEvent>().none()) {
             val parentChildren = parent.node.getChildren(null).toList()

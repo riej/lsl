@@ -12,10 +12,8 @@ import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 
-class LslStatementBlock(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement,
-    LslPsiScope {
+class LslStatementBlock(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement {
     val statements: List<LslStatement>
         get() = findChildrenByType(LslTypes.STATEMENTS)
 

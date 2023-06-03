@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement
 import io.github.riej.lsl.LslPrimitiveType
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 
-interface LslExpression : PsiElement, LslTypedElement, LslAnnotatedElement, LslScopedElement {
+interface LslExpression : PsiElement, LslTypedElement, LslAnnotatedElement {
     override fun annotate(holder: AnnotationHolder) {
         val elementType = try {
             lslType

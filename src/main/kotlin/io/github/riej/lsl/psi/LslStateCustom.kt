@@ -5,9 +5,11 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.navigation.ItemPresentation
+import com.intellij.psi.NavigatablePsiElement
 import io.github.riej.lsl.LslIcons
-import io.github.riej.lsl.annotation.LslAnnotatedElement
+import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
+import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import javax.swing.Icon
 
 class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState, ItemPresentation {
@@ -23,7 +25,17 @@ class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState,
             return
         }
 
-        super<LslState>.annotate(holder)
+        val existingIdentifier = LslScopeUtils.findElementByName(this, name)
+        if (existingIdentifier != this) {
+            var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
+                .range(identifyingElement?.textRange ?: textRange)
+
+            if (existingIdentifier is NavigatablePsiElement) {
+                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
+            }
+
+            builder.create()
+        }
 
         val identifyingElement = identifyingElement
         if (identifyingElement != null && usages.isEmpty()) {
