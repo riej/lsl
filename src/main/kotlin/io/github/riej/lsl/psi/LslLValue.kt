@@ -18,7 +18,8 @@ import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.references.LslLValueReference
 
 class LslLValue(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression, LslAnnotatedElement {
-    val variableNameIdentifier: PsiElement? = findChildByType(LslTypes.IDENTIFIER)
+    val variableNameIdentifier: PsiElement?
+        get() = findChildByType(LslTypes.IDENTIFIER)
 
     val variableName: String?
         get() = identifiers.getOrNull(0)
