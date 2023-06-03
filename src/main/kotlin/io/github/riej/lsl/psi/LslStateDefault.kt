@@ -12,9 +12,9 @@ class LslStateDefault(node: ASTNode) : ASTWrapperPsiElement(node), LslState, Ite
     override fun setName(name: String): PsiElement =
         this
 
-    override fun getNameIdentifier(): PsiElement? = this.findChildByType(LslTypes.DEFAULT)
+    override fun getNameIdentifier(): PsiElement? = findChildByType(LslTypes.DEFAULT)
 
-    override fun getName(): String? = this.nameIdentifier?.text
+    override fun getName(): String? = nameIdentifier?.text
 
     override fun getPresentableText(): String = "default"
 

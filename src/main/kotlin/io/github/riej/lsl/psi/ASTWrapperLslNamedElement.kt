@@ -9,10 +9,10 @@ import io.github.riej.lsl.parser.LslTypes
 abstract class ASTWrapperLslNamedElement(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameIdentifierOwner,
     LslNamedElement {
     override fun getNameIdentifier(): PsiElement? =
-        this.findChildByType(LslTypes.IDENTIFIER)
+        findChildByType(LslTypes.IDENTIFIER)
 
     override fun getName(): String? =
-        this.nameIdentifier?.text
+        nameIdentifier?.text
 
     override fun setName(name: String): PsiElement {
         val identifier = nameIdentifier ?: return this

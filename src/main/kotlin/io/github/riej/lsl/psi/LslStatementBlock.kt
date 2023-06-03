@@ -17,13 +17,13 @@ import io.github.riej.lsl.scope.LslPsiScope
 class LslStatementBlock(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement,
     LslPsiScope {
     val statements: List<LslStatement>
-        get() = this.findChildrenByType(LslTypes.STATEMENTS)
+        get() = findChildrenByType(LslTypes.STATEMENTS)
 
     val braceLeftEl: PsiElement?
-        get() = this.findChildByType(LslTypes.BRACE_LEFT)
+        get() = findChildByType(LslTypes.BRACE_LEFT)
 
     val braceRightEl: PsiElement?
-        get() = this.findChildByType(LslTypes.BRACE_RIGHT)
+        get() = findChildByType(LslTypes.BRACE_RIGHT)
 
     override fun annotate(holder: AnnotationHolder) {
         val statementReturn = statements.indexOfFirst { it is LslStatementReturn }

@@ -19,7 +19,7 @@ interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElem
         get() = eventsEl?.events.orEmpty()
 
     val eventsEl: LslEvents?
-        get() = this.children.firstNotNullOfOrNull { it as? LslEvents }
+        get() = children.firstNotNullOfOrNull { it as? LslEvents }
 
     val usages: List<PsiElement>
         get() = PsiTreeUtil.collectElements(containingFile) {

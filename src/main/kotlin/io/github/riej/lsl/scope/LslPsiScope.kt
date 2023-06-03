@@ -11,7 +11,7 @@ interface LslPsiScope : PsiElement, LslScope {
         get() = children.mapNotNull { it as? LslNamedElement }
 
     override val parentScope: LslScope?
-        get() = PsiTreeUtil.findFirstParent(this.parent) { it is LslScope } as? LslScope
+        get() = PsiTreeUtil.findFirstParent(parent) { it is LslScope } as? LslScope
 
     override val allDeclaredElements: Map<String, LslNamedElement>
         get() = CachedValuesManager.getCachedValue(this) {

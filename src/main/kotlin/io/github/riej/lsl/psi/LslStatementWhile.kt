@@ -6,8 +6,8 @@ import io.github.riej.lsl.parser.LslTypes
 
 class LslStatementWhile(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement {
     val condition: LslExpression?
-        get() = this.findChildByType(LslTypes.EXPRESSIONS)
+        get() = findChildByType(LslTypes.EXPRESSIONS)
 
     val statement: LslStatement?
-        get() = this.findChildByType(LslTypes.STATEMENTS)
+        get() = findChildByType(LslTypes.STATEMENTS)
 }

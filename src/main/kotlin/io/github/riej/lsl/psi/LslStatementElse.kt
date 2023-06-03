@@ -7,5 +7,5 @@ import io.github.riej.lsl.parser.LslTypes
 // not a real statement
 class LslStatementElse(node: ASTNode) : ASTWrapperPsiElement(node) {
     val statement: LslStatement?
-        get() = this.findChildByType(LslTypes.STATEMENTS)
+        get() = findChildByType(LslTypes.STATEMENTS)
 }

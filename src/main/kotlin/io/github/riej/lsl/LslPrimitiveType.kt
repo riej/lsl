@@ -94,7 +94,7 @@ enum class LslPrimitiveType {
         throw TypeMismatch(other, this)
     }
 
-    override fun toString(): String = this.name.lowercase()
+    override fun toString(): String = name.lowercase()
 
     class TypeMismatch(expected: LslPrimitiveType, got: LslPrimitiveType) : Exception(
         "Type mismatch (expected %s, got %s).".format(expected.toString(), got.toString())

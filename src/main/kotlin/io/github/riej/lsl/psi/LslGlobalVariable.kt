@@ -26,7 +26,7 @@ class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), Naviga
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 
     override val expression: LslExpression?
-        get() = this.findChildByType(LslTypes.EXPRESSIONS)
+        get() = findChildByType(LslTypes.EXPRESSIONS)
 
     override fun getIcon(unused: Boolean): Icon = AllIcons.Nodes.Gvariable
 

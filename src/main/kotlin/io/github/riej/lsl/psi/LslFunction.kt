@@ -35,10 +35,10 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         get() = argumentsEl?.arguments.orEmpty()
 
     val argumentsEl: LslArguments?
-        get() = this.findChildByType(LslTypes.ARGUMENTS)
+        get() = findChildByType(LslTypes.ARGUMENTS)
 
     val body: LslStatement?
-        get() = this.findChildByType(LslTypes.STATEMENT_BLOCK)
+        get() = findChildByType(LslTypes.STATEMENT_BLOCK)
 
     val usages: List<PsiElement>
         get() = PsiTreeUtil.collectElements(containingFile) {

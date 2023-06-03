@@ -31,10 +31,10 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
         get() = argumentsEl?.arguments.orEmpty()
 
     val argumentsEl: LslArguments?
-        get() = this.findChildByType(LslTypes.ARGUMENTS)
+        get() = findChildByType(LslTypes.ARGUMENTS)
 
     val body: LslStatement?
-        get() = this.findChildByType(LslTypes.STATEMENT_BLOCK)
+        get() = findChildByType(LslTypes.STATEMENT_BLOCK)
 
     override val declaredElements: List<LslNamedElement>
         get() = arguments

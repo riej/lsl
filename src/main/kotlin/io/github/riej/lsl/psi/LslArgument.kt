@@ -38,7 +38,7 @@ class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
 
         super<LslVariable>.annotate(holder)
 
-        if (identifyingElement != null && usages.isEmpty() && this.parentsOfType<LslEvent>().none()) {
+        if (identifyingElement != null && usages.isEmpty() && parentsOfType<LslEvent>().none()) {
             val parentChildren = parent.node.getChildren(null).toList()
             val elementsToDelete = listOfNotNull(
                 parentChildren
