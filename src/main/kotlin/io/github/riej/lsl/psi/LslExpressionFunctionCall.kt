@@ -11,12 +11,12 @@ import com.intellij.psi.PsiReference
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.references.LslExpressionFunctionCallReference
+import io.github.riej.lsl.scope.LslScopeUtils
 import kotlin.math.min
 
 class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression, LslAnnotatedElement {
@@ -27,7 +27,7 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
         get() = functionNameIdentifier?.text
 
     val function: LslFunction?
-        get() = LslScopeUtils.findElementByName(this, functionName) as? LslFunction?
+        get() = LslScopeUtils.getGlobalElementOrFindAny(this, functionName) as? LslFunction?
 
     val expressions: List<LslExpression>
         get() = findChildrenByType(LslTypes.EXPRESSIONS)
@@ -38,7 +38,7 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
     override fun getReference(): PsiReference = LslExpressionFunctionCallReference(this)
 
     override fun annotate(holder: AnnotationHolder) {
-        val existingIdentifier = LslScopeUtils.findElementByName(this, functionName)
+        val existingIdentifier = LslScopeUtils.getGlobalElementOrFindAny(this, functionName)
 
         if (existingIdentifier == null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Undeclared identifier").create()

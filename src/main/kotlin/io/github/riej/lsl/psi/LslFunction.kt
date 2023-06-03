@@ -13,18 +13,23 @@ import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.scope.ChildCache
+import io.github.riej.lsl.scope.LslScope
+import io.github.riej.lsl.scope.LslScopeUtils
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement,
-    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration {
+    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration, LslScope<LslArgument> {
+
+    override val declarations = ChildCache(this) { arguments }
+
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(typeNameEl?.text)
 

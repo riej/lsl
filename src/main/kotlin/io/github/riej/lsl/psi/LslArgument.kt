@@ -12,12 +12,12 @@ import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.parentsOfType
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.scope.LslScopeUtils
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 

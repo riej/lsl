@@ -7,11 +7,11 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.references.LslStatementJumpReference
+import io.github.riej.lsl.scope.LslScopeUtils
 
 class LslStatementJump(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement {
     val labelNameIdentifier: PsiElement?

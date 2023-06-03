@@ -11,12 +11,12 @@ import com.intellij.psi.PsiReference
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.parser.LslTypes
 import io.github.riej.lsl.references.LslLValueReference
+import io.github.riej.lsl.scope.LslScopeUtils
 
 class LslLValue(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression, LslAnnotatedElement {
     val variableNameIdentifier: PsiElement?

@@ -7,12 +7,15 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.NavigatablePsiElement
 import io.github.riej.lsl.LslIcons
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
+import io.github.riej.lsl.scope.ChildCache
+import io.github.riej.lsl.scope.LslScopeUtils
 import javax.swing.Icon
 
 class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState, ItemPresentation {
+
+    override val declarations = ChildCache(this) { events }
 
     override fun getPresentableText(): String = "state $name"
 

@@ -11,11 +11,13 @@ import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.scope.LslScope
 
 interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration,
-    LslAnnotatedElement {
+    LslAnnotatedElement, LslScope<LslEvent> {
+
     val events: List<LslEvent>
-        get() = eventsEl?.events.orEmpty()
+        get() = eventsEl?.events ?: children.filterIsInstance<LslEvent>()
 
     val eventsEl: LslEvents?
         get() = children.firstNotNullOfOrNull { it as? LslEvents }

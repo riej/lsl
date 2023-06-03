@@ -10,23 +10,29 @@ import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.findParentOfType
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.LslPrimitiveType
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
+import io.github.riej.lsl.scope.ChildCache
+import io.github.riej.lsl.scope.LslScope
+import io.github.riej.lsl.scope.LslScopeUtils
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 import kotlin.math.min
 
 class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement,
-    ItemPresentation, LslAnnotatedElement {
+    ItemPresentation, LslAnnotatedElement, LslScope<LslArgument> {
+
+    override val declarations = ChildCache(this) { arguments }
+
     val arguments: List<LslArgument>
         get() = argumentsEl?.arguments.orEmpty()
 
@@ -51,7 +57,7 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
             return
         }
 
-        val existingIdentifier = parent.children.firstOrNull { (it as? LslEvent)?.name == name }
+        val existingIdentifier = findParentOfType<LslState>()!!.declarations[name]
         if (existingIdentifier != this) {
             var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
                 .range(identifyingElement?.textRange ?: textRange)

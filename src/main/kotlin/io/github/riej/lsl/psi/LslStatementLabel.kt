@@ -6,11 +6,11 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiReference
-import io.github.riej.lsl.LslScopeUtils
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.references.LslStatementLabelReference
+import io.github.riej.lsl.scope.LslScopeUtils
 
 class LslStatementLabel(node: ASTNode) : ASTWrapperLslNamedElement(node), LslStatement, NavigatablePsiElement,
     LslAnnotatedElement {
