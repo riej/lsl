@@ -24,7 +24,7 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
         get() = functionNameIdentifier?.text
 
     val function: LslFunction?
-        get() = (containingFile as LslFile).findElementByName(functionName) as? LslFunction?
+        get() = (containingFile as LslFile).scope.findElementByName(functionName) as? LslFunction?
 
     val expressions: List<LslExpression>
         get() = findChildrenByType(LslTypes.EXPRESSIONS)
@@ -40,14 +40,6 @@ class LslExpressionFunctionCall(node: ASTNode) : ASTWrapperPsiElement(node), Lsl
         if (function == null) {
             // TODO: add create function fix
             holder.newAnnotation(HighlightSeverity.ERROR, "Undeclared function").create()
-//        } else if (existingIdentifier != null && existingIdentifier != function) {
-//            var builder = holder.newAnnotation(HighlightSeverity.WARNING, "Function expected")
-//
-//            if (existingIdentifier is NavigatablePsiElement) {
-//                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
-//            }
-//
-//            builder.create()
         } else {
             if (expressions.isNotEmpty()) {
                 (0 until min(expressions.size, function.arguments.size)).forEach { i ->

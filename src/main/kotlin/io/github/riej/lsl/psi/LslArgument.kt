@@ -20,7 +20,7 @@ import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslArgument(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement,
-    LslVariable, LslAnnotatedElement, LslDocumentedElement {
+    LslVariable, LslAnnotatedElement, LslDocumentedElement, LslScopedElement {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(findChildByType<PsiElement?>(LslTypes.TYPE_NAME)?.text)
 

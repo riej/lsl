@@ -11,10 +11,9 @@ import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 
-interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration, LslPsiScope,
-    LslAnnotatedElement {
+interface LslState : LslNamedElement, PsiNameIdentifierOwner, NavigatablePsiElement, LslSymbolDeclaration,
+    LslAnnotatedElement, LslScopedElement {
     val events: List<LslEvent>
         get() = eventsEl?.events.orEmpty()
 

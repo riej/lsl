@@ -19,12 +19,11 @@ import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslTypedElement,
-    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration, LslPsiScope {
+    LslAnnotatedElement, LslDocumentedElement, ItemPresentation, LslSymbolDeclaration, LslScopedElement {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(typeNameEl?.text)
 
@@ -44,9 +43,6 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
         get() = PsiTreeUtil.collectElements(containingFile) {
             (it is LslExpressionFunctionCall) && (it.function == this)
         }.toList()
-
-    override val declaredElements: List<LslNamedElement>
-        get() = arguments
 
     override fun getPresentableText(): String = "$lslType $name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }

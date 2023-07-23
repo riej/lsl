@@ -31,7 +31,7 @@ class LslLValue(node: ASTNode) : ASTWrapperPsiElement(node), LslExpression, LslA
         get() = findChildrenByType<PsiElement>(LslTypes.IDENTIFIER).map { it.text }
 
     val variable: LslVariable?
-        get() = scope?.findElementByName(variableName) as? LslVariable?
+        get() = scope.findElementByName(variableName) as? LslVariable
 
     override fun getReference(): PsiReference = LslLValueReference(this)
 

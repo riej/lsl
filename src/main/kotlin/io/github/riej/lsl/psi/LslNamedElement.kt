@@ -11,27 +11,27 @@ import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 interface LslNamedElement : PsiNameIdentifierOwner, LslAnnotatedElement, LslScopedElement {
     override fun annotate(holder: AnnotationHolder) {
         val scope = scope
-        val existingIdentifier = scope?.getDeclaredElement(name)
-        if (existingIdentifier != null && existingIdentifier != this) {
+        val existingElement = scope.getDeclaredElement(name)
+        if (existingElement != null && existingElement != this) {
             var builder = holder.newAnnotation(HighlightSeverity.ERROR, "Redeclared identifier")
                 .highlightType(ProblemHighlightType.ERROR)
                 .range(identifyingElement?.textRange ?: textRange)
 
-            if (existingIdentifier is NavigatablePsiElement) {
-                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
+            if (existingElement is NavigatablePsiElement) {
+                builder = builder.withFix(NavigateToElementFix(existingElement, "Navigate to declaration"))
             }
 
             builder.create()
         } else {
-            val existingIdentifierInUpperScope = scope?.parentScope?.findElementByName(name)
-            if (existingIdentifierInUpperScope != null) {
+            val existingElementInUpperScope = scope.parentScope?.findElementByName(name)
+            if (existingElementInUpperScope != null) {
                 var builder = holder.newAnnotation(HighlightSeverity.WARNING, "Redeclared identifier")
-                    .highlightType(ProblemHighlightType.POSSIBLE_PROBLEM)
+                    .highlightType(ProblemHighlightType.WARNING)
                     .range(identifyingElement?.textRange ?: textRange)
 
-                if (existingIdentifierInUpperScope is NavigatablePsiElement) {
+                if (existingElementInUpperScope is NavigatablePsiElement) {
                     builder =
-                        builder.withFix(NavigateToElementFix(existingIdentifierInUpperScope, "Navigate to declaration"))
+                        builder.withFix(NavigateToElementFix(existingElementInUpperScope, "Navigate to declaration"))
                 }
 
                 builder.create()

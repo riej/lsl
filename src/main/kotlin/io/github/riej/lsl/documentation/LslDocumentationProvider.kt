@@ -13,7 +13,7 @@ class LslDocumentationProvider : DocumentationProvider {
                 listOfNotNull(
                     DocumentationUtils.getUrlFor(
                         // provide URL only for predefined elements
-                        (element.containingFile as LslFile).kwdbData.findElementByName(element.getName())?.getName()
+                        (element.containingFile as LslFile).kwdbData.scope.findElementByName(element.name)?.name
                     )
                 ).nullize()
 

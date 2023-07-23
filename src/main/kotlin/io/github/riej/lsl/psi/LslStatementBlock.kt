@@ -7,15 +7,14 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.parentOfType
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.annotation.fixes.DeleteElementsFix
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 
-class LslStatementBlock(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement,
-    LslPsiScope {
+class LslStatementBlock(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement {
     val statements: List<LslStatement>
         get() = findChildrenByType(LslTypes.STATEMENTS)
 
@@ -24,6 +23,12 @@ class LslStatementBlock(node: ASTNode) : ASTWrapperPsiElement(node), LslStatemen
 
     val braceRightEl: PsiElement?
         get() = findChildByType(LslTypes.BRACE_RIGHT)
+
+    val labels: Map<String, LslStatementLabel>
+        get() = (parentOfType<LslStatementBlock>()?.labels ?: emptyMap()).plus(
+            statements.filterIsInstance<LslStatementLabel>().associateBy { it.name ?: "" }
+                .filterKeys { it.isNotBlank() }
+        )
 
     override fun annotate(holder: AnnotationHolder) {
         val statementReturn = statements.indexOfFirst { it is LslStatementReturn }

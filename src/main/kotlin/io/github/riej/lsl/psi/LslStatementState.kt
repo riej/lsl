@@ -23,7 +23,7 @@ class LslStatementState(node: ASTNode) : ASTWrapperPsiElement(node), LslStatemen
         get() = stateNameIdentifier?.text
 
     val state: LslState?
-        get() = (containingFile as LslFile).findElementByName(stateName) as? LslState?
+        get() = (containingFile as LslFile).scope.findElementByName(stateName) as? LslState?
 
     override fun getReference(): PsiReference = LslStatementStateReference(this)
 
@@ -32,14 +32,6 @@ class LslStatementState(node: ASTNode) : ASTWrapperPsiElement(node), LslStatemen
             // TODO: add create state fix
             holder.newAnnotation(HighlightSeverity.ERROR, "Undeclared state")
                 .range(stateNameIdentifier?.textRange ?: textRange).create()
-//        } else if (existingIdentifier !is LslState) {
-//            var builder = holder.newAnnotation(HighlightSeverity.ERROR, "State expected")
-//
-//            if (existingIdentifier is NavigatablePsiElement) {
-//                builder = builder.withFix(NavigateToElementFix(existingIdentifier, "Navigate to declaration"))
-//            }
-//
-//            builder.create()
         }
     }
 }

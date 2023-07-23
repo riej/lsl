@@ -20,13 +20,12 @@ import io.github.riej.lsl.annotation.fixes.NavigateToElementFix
 import io.github.riej.lsl.documentation.DocumentationUtils
 import io.github.riej.lsl.documentation.LslDocumentedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.scope.LslPsiScope
 import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 import kotlin.math.min
 
 class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement,
-    ItemPresentation, LslAnnotatedElement, LslPsiScope {
+    ItemPresentation, LslAnnotatedElement, LslScopedElement {
     val arguments: List<LslArgument>
         get() = argumentsEl?.arguments.orEmpty()
 
@@ -35,9 +34,6 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
 
     val body: LslStatement?
         get() = findChildByType(LslTypes.STATEMENT_BLOCK)
-
-    override val declaredElements: List<LslNamedElement>
-        get() = arguments
 
     override fun getPresentableText(): String = "$name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }

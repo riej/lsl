@@ -12,7 +12,7 @@ import io.github.riej.lsl.psi.*
 import io.github.riej.lsl.scope.LslScope
 
 
-class KwdbData(project: Project) : LslScope {
+class KwdbData(project: Project) {
     val data: XmlFile
     val lang = "en"
     val generated: LslFile
@@ -20,6 +20,8 @@ class KwdbData(project: Project) : LslScope {
     val functions: Map<String, LslFunction>
     val constants: Map<String, LslGlobalVariable>
     val events: Map<String, LslEvent>
+
+    val scope: LslScope
 
     init {
         val resource = ResourceUtil.getResource(javaClass.classLoader, ".", "kwdb.xml")
@@ -31,6 +33,8 @@ class KwdbData(project: Project) : LslScope {
         functions = generated.children.filterIsInstance<LslFunction>().associateBy { it.name!! }
         constants = generated.children.filterIsInstance<LslGlobalVariable>().associateBy { it.name!! }
         events = PsiTreeUtil.collectElementsOfType(generated, LslEvent::class.java).associateBy { it.name!! }
+
+        scope = LslScope(null, emptyList<LslNamedElement>().plus(constants.values).plus(functions.values))
     }
 
     fun commentDescription(description: String): String =
@@ -103,26 +107,5 @@ class KwdbData(project: Project) : LslScope {
         sb.append("}\n")
 
         return sb.toString()
-    }
-
-    override val parentScope: LslScope? = null
-
-    override val declaredElements: List<LslNamedElement>
-        get() = generated.declaredElements.filter { it !is LslState }
-
-    override val allDeclaredElements: Map<String, LslNamedElement>
-        get() = declaredElements.associateBy { it.name!! }
-
-    override fun findElementByName(name: String?): LslNamedElement? {
-        if (name == null) {
-            return null
-        }
-
-        val event = events[name]
-        if (event != null) {
-            return event
-        }
-
-        return allDeclaredElements[name]
     }
 }
