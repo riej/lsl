@@ -24,7 +24,11 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
             .before(LslTypes.ELSE).lineBreakInCodeIf(commonSettings.ELSE_ON_NEW_LINE)
             .beforeInside(LslTypes.WHILE, LslTypes.STATEMENT_DO).lineBreakInCodeIf(commonSettings.WHILE_ON_NEW_LINE)
 
+            .aroundInside(LslTypes.ASSIGNMENT_OPERATORS, LslTypes.EXPRESSION_ASSIGNMENT).spaceIf(commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
             .aroundInside(LslTypes.ASSIGNMENT_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
+            .aroundInside(LslTypes.ASSIGNMENT_OPERATORS, LslTypes.GLOBAL_VARIABLE).spaceIf(commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
+            .aroundInside(LslTypes.ASSIGNMENT_OPERATORS, LslTypes.STATEMENT_VARIABLE).spaceIf(commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
+
             .aroundInside(LslTypes.LOGICAL_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_LOGICAL_OPERATORS)
             .aroundInside(LslTypes.EQUALITY_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_EQUALITY_OPERATORS)
             .aroundInside(LslTypes.RELATIONAL_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_RELATIONAL_OPERATORS)
@@ -33,8 +37,9 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
             .aroundInside(LslTypes.MULTIPLICATIVE_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_MULTIPLICATIVE_OPERATORS)
             .aroundInside(LslTypes.SHIFT_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_SHIFT_OPERATORS)
 
-            .betweenInside(LslTypes.OPERATORS, LslTypes.EXPRESSIONS, LslTypes.EXPRESSION_UNARY_PREFIX).spaceIf(false)
-            .betweenInside(LslTypes.EXPRESSIONS, LslTypes.OPERATORS, LslTypes.EXPRESSION_UNARY_POSTFIX).spaceIf(false)
+            .aroundInside(LslTypes.OPERATORS, LslTypes.GLOBAL_VARIABLE).spaceIf(false)
+            .aroundInside(LslTypes.OPERATORS, LslTypes.EXPRESSION_UNARY_PREFIX).spaceIf(false)
+            .aroundInside(LslTypes.OPERATORS, LslTypes.EXPRESSION_UNARY_POSTFIX).spaceIf(false)
 
             .after(LslTypes.COMMA).spaceIf(commonSettings.SPACE_AFTER_COMMA)
             .before(LslTypes.COMMA).spaceIf(commonSettings.SPACE_BEFORE_COMMA)
