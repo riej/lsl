@@ -98,6 +98,7 @@ default {
                 consumer.showStandardOptions("SPACE_WITHIN_BRACKETS")
                 consumer.showStandardOptions("SPACE_WITHIN_BRACES")
 
+                consumer.renameStandardOption("SPACE_AFTER_QUEST", "Space after parentheses")
                 consumer.showStandardOptions("SPACE_AFTER_TYPE_CAST")
                 consumer.showStandardOptions("SPACE_BEFORE_METHOD_CALL_PARENTHESES")
                 consumer.showStandardOptions("SPACE_BEFORE_METHOD_PARENTHESES")

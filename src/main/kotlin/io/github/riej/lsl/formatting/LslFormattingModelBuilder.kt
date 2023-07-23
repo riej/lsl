@@ -24,14 +24,17 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
             .before(LslTypes.ELSE).lineBreakInCodeIf(commonSettings.ELSE_ON_NEW_LINE)
             .beforeInside(LslTypes.WHILE, LslTypes.STATEMENT_DO).lineBreakInCodeIf(commonSettings.WHILE_ON_NEW_LINE)
 
-            .around(LslTypes.ASSIGNMENT_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
-            .around(LslTypes.LOGICAL_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_LOGICAL_OPERATORS)
-            .around(LslTypes.EQUALITY_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_EQUALITY_OPERATORS)
-            .around(LslTypes.RELATIONAL_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_RELATIONAL_OPERATORS)
-            .around(LslTypes.BITWISE_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_BITWISE_OPERATORS)
-            .around(LslTypes.ADDITIVE_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_ADDITIVE_OPERATORS)
-            .around(LslTypes.MULTIPLICATIVE_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_MULTIPLICATIVE_OPERATORS)
-            .around(LslTypes.SHIFT_OPERATORS).spaceIf(commonSettings.SPACE_AROUND_SHIFT_OPERATORS)
+            .aroundInside(LslTypes.ASSIGNMENT_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
+            .aroundInside(LslTypes.LOGICAL_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_LOGICAL_OPERATORS)
+            .aroundInside(LslTypes.EQUALITY_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_EQUALITY_OPERATORS)
+            .aroundInside(LslTypes.RELATIONAL_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_RELATIONAL_OPERATORS)
+            .aroundInside(LslTypes.BITWISE_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_BITWISE_OPERATORS)
+            .aroundInside(LslTypes.ADDITIVE_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_ADDITIVE_OPERATORS)
+            .aroundInside(LslTypes.MULTIPLICATIVE_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_MULTIPLICATIVE_OPERATORS)
+            .aroundInside(LslTypes.SHIFT_OPERATORS, LslTypes.EXPRESSION_BINARY).spaceIf(commonSettings.SPACE_AROUND_SHIFT_OPERATORS)
+
+            .betweenInside(LslTypes.OPERATORS, LslTypes.EXPRESSIONS, LslTypes.EXPRESSION_UNARY_PREFIX).spaceIf(false)
+            .betweenInside(LslTypes.EXPRESSIONS, LslTypes.OPERATORS, LslTypes.EXPRESSION_UNARY_POSTFIX).spaceIf(false)
 
             .after(LslTypes.COMMA).spaceIf(commonSettings.SPACE_AFTER_COMMA)
             .before(LslTypes.COMMA).spaceIf(commonSettings.SPACE_BEFORE_COMMA)
@@ -74,6 +77,7 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
             .afterInside(LslTypes.BRACE_LEFT, LslTypes.STATEMENT_BLOCK).spaceIf(commonSettings.SPACE_WITHIN_BRACES)
             .beforeInside(LslTypes.BRACE_RIGHT, LslTypes.STATEMENT_BLOCK).spaceIf(commonSettings.SPACE_WITHIN_BRACES)
 
+            .afterInside(LslTypes.PARENTHESES_RIGHT, LslTypes.STATEMENTS).spaceIf(commonSettings.SPACE_AFTER_QUEST)
             .betweenInside(LslTypes.PARENTHESES, LslTypes.EXPRESSIONS, LslTypes.EXPRESSION_TYPE_CAST)
             .spaceIf(commonSettings.SPACE_AFTER_TYPE_CAST)
             .betweenInside(identifierSet, LslTypes.PARENTHESES, LslTypes.EXPRESSION_FUNCTION_CALL)
