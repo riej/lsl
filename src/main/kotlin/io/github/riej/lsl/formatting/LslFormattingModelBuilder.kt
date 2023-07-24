@@ -133,7 +133,8 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
                 null,
                 null,
                 Indent.getNoneIndent(),
-                createSpacingBuilder(formattingContext.codeStyleSettings)
+                createSpacingBuilder(formattingContext.codeStyleSettings),
+                formattingContext.codeStyleSettings.getCommonSettings(LslLanguage.INSTANCE),
             ),
             formattingContext.codeStyleSettings,
         )

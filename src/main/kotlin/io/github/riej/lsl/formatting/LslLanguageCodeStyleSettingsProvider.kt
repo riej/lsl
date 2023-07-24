@@ -74,6 +74,10 @@ default {
                 consumer.showStandardOptions("WHILE_ON_NEW_LINE")
             }
 
+            SettingsType.WRAPPING_AND_BRACES_SETTINGS -> {
+                consumer.showStandardOptions("ALIGN_CONSECUTIVE_VARIABLE_DECLARATIONS")
+            }
+
             SettingsType.SPACING_SETTINGS -> {
                 consumer.showStandardOptions("SPACE_AROUND_ASSIGNMENT_OPERATORS")
                 consumer.showStandardOptions("SPACE_AROUND_LOGICAL_OPERATORS")

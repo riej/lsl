@@ -4,32 +4,66 @@ import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiComment
 import com.intellij.psi.TokenType
+import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.formatter.common.AbstractBlock
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import io.github.riej.lsl.parser.LslTypes
 
 // TODO: rewrite it in some better way
-class LslBlock(
+open class LslBlock(
     val parent: LslBlock?,
     node: ASTNode, wrap: Wrap?, alignment: Alignment?, val indent_: Indent?,
-    val spacingBuilder: SpacingBuilder
+    val spacingBuilder: SpacingBuilder,
+    val codeStyleSettings: CommonCodeStyleSettings,
+    val specialAlignment: Alignment? = null,
 ) : AbstractBlock(node, wrap, alignment) {
     override fun getSpacing(child1: Block?, child2: Block): Spacing? = spacingBuilder.getSpacing(this, child1, child2)
 
     override fun isLeaf(): Boolean = node.firstChildNode == null
 
     override fun buildChildren(): List<Block> {
-        return node.getChildren(null)
+        var specialChildAlignment: Alignment? = null
+        var blocks = ArrayList<Block>()
+
+        node.getChildren(null)
             .filterNot { isWhitespaceOrBlank(it) }
-            .map { makeChildBlock(it) }
-            .toList()
+            .forEach {
+                blocks.add(
+                    when {
+                        // TODO: write it in better way
+                        it.elementType == LslTypes.GLOBAL_VARIABLE && codeStyleSettings.ALIGN_CONSECUTIVE_VARIABLE_DECLARATIONS -> {
+                            if (hasBlankLineBefore(it)) {
+                                specialChildAlignment = Alignment.createAlignment(true, Alignment.Anchor.RIGHT)
+                            }
+
+                            makeChildBlock(it, specialChildAlignment)
+                        }
+
+                        // skip comments between global variables
+                        LslTypes.COMMENTS.contains(it.elementType) -> {
+                            makeChildBlock(it, specialChildAlignment)
+                        }
+
+                        else -> {
+                            specialChildAlignment = null
+
+                            makeChildBlock(it, specialChildAlignment)
+                        }
+                    }
+                )
+            }
+
+        return blocks.toList()
     }
 
-    private fun isWhitespaceOrBlank(n: ASTNode) =
-        n.elementType == TokenType.WHITE_SPACE || n.text.isBlank()
+    private fun isWhitespaceOrBlank(n: ASTNode?) =
+        n == null || n.elementType == TokenType.WHITE_SPACE || n.text.isBlank()
 
-    private fun makeChildBlock(child: ASTNode): LslBlock {
-        val indent = when {
+    private fun hasBlankLineBefore(n: ASTNode?) =
+        isWhitespaceOrBlank(n?.treePrev) && isWhitespaceOrBlank(n?.treePrev?.treePrev)
+
+    protected open fun makeChildBlock(child: ASTNode, specialChildAlignment: Alignment?): LslBlock {
+        val childIndent = when {
             child.psi is LeafPsiElement && child.psi !is PsiComment -> Indent.getNoneIndent()
 
             listOf(
@@ -58,7 +92,21 @@ class LslBlock(
             else -> Indent.getNoneIndent()
         }
 
-        return LslBlock(this, child, null, null, indent, spacingBuilder)
+        val childAlignment = when {
+            node.elementType == LslTypes.GLOBAL_VARIABLE && child.elementType == LslTypes.ASSIGN -> specialAlignment
+            else -> null
+        }
+
+        return LslBlock(
+            this,
+            child,
+            null,
+            childAlignment,
+            childIndent,
+            spacingBuilder,
+            codeStyleSettings,
+            specialChildAlignment
+        )
     }
 
     override fun getIndent(): Indent? =
