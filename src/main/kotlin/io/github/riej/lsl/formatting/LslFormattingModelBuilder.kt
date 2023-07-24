@@ -15,6 +15,7 @@ class LslFormattingModelBuilder : FormattingModelBuilder {
 
         return SpacingBuilder(settings, LslLanguage.INSTANCE)
             .after(LslTypes.LINE_COMMENT).lineBreakInCode()
+            .around(LslTypes.COMMENTS).spaceIf(true)
 
             .around(LslTypes.FUNCTION).blankLines(commonSettings.BLANK_LINES_AROUND_METHOD)
             .around(LslTypes.DEFAULT_STATE_DECLARATION).blankLines(commonSettings.BLANK_LINES_AROUND_CLASS)
