@@ -9,8 +9,8 @@ import com.intellij.codeInsight.lookup.LookupElementPresentation
 import com.intellij.codeInsight.lookup.LookupElementRenderer
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.util.ProcessingContext
+import io.github.riej.lsl.KwdbData
 import io.github.riej.lsl.psi.LslEvent
-import io.github.riej.lsl.psi.LslFile
 
 class EventNameCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(
@@ -19,8 +19,7 @@ class EventNameCompletionProvider : CompletionProvider<CompletionParameters>() {
         result: CompletionResultSet
     ) {
         result.addAllElements(
-            (parameters.originalFile as LslFile)
-                .kwdbData
+            KwdbData.getInstance(parameters.originalFile.project)
                 .events
                 .values
                 .map {

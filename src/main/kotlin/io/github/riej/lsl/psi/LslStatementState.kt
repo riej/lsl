@@ -2,16 +2,13 @@ package io.github.riej.lsl.psi
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
-import com.intellij.lang.annotation.AnnotationHolder
-import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
+import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import com.intellij.psi.tree.TokenSet
-import io.github.riej.lsl.annotation.LslAnnotatedElement
 import io.github.riej.lsl.parser.LslTypes
-import io.github.riej.lsl.references.LslStatementStateReference
 
-class LslStatementState(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement, LslAnnotatedElement {
+class LslStatementState(node: ASTNode) : ASTWrapperPsiElement(node), LslStatement {
     companion object {
         private val IDENTIFIER_OR_DEFAULT = TokenSet.create(LslTypes.IDENTIFIER, LslTypes.DEFAULT)
     }
@@ -25,13 +22,7 @@ class LslStatementState(node: ASTNode) : ASTWrapperPsiElement(node), LslStatemen
     val state: LslState?
         get() = (containingFile as LslFile).scope.findElementByName(stateName) as? LslState?
 
-    override fun getReference(): PsiReference = LslStatementStateReference(this)
+    override fun getReferences(): Array<PsiReference> = ReferenceProvidersRegistry.getReferencesFromProviders(this)
 
-    override fun annotate(holder: AnnotationHolder) {
-        if (state == null) {
-            // TODO: add create state fix
-            holder.newAnnotation(HighlightSeverity.ERROR, "Undeclared state")
-                .range(stateNameIdentifier?.textRange ?: textRange).create()
-        }
-    }
+    override fun getReference(): PsiReference? = references.firstOrNull()
 }

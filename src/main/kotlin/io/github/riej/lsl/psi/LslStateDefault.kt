@@ -19,4 +19,7 @@ class LslStateDefault(node: ASTNode) : ASTWrapperPsiElement(node), LslState, Ite
     override fun getPresentableText(): String = "default"
 
     override fun getIcon(unused: Boolean): Icon = LslIcons.STATE
+
+    override fun getNavigationElement(): PsiElement =
+        this.identifyingElement ?: this
 }

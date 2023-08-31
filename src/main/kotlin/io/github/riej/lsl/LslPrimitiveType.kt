@@ -42,9 +42,8 @@ enum class LslPrimitiveType {
         )
     }
 
-    @Throws(TypeMismatch::class)
-    fun operationTo(other: LslPrimitiveType, operation: IElementType?): LslPrimitiveType {
-        if (this == VOID || this == INVALID || other == VOID || other == INVALID) {
+    fun operationTo(other: LslPrimitiveType?, operation: IElementType?): LslPrimitiveType {
+        if (this == VOID || this == INVALID || other == VOID || other == INVALID || other == null) {
             return INVALID
         }
 
@@ -91,12 +90,8 @@ enum class LslPrimitiveType {
             return LIST
         }
 
-        throw TypeMismatch(other, this)
+        return INVALID
     }
 
     override fun toString(): String = name.lowercase()
-
-    class TypeMismatch(expected: LslPrimitiveType, got: LslPrimitiveType) : Exception(
-        "Type mismatch (expected %s, got %s).".format(expected.toString(), got.toString())
-    )
 }

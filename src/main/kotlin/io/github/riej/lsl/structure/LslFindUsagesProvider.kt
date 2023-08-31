@@ -14,7 +14,9 @@ class LslFindUsagesProvider : FindUsagesProvider {
             LslTypes.FUNCTION,
             LslTypes.DEFAULT_STATE_DECLARATION,
             LslTypes.STATE_DECLARATION,
+            LslTypes.ARGUMENT,
             LslTypes.STATEMENT_VARIABLE,
+            LslTypes.STATEMENT_LABEL,
         ).contains(psiElement.elementType)
 
     override fun getHelpId(psiElement: PsiElement): String? = null

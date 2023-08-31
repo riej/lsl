@@ -1,6 +1,7 @@
 package io.github.riej.lsl
 
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.Key
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
@@ -22,6 +23,17 @@ class KwdbData(project: Project) {
     val events: Map<String, LslEvent>
 
     val scope: LslScope
+
+    companion object {
+        val KWDB_DATA_KEY = Key.create<KwdbData>("KWDB_DATA")
+
+        fun getInstance(project: Project): KwdbData =
+            project.getUserData(KWDB_DATA_KEY) ?: let {
+                val data = KwdbData(project)
+                project.putUserData(KWDB_DATA_KEY, data)
+                data
+            }
+    }
 
     init {
         val resource = ResourceUtil.getResource(javaClass.classLoader, ".", "kwdb.xml")

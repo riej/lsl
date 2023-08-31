@@ -2,12 +2,17 @@ package io.github.riej.lsl.scope
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
+import io.github.riej.lsl.KwdbData
 import io.github.riej.lsl.psi.*
 
 object LslScopeUtils {
     fun getScopeFor(element: PsiElement): LslScope =
         when (element) {
-            is LslFile -> LslScope(element.kwdbData.scope, element.children.filterIsInstance<LslNamedElement>())
+            is LslFile -> LslScope(
+                KwdbData.getInstance(element.project).scope,
+                element.children.filterIsInstance<LslNamedElement>()
+            )
+
             is LslArguments -> LslScope()
             is LslStatementBlock -> when (val parent = element.parent) {
                 is LslFunction -> LslScope(parent.scope, parent.arguments)

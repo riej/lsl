@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>io.github.riej.lsl</id>
     <name>Linden Script (LSL)</name>
-    <version>0.1.11</version>
+    <version>0.2.0</version>
     <vendor email="riejinn@gmail.com">riejinno</vendor>
 
     <description><![CDATA[
@@ -28,7 +28,6 @@
         <lang.psiStructureViewFactory language="LSL" implementationClass="io.github.riej.lsl.structure.LslStructureViewFactory" />
         <navbar implementation="io.github.riej.lsl.structure.LslStructureAwareNavBar" />
         <lang.quoteHandler language="LSL" implementationClass="io.github.riej.lsl.syntax.LslQuoteHandler" />
-        <annotator language="LSL" implementationClass="io.github.riej.lsl.annotation.LslAnnotationProvider" />
         <lang.documentationProvider language="LSL" implementationClass="io.github.riej.lsl.documentation.LslDocumentationProvider" />
         <completion.contributor language="LSL" implementationClass="io.github.riej.lsl.completion.LslCompletionContributor" />
         <langCodeStyleSettingsProvider implementation="io.github.riej.lsl.formatting.LslLanguageCodeStyleSettingsProvider" />
@@ -37,6 +36,54 @@
         <spellchecker.support language="LSL" implementationClass="io.github.riej.lsl.formatting.LslSpellcheckingStrategy" />
 
         <lang.formatter language="LSL" implementationClass="io.github.riej.lsl.formatting.LslFormattingModelBuilder" />
+
+        <psi.referenceContributor language="LSL" implementation="io.github.riej.lsl.references.LslReferenceContributor" />
+
+        <!-- inspections -->
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUnusedFunctionInspection"
+                         displayName="Unused function" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUnusedVariableInspection"
+                         displayName="Unused variable" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUnusedArgumentInspection"
+                         displayName="Unused argument" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUnusedStateInspection"
+                         displayName="Unused state" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUnusedLabelInspection"
+                         displayName="Unused label" groupName="LSL" enabledByDefault="true" />
+
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUndeclaredFunctionInspection"
+                         displayName="Undeclared function" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUndeclaredVariableInspection"
+                         displayName="Undeclared variable" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUndeclaredStateInspection"
+                         displayName="Undeclared state" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUndeclaredLabelInspection"
+                         displayName="Undeclared label" groupName="LSL" enabledByDefault="true" />
+
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslReservedIdentifierInspection"
+                         displayName="Reserved identifier" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslRedeclaredIdentifierInspection"
+                         displayName="Redeclared identifier" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslInvalidVectorOrQuaternionItemInspection"
+                         displayName="Invalid vector or quaternion item" groupName="LSL" enabledByDefault="true" />
+
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslEmptyStateBodyInspection"
+                         displayName="Empty state" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslUnreachableCodeInspection"
+                         displayName="Unreachable code" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslRedundantTypeCastInspection"
+                         displayName="Redundant type cast" groupName="LSL" enabledByDefault="true" />
+
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslInvalidAssignmentTypeInspection"
+                         displayName="Invalid assignment type" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslInvalidReturnTypeInspection"
+                         displayName="Invalid return type" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslInvalidExpressionTypeInspection"
+                         displayName="Invalid expression type" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslInvalidFunctionCallArgumentInspection"
+                         displayName="Invalid function call argument" groupName="LSL" enabledByDefault="true" />
+        <localInspection language="LSL" implementationClass="io.github.riej.lsl.inspections.LslInvalidEventDeclarationInspection"
+                         displayName="Invalid event declaration" groupName="LSL" enabledByDefault="true" />
 
         <internalFileTemplate name="Linden Script"/>
     </extensions>

@@ -3,7 +3,7 @@ package io.github.riej.lsl.documentation
 import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.psi.PsiElement
 import com.intellij.util.containers.nullize
-import io.github.riej.lsl.psi.LslFile
+import io.github.riej.lsl.KwdbData
 import io.github.riej.lsl.psi.LslNamedElement
 
 class LslDocumentationProvider : DocumentationProvider {
@@ -13,7 +13,7 @@ class LslDocumentationProvider : DocumentationProvider {
                 listOfNotNull(
                     DocumentationUtils.getUrlFor(
                         // provide URL only for predefined elements
-                        (element.containingFile as LslFile).kwdbData.scope.findElementByName(element.name)?.name
+                        KwdbData.getInstance(element.project).scope.findElementByName(element.name)?.name
                     )
                 ).nullize()
 

@@ -11,7 +11,7 @@ import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.codeInsight.template.impl.ConstantNode
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
-import io.github.riej.lsl.psi.LslFile
+import io.github.riej.lsl.KwdbData
 import io.github.riej.lsl.psi.LslFunction
 
 class FunctionCompletionProvider(val addSemicolon: Boolean) : CompletionProvider<CompletionParameters>() {
@@ -24,7 +24,7 @@ class FunctionCompletionProvider(val addSemicolon: Boolean) : CompletionProvider
             PsiTreeUtil.collectElements(parameters.originalFile) { it is LslFunction }
                 .map { it as LslFunction }
                 .plus(
-                    (parameters.originalFile as LslFile).kwdbData.functions.values
+                    KwdbData.getInstance(parameters.originalFile.project).functions.values
                 )
                 .mapNotNull {
                     if (it.name != null)
