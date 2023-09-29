@@ -51,6 +51,25 @@ enum class LslPrimitiveType {
             return FLOAT
         }
 
+        if (this == KEY) {
+            return when { // key = key or key = string only
+                (other == KEY || other == STRING) && operation == LslTypes.ASSIGN -> KEY
+                else -> INVALID
+            }
+        }
+
+        if (this == STRING) {
+            return when {
+                // string = key
+                other == KEY && operation == LslTypes.ASSIGN -> STRING
+                // string = string
+                // string += string
+                // string + string
+                other == STRING && listOf(LslTypes.ASSIGN, LslTypes.PLUS_ASSIGN, LslTypes.PLUS).contains(operation) -> STRING
+                else -> INVALID
+            }
+        }
+
         if (this == other) {
             return this
         }
@@ -58,10 +77,6 @@ enum class LslPrimitiveType {
         // int % int only
         if (operation == LslTypes.MODULUS || operation == LslTypes.MODULUS_ASSIGN) {
             return INVALID
-        }
-
-        if ((this == STRING || this == KEY) && (other == STRING || other == KEY)) {
-            return STRING
         }
 
         if ((this == INTEGER || this == FLOAT) && (other == INTEGER || other == FLOAT)) {
