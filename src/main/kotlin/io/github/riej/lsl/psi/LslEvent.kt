@@ -31,6 +31,9 @@ class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiE
     val parenthesesRightEl: PsiElement?
         get() = findChildByType(LslTypes.PARENTHESES_RIGHT)
 
+    override fun getNavigationElement(): PsiElement =
+        this.identifyingElement ?: this
+
     override fun getPresentableText(): String = "$name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }
     })".trim()

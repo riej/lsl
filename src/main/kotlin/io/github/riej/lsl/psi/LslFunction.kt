@@ -32,6 +32,9 @@ class LslFunction(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatableP
     val body: LslStatement?
         get() = findChildByType(LslTypes.STATEMENT_BLOCK)
 
+    override fun getNavigationElement(): PsiElement =
+        this.identifyingElement ?: this
+
     override fun getPresentableText(): String = "$lslType $name(${
         arguments.joinToString(", ") { "${it.lslType} ${it.name}" }
     })".trim()
