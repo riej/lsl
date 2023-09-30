@@ -34,6 +34,7 @@
         <lang.foldingBuilder language="LSL" implementationClass="io.github.riej.lsl.structure.LslFoldingBuilder" />
         <lang.findUsagesProvider language="LSL" implementationClass="io.github.riej.lsl.structure.LslFindUsagesProvider" />
         <spellchecker.support language="LSL" implementationClass="io.github.riej.lsl.formatting.LslSpellcheckingStrategy" />
+        <lang.namesValidator language="LSL" implementationClass="io.github.riej.lsl.syntax.LslNamesValidator" />
 
         <lang.formatter language="LSL" implementationClass="io.github.riej.lsl.formatting.LslFormattingModelBuilder" />
 
