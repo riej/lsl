@@ -11,11 +11,10 @@ class LslDocumentationProvider : DocumentationProvider {
         when (element) {
             is LslNamedElement ->
                 listOfNotNull(
-                    DocumentationUtils.getUrlFor(
-                        // provide URL only for predefined elements
-                        KwdbData.getInstance(element.project).scope.findElementByName(element.name)?.name
-                    )
-                ).nullize()
+                    KwdbData.getInstance(element.project).getByName(element.name)?.name
+                )
+                    .mapNotNull { DocumentationUtils.getUrlFor(it) }
+                    .nullize()
 
             else -> null
         }

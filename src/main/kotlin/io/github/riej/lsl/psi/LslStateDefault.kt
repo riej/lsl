@@ -8,7 +8,7 @@ import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.parser.LslTypes
 import javax.swing.Icon
 
-class LslStateDefault(node: ASTNode) : ASTWrapperPsiElement(node), LslState, ItemPresentation, LslScopedElement {
+class LslStateDefault(node: ASTNode) : ASTWrapperPsiElement(node), LslState, ItemPresentation {
     override fun setName(name: String): PsiElement =
         this
 

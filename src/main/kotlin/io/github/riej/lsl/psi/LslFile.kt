@@ -9,8 +9,7 @@ import io.github.riej.lsl.LslIcons
 import io.github.riej.lsl.LslLanguage
 import javax.swing.Icon
 
-class LslFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, LslLanguage.INSTANCE), ItemPresentation,
-    LslScopedElement {
+class LslFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, LslLanguage.INSTANCE), ItemPresentation {
     override fun getFileType(): FileType = LslFileType.INSTANCE
 
     override fun toString() = "LSL file"

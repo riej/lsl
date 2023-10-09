@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement
 import io.github.riej.lsl.LslIcons
 import javax.swing.Icon
 
-class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState, ItemPresentation, LslScopedElement {
+class LslStateCustom(node: ASTNode) : ASTWrapperLslNamedElement(node), LslState, ItemPresentation {
     override fun getPresentableText(): String = "state $name"
 
     override fun getIcon(unused: Boolean): Icon = LslIcons.STATE

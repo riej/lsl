@@ -20,7 +20,9 @@ class LslStatementState(node: ASTNode) : ASTWrapperPsiElement(node), LslStatemen
         get() = stateNameIdentifier?.text
 
     val state: LslState?
-        get() = (containingFile as LslFile).scope.findElementByName(stateName) as? LslState?
+        get() = (containingFile as LslFile).children
+            .filterIsInstance<LslState>()
+            .firstOrNull {it.name == stateName }
 
     override fun getReferences(): Array<PsiReference> = ReferenceProvidersRegistry.getReferencesFromProviders(this)
 

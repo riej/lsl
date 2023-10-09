@@ -15,7 +15,7 @@ import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslGlobalVariable(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslVariable,
-    LslDocumentedElement, LslScopedElement {
+    LslDocumentedElement {
     override val lslType: LslPrimitiveType
         get() = LslPrimitiveType.fromString(typeNameEl?.text)
 

@@ -16,7 +16,7 @@ import io.github.riej.lsl.syntax.LslSyntaxHighlighter
 import javax.swing.Icon
 
 class LslEvent(node: ASTNode) : ASTWrapperLslNamedElement(node), NavigatablePsiElement, LslDocumentedElement,
-    ItemPresentation, LslScopedElement {
+    ItemPresentation {
     val arguments: List<LslArgument>
         get() = argumentsEl?.arguments.orEmpty()
 
