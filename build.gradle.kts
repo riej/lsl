@@ -41,6 +41,12 @@ tasks {
         untilBuild.set("")
     }
 
+    withType<Test> {
+        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1).also {
+            println("Setting maxParallelForks to $it")
+        }
+    }
+
     signPlugin {
         certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
         privateKey.set(System.getenv("PRIVATE_KEY"))
