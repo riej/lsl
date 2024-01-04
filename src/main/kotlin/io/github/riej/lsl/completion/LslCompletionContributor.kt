@@ -17,6 +17,7 @@ class LslCompletionContributor : CompletionContributor() {
         extend(CompletionType.BASIC, statementScopePlace(), TypenameCompletionProvider())
 
         extend(CompletionType.BASIC, lValueIdentifierScopePlace(), VariableCompletionProvider())
+        extend(CompletionType.BASIC, lValueItemScopePlace(), LValueItemCompletionProvider())
 
         extend(CompletionType.BASIC, functionCallAsStatementScopePlace(), FunctionCompletionProvider(true))
         extend(CompletionType.BASIC, functionCallInsideExpressionScopePlace(), FunctionCompletionProvider(false))
@@ -31,16 +32,19 @@ class LslCompletionContributor : CompletionContributor() {
         psiElement(LslTypes.ARGUMENT)
 
     fun statementScopePlace(): PsiElementPattern.Capture<PsiElement> =
-        psiElement().atStartOf(psiElement(LslStatement::class.java))
+        psiElement().atStartOf(psiElement(LslStatement::class.java)).andNot(psiElement().afterLeaf(psiElement(LslTypes.DOT)))
 
     fun functionCallAsStatementScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslStatement::class.java))
 
     fun functionCallInsideExpressionScopePlace(): PsiElementPattern.Capture<PsiElement> =
-        psiElement(LslTypes.IDENTIFIER).inside(LslExpression::class.java)
+        psiElement(LslTypes.IDENTIFIER).inside(LslExpression::class.java).andNot(psiElement().inside(LslLValue::class.java))
 
     fun lValueIdentifierScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslLValue::class.java))
+
+    fun lValueItemScopePlace(): PsiElementPattern.Capture<PsiElement> =
+        psiElement(LslTypes.IDENTIFIER).inside(LslLValue::class.java).afterLeaf(psiElement(LslTypes.DOT))
 
     fun eventIdentifierScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslEvent::class.java))
