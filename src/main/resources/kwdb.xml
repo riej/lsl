@@ -4,8 +4,9 @@
 (C) Copyright 2012 Linden Research, Inc.
 (C) Copyright 2013-2023 Sei Lisa.
 (C) Copyright 2017-2023 Mako Nozaki.
-Sei Lisa and Mako Nozaki are the usernames of the authors in the Second Life(R)
-online virtual world.
+(C) Copyright 2023-2023 Alex Carpenter.
+Sei Lisa, Mako Nozaki, and Alex Carpenter are the usernames of the authors in the
+Second Life(R) online virtual world.
 
     LSL2 Keywords Database
 
@@ -85,7 +86,8 @@ Example: grid="os aa"
         <!ATTLIST event
                 name CDATA #REQUIRED
                 version CDATA #IMPLIED
-                grid NMTOKENS #IMPLIED>
+                grid NMTOKENS #IMPLIED
+                status (normal | deprecated | godmode | unimplemented) "normal">
         <!ELEMENT description (#PCDATA)>
         <!ATTLIST description
                 lang NMTOKENS #REQUIRED>
@@ -96,7 +98,7 @@ Example: grid="os aa"
 
         ]>
 
-<keywords version="0.0.20230409000">
+<keywords version="0.0.20231219001">
     <!--The OpenSim/Aurora functions, constants and types are based on the following revisions:
 
       OpenSim revision 0.9.2.1
@@ -107,7 +109,7 @@ Example: grid="os aa"
   -->
 
     <!-- Grids supported and their versions -->
-    <grid id="sl" version="2023-03-24.579022">Second Life</grid>
+    <grid id="sl" version="2023-11-07.6790647783">Second Life</grid>
     <grid id="os" version="v0.9.2.1">OpenSimulator</grid>
     <grid id="aa" version="0049c9335f8b91ab119ce4fee5ba1d50d4f6f017">Aurora-Sim</grid>
 
@@ -652,6 +654,12 @@ Type for a date and time value
         </description>
     </constant>
 
+    <constant name="AGENT_AUTOMATED" type="integer" value="0x4000" grid="sl" version="sl:2023-06-09.580543">
+        <description lang="en">
+            Returned by llGetAgentInfo if the Agent is marked as a scripted agent/bot.
+        </description>
+    </constant>
+
     <constant name="AGENT_MALE" type="integer" value="0x40000000" grid="os">
         <description lang="en">
             <!-- TODO: add documentation -->
@@ -1119,7 +1127,7 @@ Type for a date and time value
 
     <constant name="VEHICLE_FLAG_NO_FLY_UP" type="integer" value="0x1" status="deprecated" version="sl:1.1.0">
         <description lang="en">
-            DEPRECATED - use VEHICLE_FLAG_NO_DEFLECTION_UP
+            (DEPRECATED) Use VEHICLE_FLAG_NO_DEFLECTION_UP
         </description>
     </constant>
 
@@ -1414,6 +1422,13 @@ Type for a date and time value
         </description>
     </constant>
 
+    <constant name="INVENTORY_MATERIAL" type="integer" value="57" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            Passed to task inventory library functions to reference GLTF materials
+        </description>
+    </constant>
+
+
     <constant name="INVENTORY_ALL" type="integer" value="-1" version="sl:1.6.0">
         <description lang="en">
             Passed to task inventory library functions to reference all inventory items
@@ -1596,8 +1611,8 @@ Type for a date and time value
 
     <constant name="ATTACH_RPEC" type="integer" value="29" status="deprecated" grid="sl os">
         <description lang="en">
+            (DEPRECATED/MISNAMED) Use ATTACH_LEFT_PEC or ATTACH_RIGHT_PEC.
             Passed to llAttachToAvatar to attach task to LEFT pectoral.
-            DEPRECATED/MISNAMED - use ATTACH_LEFT_PEC or ATTACH_RIGHT_PEC.
         </description>
     </constant>
 
@@ -1609,8 +1624,8 @@ Type for a date and time value
 
     <constant name="ATTACH_LPEC" type="integer" value="30" status="deprecated" grid="sl os">
         <description lang="en">
+            (DEPRECATED/MISNAMED) Use ATTACH_LEFT_PEC or ATTACH_RIGHT_PEC.
             Passed to llAttachToAvatar to attach task to RIGHT pectoral.
-            DEPRECATED/MISNAMED - use ATTACH_LEFT_PEC or ATTACH_RIGHT_PEC.
         </description>
     </constant>
 
@@ -1866,7 +1881,8 @@ Type for a date and time value
 
     <constant name="DATA_RATING" type="integer" value="4" status="deprecated" version="sl:1.1.0">
         <description lang="en">
-            Passed to llRequestAgentData to get a comma separated sting of integer ratings. DEPRECATED - Ratings are no longer in use and using this value in a query always returns "0, 0, 0, 0, 0, 0".
+            (DEPRECATED) Ratings are no longer in use and using this value in a query always returns "0, 0, 0, 0, 0, 0".
+            Passed to llRequestAgentData to get a comma separated sting of integer ratings.
         </description>
     </constant>
 
@@ -2081,6 +2097,12 @@ Type for a date and time value
         </description>
     </constant>
 
+    <constant name="CHANGED_RENDER_MATERIAL" type="integer" value="0x1000" grid="sl" version="sl:2021-01-08.554811">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
     <constant name="TYPE_INTEGER" type="integer" value="1">
         <description lang="en">
             Indicates that the list entry is holding an integer
@@ -2123,19 +2145,19 @@ Type for a date and time value
         </description>
     </constant>
 
-    <constant name="REMOTE_DATA_CHANNEL" type="integer" value="1">
+    <constant name="REMOTE_DATA_CHANNEL" type="integer" value="1" status="deprecated">
         <description lang="en">
             Value of event_type in remote_event after successful llOpenRemoteDataChannel
         </description>
     </constant>
 
-    <constant name="REMOTE_DATA_REQUEST" type="integer" value="2">
+    <constant name="REMOTE_DATA_REQUEST" type="integer" value="2" status="deprecated">
         <description lang="en">
             Value of event_type in remote_event if XML-RPC request is received
         </description>
     </constant>
 
-    <constant name="REMOTE_DATA_REPLY" type="integer" value="3">
+    <constant name="REMOTE_DATA_REPLY" type="integer" value="3" status="deprecated">
         <description lang="en">
             Value of event_type in remote_event if XML-RPC reply is received
         </description>
@@ -2185,7 +2207,7 @@ Type for a date and time value
 
     <constant name="PRIM_CAST_SHADOWS" type="integer" value="24" status="unimplemented">
         <description lang="en">
-            DEPRECATED. Takes 1 parameter, an integer, but has no effect when set and always returns 0 if used in llGetPrimitiveParams.
+            (DEPRECATED) Takes 1 parameter, an integer, but has no effect when set and always returns 0 if used in llGetPrimitiveParams.
         </description>
     </constant>
 
@@ -2360,7 +2382,7 @@ Type for a date and time value
 
     <constant name="PRIM_TYPE_SCULPT" type="integer" value="7">
         <description lang="en">
-            Followed by a key/string texture uuid, and one of PRIM_SCULPT_TYPE_SPHERE, PRIM_SCULPT_TYPE_TORUS, PRIM_SCULPT_TYPE_PLANE, or PRIM_SCULPT_TYPE_CYLINDER
+            Followed by a key/string texture uuid, and one of PRIM_SCULPT_TYPE_SPHERE, PRIM_SCULPT_TYPE_TORUS, PRIM_SCULPT_TYPE_PLANE, PRIM_SCULPT_TYPE_CYLINDER, or PRIM_SCULPT_TYPE_MESH.
         </description>
     </constant>
 
@@ -2432,7 +2454,8 @@ Type for a date and time value
 
     <constant name="PRIM_MATERIAL_LIGHT" type="integer" value="7" status="deprecated">
         <description lang="en">
-            Sets material to light. DEPRECATED - use PRIM_FULLBRIGHT instead.
+            (DEPRECATED) Use PRIM_FULLBRIGHT instead.
+            Sets material to light.
         </description>
     </constant>
 
@@ -2604,15 +2627,21 @@ Type for a date and time value
         </description>
     </constant>
 
-    <constant name="PRIM_SCULPT_TYPE_MESH" type="integer" value="5" grid="aa">
+    <constant name="PRIM_SCULPT_TYPE_MESH" type="integer" value="5" grid="sl aa" version="sl:2023-07-14.581036">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Mesh model.
         </description>
     </constant>
 
     <constant name="PRIM_SCULPT_TYPE_MASK" type="integer" value="7" grid="sl os">
         <description lang="en">
             Mask used to determine stitching type
+        </description>
+    </constant>
+
+    <constant name="PRIM_SCULPT_FLAG_ANIMESH" type="integer" value="0x20" grid="sl" version="sl:2023-07-14.581036">
+        <description lang="en">
+            Flag to specify that the prim is animated mesh.
         </description>
     </constant>
 
@@ -2647,6 +2676,72 @@ Type for a date and time value
     </constant>
 
     <constant name="PRIM_PHYSICS_MATERIAL" type="integer" value="31" grid="os">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_RENDER_MATERIAL" type="integer" value="49" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_BASE_COLOR" type="integer" value="48" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_NORMAL" type="integer" value="45" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_METALLIC_ROUGHNESS" type="integer" value="47" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_EMISSIVE" type="integer" value="46" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_ALPHA_MODE_OPAQUE" type="integer" value="0" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_ALPHA_MODE_BLEND" type="integer" value="1" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_GLTF_ALPHA_MODE_MASK" type="integer" value="2" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_REFLECTION_PROBE" type="integer" value="44" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_REFLECTION_PROBE_BOX" type="integer" value="1" grid="sl" version="sl:2023-11-07.6790647783">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_REFLECTION_PROBE_DYNAMIC" type="integer" value="2" grid="sl" version="sl:2023-11-07.6790647783">
         <description lang="en">
             <!-- TODO: add documentation -->
         </description>
@@ -3296,6 +3391,18 @@ Type for a date and time value
     <constant name="CLICK_ACTION_ZOOM" type="integer" value="7">
         <description lang="en">
             Used with llSetClickAction to set zoom in as the default action when object is clicked
+        </description>
+    </constant>
+
+    <constant name="CLICK_ACTION_DISABLED" type="integer" value="8" grid="sl" version="2020-06-05T19:36:41.543337">
+        <description lang="en">
+            Used with llSetClickAction to disable the click action. No touches are detected or passed.
+        </description>
+    </constant>
+
+    <constant name="CLICK_ACTION_IGNORE" type="integer" value="9" grid="sl" version="sl:2023-09-07.6113592855">
+        <description lang="en">
+            Used with llSetClickAction. Causes clicks to go through the object to whatever is behind it. No touches detected.
         </description>
     </constant>
 
@@ -4456,7 +4563,7 @@ This constant has no use for keyframed motion.
 
     <constant name="SIM_STAT_PCT_CHARS_STEPPED" type="integer" value="0" grid="sl">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            The % of pathfinding characters updated each frame, averaged over the last minute. The value corresponds to the "Characters Updated" stat in the viewer's Statistics Bar.
         </description>
     </constant>
 
@@ -4964,6 +5071,24 @@ This constant has no use for keyframed motion.
         </description>
     </constant>
 
+    <constant name="SKY_BLUE" type="integer" value="22" grid="sl" version="sl:2021-01-08.554811">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="SKY_HAZE" type="integer" value="23" grid="sl" version="sl:2021-01-08.554811">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="SKY_REFLECTION_PROBE_AMBIANCE" type="integer" value="24" grid="sl" version="sl:2021-01-08.554811">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
     <constant name="WATER_BLUR_MULTIPLIER" type="integer" value="100" grid="sl" version="sl:18.11.02.521379">
         <description lang="en">
             <!-- TODO: add documentation -->
@@ -5105,24 +5230,6 @@ This constant has no use for keyframed motion.
         </description>
     </constant>
 
-    <constant name="CLICK_ACTION_DISABLED" type="integer" value="8" grid="sl" version="2020-06-05T19:36:41.543337">
-        <description lang="en">
-            <!-- TODO: add documentation -->
-        </description>
-    </constant>
-
-    <constant name="SKY_BLUE" type="integer" value="22" grid="sl" version="sl:2021-01-08.554811">
-        <description lang="en">
-            <!-- TODO: add documentation -->
-        </description>
-    </constant>
-
-    <constant name="SKY_HAZE" type="integer" value="23" grid="sl" version="sl:2021-01-08.554811">
-        <description lang="en">
-            <!-- TODO: add documentation -->
-        </description>
-    </constant>
-
     <constant name="HTTP_EXTENDED_ERROR" type="integer" value="9" grid="sl" version="sl:2021-01-20.555189">
         <description lang="en">
             <!-- TODO: add documentation -->
@@ -5130,6 +5237,12 @@ This constant has no use for keyframed motion.
     </constant>
 
     <constant name="PRIM_PROJECTOR" type="integer" value="42" grid="sl" version="sl:2021-10-25.565008">
+        <description lang="en">
+            <!-- TODO: add documentation -->
+        </description>
+    </constant>
+
+    <constant name="PRIM_CLICK_ACTION" type="integer" value="43" grid="sl" version="sl:2023-09-07.6113592855">
         <description lang="en">
             <!-- TODO: add documentation -->
         </description>
@@ -5195,11 +5308,29 @@ This constant has no use for keyframed motion.
 
     <constant name="ENV_NO_PERMISSIONS" type="integer" value="-9" grid="sl" version="sl:2022-08-12.574216"/>
 
-    <constant name="LINKSETDATA_RESET" type="integer" value="0" grid="sl" version="sl:2022-11-04.576376"/>
+    <constant name="LINKSETDATA_RESET" type="integer" value="0" grid="sl" version="sl:2022-11-04.576376">
+        <description lang="en">
+            The linkset's datastore has been cleared by a call to llLinksetDataReset.
+        </description>
+    </constant>
 
-    <constant name="LINKSETDATA_UPDATE" type="integer" value="1" grid="sl" version="sl:2022-11-04.576376"/>
+    <constant name="LINKSETDATA_UPDATE" type="integer" value="1" grid="sl" version="sl:2022-11-04.576376">
+        <description lang="en">
+            A key in the linkset's datastore has been assigned a new value with llLinksetDataWrite
+        </description>
+    </constant>
 
-    <constant name="LINKSETDATA_DELETE" type="integer" value="2" grid="sl" version="sl:2022-11-04.576376"/>
+    <constant name="LINKSETDATA_DELETE" type="integer" value="2" grid="sl" version="sl:2022-11-04.576376">
+        <description lang="en">
+            A key in the linkset's datastore has been deleted. Either through a call to llLinksetDataDelete or llLinksetDataWrite with an empty value.
+        </description>
+    </constant>
+
+    <constant name="LINKSETDATA_MULTIDELETE" type="integer" value="3" grid="sl" version="2023-07-14.581036">
+        <description lang="en">
+            A comma separated list of the keys in the linkset's datastore which have been deleted through a call to llLinksetDataDeleteFound.
+        </description>
+    </constant>
 
     <constant name="LINKSETDATA_OK" type="integer" value="0" grid="sl" version="sl:2022-11-04.576376"/>
 
@@ -5223,58 +5354,161 @@ This constant has no use for keyframed motion.
 
     <!-- These constants' exact appearance version is unknown. The version
        specified is the one where it was first seen by the maintainer. -->
-    <constant name="SIM_STAT_PHYSICS_FPS" type="integer" value="1" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PHYSICS_FPS" type="integer" value="1" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Physics simulation FPS.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_AGENT_UPDATES" type="integer" value="2" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_AGENT_UPDATES" type="integer" value="2" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Agent updates per second.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_FRAME_MS" type="integer" value="3" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_FRAME_MS" type="integer" value="3" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Total frame time.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_NET_MS" type="integer" value="4" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_NET_MS" type="integer" value="4" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent in 'network' segment of simulation frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_OTHER_MS" type="integer" value="5" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_OTHER_MS" type="integer" value="5" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Main simulation segment of frame, encapsulating task, script and misc. updates.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_PHYSICS_MS" type="integer" value="6" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PHYSICS_MS" type="integer" value="6" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent in 'physics' segment of simulation frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_AGENT_MS" type="integer" value="7" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_AGENT_MS" type="integer" value="7" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent in 'agent' segment of simulation frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_IMAGE_MS" type="integer" value="8" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_IMAGE_MS" type="integer" value="8" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent in 'image' segment of simulation frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_SCRIPT_MS" type="integer" value="9" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_SCRIPT_MS" type="integer" value="9" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent in 'script' segment of simulation frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_AGENT_COUNT" type="integer" value="10" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_AGENT_COUNT" type="integer" value="10" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Number of agents in region.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_CHILD_AGENT_COUNT" type="integer" value="11" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_CHILD_AGENT_COUNT" type="integer" value="11" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Number of child (neighboring) agents in region.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_ACTIVE_SCRIPT_COUNT" type="integer" value="12" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_ACTIVE_SCRIPT_COUNT" type="integer" value="12" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Number of active scripts in region.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_PACKETS_IN" type="integer" value="13" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PACKETS_IN" type="integer" value="13" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Average packets in per second.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_PACKETS_OUT" type="integer" value="14" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PACKETS_OUT" type="integer" value="14" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Average packets out per second.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_ASSET_DOWNLOADS" type="integer" value="15" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_ASSET_DOWNLOADS" type="integer" value="15" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Pending asset download count.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_ASSET_UPLOADS" type="integer" value="16" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_ASSET_UPLOADS" type="integer" value="16" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Pending asset upload count.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_UNACKED_BYTES" type="integer" value="17" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_UNACKED_BYTES" type="integer" value="17" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Total unacknowledged bytes.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_PHYSICS_STEP_MS" type="integer" value="18" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PHYSICS_STEP_MS" type="integer" value="18" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Average physics step time.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_PHYSICS_SHAPE_MS" type="integer" value="19" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PHYSICS_SHAPE_MS" type="integer" value="19" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Average physics 'shape' segment update time.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_PHYSICS_OTHER_MS" type="integer" value="20" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_PHYSICS_OTHER_MS" type="integer" value="20" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Average physics 'other' segment update time.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_SCRIPT_EPS" type="integer" value="21" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_SCRIPT_EPS" type="integer" value="21" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Script events per second.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_SPARE_MS" type="integer" value="22" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_SPARE_MS" type="integer" value="22" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Spare time left after frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_SLEEP_MS" type="integer" value="23" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_SLEEP_MS" type="integer" value="23" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent sleeping.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_IO_PUMP_MS" type="integer" value="24" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_IO_PUMP_MS" type="integer" value="24" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            PumpIO time.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_SCRIPT_RUN_PCT" type="integer" value="25" grid="sl" version="sl:2023-03-24.579022"/>
+    <constant name="SIM_STAT_SCRIPT_RUN_PCT" type="integer" value="25" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Percent of scripts run during frame.
+        </description>
+    </constant>
 
-    <constant name="SIM_STAT_AI_MS" type="integer" value="26" grid="sl" version="sl:2023-03-24.579022"/>
-
+    <constant name="SIM_STAT_AI_MS" type="integer" value="26" grid="sl" version="sl:2023-03-24.579022">
+        <description lang="en">
+            Time spent on AI step.
+        </description>
+    </constant>
 
     <!-- String constants -->
 
@@ -7021,8 +7255,8 @@ This constant has no use for keyframed motion.
     <function name="llCloud" type="float" status="unimplemented">
         <param type="vector" name="offset"/>
         <description lang="en">
+            (DEPRECATED) It always returns 0.0 now.
             Returns the cloud density at the object position + offset.
-            DEPRECATED - It always returns 0.0 now.
         </description>
     </function>
 
@@ -7327,7 +7561,8 @@ This constant has no use for keyframed motion.
         <param type="integer" name="queue"/>
         <param type="integer" name="loop"/>
         <description lang="en">
-            Plays sound at volume and whether it should loop or not. DEPRECATED - Use llPlaySound / llLoopSound / llSetSoundQueueing.
+            (DEPRECATED) Use llPlaySound / llLoopSound / llSetSoundQueueing.
+            Plays sound at volume and whether it should loop or not.
         </description>
     </function>
 
@@ -7595,14 +7830,16 @@ This constant has no use for keyframed motion.
     <function name="llTakeCamera" status="unimplemented">
         <param type="key" name="avatar"/>
         <description lang="en">
-            Moves avatar's viewpoint to task
+            (DEPRECATED) Use llSetCameraParams instead.
+            Moves avatar's viewpoint to task.
         </description>
     </function>
 
     <function name="llReleaseCamera" status="unimplemented">
         <param type="key" name="avatar"/>
         <description lang="en">
-            Returns camera to agent avatar
+            (DEPRECATED) Use llClearCameraParams instead.
+            Returns camera to agent avatar.
         </description>
     </function>
 
@@ -7677,7 +7914,8 @@ This constant has no use for keyframed motion.
     <function name="llSoundPreload" status="deprecated">
         <param type="string" name="sound"/>
         <description lang="en">
-            Preloads a sound on viewers within range. DEPRECATED - Use llPreloadSound.
+            (DEPRECATED) Use llPreloadSound.
+            Preloads a sound on viewers within range
         </description>
     </function>
 
@@ -8633,7 +8871,7 @@ This constant has no use for keyframed motion.
         <param type="integer" name="running"/>
         <param type="integer" name="start_param"/>
         <description lang="en">
-            DEPRECATED!  Please use llRemoteLoadScriptPin instead.
+            (DEPRECATED) Use llRemoteLoadScriptPin instead.
         </description>
     </function>
 
@@ -8658,13 +8896,13 @@ This constant has no use for keyframed motion.
     </function>
 
     <!-- This function returns DateTime for Aurora, but we're not special-casing it -->
-    <function name="llOpenRemoteDataChannel" delay="1">
+    <function name="llOpenRemoteDataChannel" delay="1" status="deprecated">
         <description lang="en">
             Creates a channel to listen for XML-RPC calls, and will trigger a remote_data event with channel id once it is available
         </description>
     </function>
 
-    <function name="llSendRemoteData" type="key" delay="3">
+    <function name="llSendRemoteData" type="key" delay="3" status="deprecated">
         <param type="key" name="channel"/>
         <param type="string" name="dest"/>
         <param type="integer" name="idata"/>
@@ -8676,7 +8914,7 @@ This constant has no use for keyframed motion.
     </function>
 
     <!-- This function returns DateTime for Aurora, but we're not special-casing it -->
-    <function name="llRemoteDataReply" delay="3">
+    <function name="llRemoteDataReply" delay="3" status="deprecated">
         <param type="key" name="channel"/>
         <param type="key" name="message_id"/>
         <param type="string" name="sdata"/>
@@ -8689,7 +8927,7 @@ This constant has no use for keyframed motion.
     <!-- In AuroraSim, this function requires an object type param and returns DateTime.
        We're not adding the Aurora specifics here.
   -->
-    <function name="llCloseRemoteDataChannel" delay="1">
+    <function name="llCloseRemoteDataChannel" delay="1" status="deprecated">
         <param type="key" name="channel"/>
         <description lang="en">
             Closes XML-RPC channel
@@ -8730,14 +8968,14 @@ This constant has no use for keyframed motion.
         <param type="string" name="str1"/>
         <param type="string" name="str2"/>
         <description lang="en">
-            DEPRECATED!  Please use llXorBase64 instead.
+            (DEPRECATED) Use llXorBase64 instead.
             Incorrectly performs an exclusive or on two Base64 strings and returns a Base64 string. str2 repeats if it is shorter than str1. Retained for backwards compatability.
         </description>
     </function>
 
     <function name="llRemoteDataSetRegion" status="deprecated">
         <description lang="en">
-            DEPRECATED!  Please use llOpenRemoteDataChannel instead.
+            (DEPRECATED) Use http_server instead.
             If an object using remote data channels changes regions, you must call this function to reregister the remote data channels. This call is not needed if the prim does not change regions.
         </description>
     </function>
@@ -9057,6 +9295,7 @@ This constant has no use for keyframed motion.
     <!-- This function returns DateTime for Aurora, but we're not special-casing it -->
     <function name="llRefreshPrimURL" delay="20" status="unimplemented">
         <description lang="en">
+            (DEPRECATED) Issues a warning "llRefreshPrimURL - not yet supported".
             Reloads the web page shown on the sides of the object
         </description>
     </function>
@@ -9156,7 +9395,7 @@ This constant has no use for keyframed motion.
         <param type="string" name="str1"/>
         <param type="string" name="str2"/>
         <description lang="en">
-            DEPRECATED! Please use llXorBase64 instead.
+            (DEPRECATED) Use llXorBase64 instead.
             Incorrectly performs an exclusive or on two Base64 strings and returns a Base64 string.
             str2 repeats if it is shorter than str1. Retained for backwards compatability.
         </description>
@@ -9548,7 +9787,7 @@ This constant has no use for keyframed motion.
         <param type="integer" name="link"/>
         <param type="integer" name="face"/>
         <description lang="en">
-            Clears (deletes) the media and all params from the given face on linked prim
+            Clears (deletes) the media and all params from the given face on linked prim.
         </description>
     </function>
 
@@ -9922,7 +10161,7 @@ This constant has no use for keyframed motion.
     <function name="llReturnObjectsByID" type="integer" grid="sl">
         <param type="list" name="objects"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns to their owners the objects provided as a list of object keys. The return value is the number of objects successfully returned, or an ERR_* flag.
         </description>
     </function>
 
@@ -9930,7 +10169,7 @@ This constant has no use for keyframed motion.
         <param type="key" name="owner"/>
         <param type="integer" name="scope"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns to the owner the objects, limited by the scope parameter. The return value is the number of objects successfully returned, or an ERR_* flag.
         </description>
     </function>
 
@@ -9946,33 +10185,33 @@ This constant has no use for keyframed motion.
     <function name="llScaleByFactor" type="integer" grid="sl os">
         <param type="float" name="scaling_factor"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Attempts to resize the entire object by scaling_factor, maintaining the size-position ratios of the prims.
         </description>
     </function>
 
     <function name="llGetMinScaleFactor" type="float" grid="sl os">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a float that is the smallest scaling factor that can be used with llScaleByFactor to resize the object. This minimum is determined by the prim scale limits.
         </description>
     </function>
 
     <function name="llGetMaxScaleFactor" type="float" grid="sl os">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a float that is the largest scaling factor that can be used with llScaleByFactor to resize the object. This maximum is determined by the Linkability Rules and prim scale limits.
         </description>
     </function>
 
     <function name="llAgentInExperience" type="integer" grid="sl" version="sl:14.07.18.292162">
         <param type="key" name="agent"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Determines whether or not the specified agent is in the script's experience.
         </description>
     </function>
 
     <function name="llGetExperienceDetails" grid="sl" type="list" version="sl:14.07.18.292162">
         <param type="key" name="experience_id"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a list of details about the experience. This list has 6 components: [string experience_name, key owner_id, key experience_id, integer state, string state_message, key group_id].
         </description>
     </function>
 
@@ -9980,14 +10219,14 @@ This constant has no use for keyframed motion.
         <param type="key" name="agent"/>
         <param type="string" name="name"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Asks the agent for permission to participate in the script's Experience.
         </description>
     </function>
 
     <function name="llReadKeyValue" grid="sl" type="key" version="sl:14.07.18.292162">
         <param type="string" name="k"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to read the value associated with the specified key (k) and the script's Experience.
         </description>
     </function>
 
@@ -9995,7 +10234,7 @@ This constant has no use for keyframed motion.
         <param type="string" name="k"/>
         <param type="string" name="v"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to create a key-value pair associated with the script's Experience using the given key (k) and value (v).
         </description>
     </function>
 
@@ -10005,20 +10244,20 @@ This constant has no use for keyframed motion.
         <param type="integer" name="checked"/>
         <param type="string" name="original_value"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to update a key-value pair associated with the script's Experience with the given key (k) and value (v).
         </description>
     </function>
 
     <function name="llDeleteKeyValue" grid="sl" type="key" version="sl:14.07.18.292162">
         <param type="string" name="k"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to delete a key-value pair associated with the script's Experience with the given key (k).
         </description>
     </function>
 
     <function name="llDataSizeKeyValue" grid="sl" type="key" version="sl:14.07.18.292162">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to request the used and total amount of data allocated for the Experience.
         </description>
     </function>
 
@@ -10026,20 +10265,20 @@ This constant has no use for keyframed motion.
         <param type="integer" name="start"/>
         <param type="integer" name="count"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to request a number of keys from the script's Experience.
         </description>
     </function>
 
     <function name="llKeyCountKeyValue" grid="sl" type="key" version="sl:14.07.18.292162">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start an asynchronous transaction to request the number of keys with the script's Experience.
         </description>
     </function>
 
     <function name="llGetExperienceErrorMessage" grid="sl" type="string" version="sl:14.07.18.292162">
         <param type="integer" name="value"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a text description of a particular Experience LSL error constant.
         </description>
     </function>
 
@@ -10058,9 +10297,9 @@ This constant has no use for keyframed motion.
     </function>
 
     <function name="llGetAttachedList" type="list" grid="sl os" version="sl:15.09.14.305056">
-        <param type="key" name="agent"/>
+        <param type="key" name="avatar"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a list of object keys corresponding to public attachments worn by an avatar.
         </description>
     </function>
 
@@ -10068,41 +10307,41 @@ This constant has no use for keyframed motion.
         <param type="key" name="agent_id"/>
         <param type="integer" name="link"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            The avatar specified by agent_id is forced to sit on the sit target of the prim indicated by the link parameter.
         </description>
     </function>
 
     <function name="llName2Key" type="key" grid="sl os" version="sl:18.05.07.515224">
         <param type="string" name="name"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a key the Agent ID for the named agent in the region.
         </description>
     </function>
 
     <function name="llRequestUserKey" type="key" grid="sl os" version="sl:18.05.07.515224">
-        <param type="string" name="name"/>
+        <param type="string" name="username"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Requests the Agent ID for the agent identified by name from the dataserver.
         </description>
     </function>
 
     <function name="llStartObjectAnimation" grid="sl os" version="sl:18.06.14.516474">
         <param type="string" name="anim"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Start animation for the current object.
         </description>
     </function>
 
     <function name="llStopObjectAnimation" grid="sl os" version="sl:18.06.14.516474">
         <param type="string" name="anim"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Stop an animation for the current object.
         </description>
     </function>
 
     <function name="llGetObjectAnimationNames" type="list" grid="sl os" version="sl:18.06.14.516474">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a list of names of animations playing in the current object.
         </description>
     </function>
 
@@ -10110,79 +10349,79 @@ This constant has no use for keyframed motion.
         <param type="vector" name="pos"/>
         <param type="list" name="params"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a list containing the current environment values for the parcel or region as a list of attributes.
         </description>
     </function>
 
     <function name="llGetDayLength" type="integer" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the number of seconds in the day cycle applied to the current parcel.
         </description>
     </function>
 
     <function name="llGetDayOffset" type="integer" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the number of seconds added to the current time before calculating the current environmental time for the parcel.
         </description>
     </function>
 
     <function name="llGetRegionDayLength" type="integer" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the number of seconds in the day cycle applied to the current region.
         </description>
     </function>
 
     <function name="llGetRegionDayOffset" type="integer" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the number of seconds added to the current time before calculating the current environmental time for the region.
         </description>
     </function>
 
     <function name="llGetMoonRotation" type="rotation" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the rotation applied to the moon for the parcel at the location of the object containing the script.
         </description>
     </function>
 
     <function name="llGetRegionMoonRotation" type="rotation" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the rotation applied to the moon for the region at the location of the object containing the script.
         </description>
     </function>
 
     <function name="llGetRegionSunRotation" type="rotation" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the rotation applied to the sun for the region at the location of the object containing the script.
         </description>
     </function>
 
     <function name="llGetSunRotation" type="rotation" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Return the rotation applied to the sun for the parcel at the location of the object containing the script.
         </description>
     </function>
 
     <function name="llGetMoonDirection" type="vector" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a normalized vector to the current moon position at the location of object containing the script.
         </description>
     </function>
 
     <function name="llGetRegionMoonDirection" type="vector" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a normalized vector to the current moon position at the location of object containing the script.
         </description>
     </function>
 
     <function name="llGetRegionSunDirection" type="vector" grid="sl os" version="sl:18.11.02.521379">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a normalized vector to the current sun position at the location of object containing the script.
         </description>
     </function>
 
     <function name="llGetRegionTimeOfDay" type="float" grid="sl" version="sl:19.02.01.523934">
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Returns a float that is the time in seconds with subsecond precision since Second Life midnight (per the region-scoped day cycle settings) or region up-time (time since when the region was brought online/rebooted); whichever is smaller.
         </description>
     </function>
 
@@ -10191,7 +10430,7 @@ This constant has no use for keyframed motion.
         <param type="float" name="transition"/>
         <param type="list" name="params"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            This function sets environment values for an individual agent in an experience.
         </description>
     </function>
 
@@ -10200,58 +10439,85 @@ This constant has no use for keyframed motion.
         <param type="float" name="transition"/>
         <param type="string" name="environment"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Overrides the current region and parcel environment seen by an agent.
         </description>
     </function>
 
     <function name="llTargetedEmail" delay="20" grid="sl os" version="sl:2020-04-03T19:49:49.539684">
         <param type="integer" name="target"/>
-        <param type="string" name="header"/>
-        <param type="string" name="body"/>
+        <param type="string" name="subject"/>
+        <param type="string" name="message"/>
         <description lang="en">
-            <!-- TODO: add documentation -->
+            Sends an email to the owner (selected by target) of an object with subject and message.
         </description>
     </function>
 
     <function name="llsRGB2Linear" type="vector" grid="sl" version="sl:2020-04-16T22:38:28.540369">
         <param type="vector" name="srgb"/>
+        <description lang="en">
+            Returns a vector Transforms a color specified in the sRGB colorspace to the linear RGB colorspace.
+        </description>
     </function>
 
     <function name="llLinear2sRGB" type="vector" grid="sl" version="sl:2020-04-16T22:38:28.540369">
         <param type="vector" name="color"/>
+        <description lang="en">
+            Returns a vector Transforms a color specified in linear RGB colorspace into the sRGB colorspace.
+        </description>
     </function>
 
     <function name="llOrd" type="integer" grid="sl os" version="sl:2021-05-05.559308">
         <param type="string" name="val"/>
         <param type="integer" name="index"/>
+        <description lang="en">
+            Calculate the ordinal value for a character in a string.
+        </description>
     </function>
 
     <function name="llChar" type="string" grid="sl os" version="sl:2021-05-05.559308">
         <param type="integer" name="code"/>
+        <description lang="en">
+            Construct a single character string from the supplied Unicode value.
+        </description>
     </function>
 
     <function name="llHash" type="integer" grid="sl os" version="sl:2021-05-05.559308">
         <param type="string" name="val"/>
+        <description lang="en">
+            Returns a 32bit hash for the provided string. Returns 0 if the input string is empty.
+        </description>
     </function>
 
     <function name="llOpenFloater" type="integer" grid="sl" version="sl:2021-05-12.559669" status="godmode">
-        <param type="string" name="title"/>
+        <param type="string" name="floater_name"/>
         <param type="string" name="url"/>
         <param type="list" name="params"/>
+        <description lang="en">
+            Returns an integer Error code, or 0 if no error.
+        </description>
     </function>
 
     <function name="llGetInventoryAcquireTime" type="string" grid="sl" version="sl:2021-05-25.560108">
         <param type="string" name="item"/>
+        <description lang="en">
+            Returns a string with the timestamp that the item was added to the prim's inventory.
+        </description>
     </function>
 
     <function name="llGetVisualParams" type="list" grid="sl" version="sl:2022-04-21.571166">
-        <param type="key" name="id"/>
+        <param type="key" name="agentid"/>
         <param type="list" name="params"/>
+        <description lang="en">
+            Returns a list of the details for agentid requested in params.
+        </description>
     </function>
 
     <function name="llSetEnvironment" type="integer" grid="sl" version="sl:2022-08-12.574216">
         <param type="vector" name="position"/>
         <param type="list" name="params"/>
+        <description lang="en">
+            Overrides the environmental settings for a region or a parcel.
+        </description>
     </function>
 
     <function name="llReplaceEnvironment" type="integer" grid="sl" version="sl:2022-08-12.574216">
@@ -10260,63 +10526,147 @@ This constant has no use for keyframed motion.
         <param type="integer" name="track_no"/>
         <param type="integer" name="day_length"/>
         <param type="integer" name="day_offset"/>
+        <description lang="en">
+            Replaces the environment in a parcel or a region.
+        </description>
     </function>
 
     <function name="llGetObjectLinkKey" type="key" grid="sl" version="sl:2022-09-23.575315">
-        <param type="key" name="id"/>
+        <param type="key" name="object_id"/>
         <param type="integer" name="link"/>
+        <description lang="en">
+            Returns the key of the linked prim link in the linkset identified by object_id.
+        </description>
     </function>
 
     <!-- Version unsure - could be earlier; it was documented in the indicated version, but some
        other functions were added before this one and also documented in it. -->
     <function name="llSHA256String" type="string" grid="sl" version="sl:2022-10-07.575585">
         <param type="string" name="src"/>
+        <description lang="en">
+            Returns a string of 64 hex characters that is the SHA-256 security hash of src.
+        </description>
     </function>
 
-    <function name="llLinksetDataReset" grid="sl" version="sl:2022-11-04.576376"/>
+    <function name="llLinksetDataReset" grid="sl" version="sl:2022-11-04.576376">
+        <description lang="en">
+            Erases all name:value pairs stored in the linkset's datastore.
+        </description>
+    </function>
 
-    <function name="llLinksetDataAvailable" type="integer" grid="sl" version="sl:2022-11-04.576376"/>
+    <function name="llLinksetDataAvailable" type="integer" grid="sl" version="sl:2022-11-04.576376">
+        <description lang="en">
+            Returns the number of bytes available in the linkset's datastore.
+        </description>
+    </function>
 
-    <function name="llLinksetDataCountKeys" type="integer" grid="sl" version="sl:2022-11-04.576376"/>
+    <function name="llLinksetDataCountKeys" type="integer" grid="sl" version="sl:2022-11-04.576376">
+        <description lang="en">
+            Returns the number of unique keys that have been stored in the linkset's datastore.
+        </description>
+    </function>
 
     <function name="llLinksetDataWrite" type="integer" grid="sl" version="sl:2022-11-04.576376">
-        <param type="string" name="keyname"/>
+        <param type="string" name="name"/>
         <param type="string" name="value"/>
+        <description lang="en">
+            Creates or updates an unprotected name:value pair from the linkset's datastore.
+        </description>
     </function>
 
     <function name="llLinksetDataWriteProtected" type="integer" grid="sl" version="sl:2022-11-04.576376">
-        <param type="string" name="keyname"/>
+        <param type="string" name="name"/>
         <param type="string" name="value"/>
         <param type="string" name="password"/>
+        <description lang="en">
+            Creates or updates a protected name:value pair from the linkset's datastore.
+        </description>
     </function>
 
     <function name="llLinksetDataRead" type="string" grid="sl" version="sl:2022-11-04.576376">
-        <param type="string" name="keyname"/>
+        <param type="string" name="name"/>
+        <description lang="en">
+            Reads an unprotected name:value pair from the linkset's datastore.
+        </description>
     </function>
 
     <function name="llLinksetDataReadProtected" type="string" grid="sl" version="sl:2022-11-04.576376">
-        <param type="string" name="keyname"/>
+        <param type="string" name="name"/>
         <param type="string" name="password"/>
+        <description lang="en">
+            Reads a protected name:value pair from the datastore.
+        </description>
     </function>
 
     <function name="llLinksetDataDelete" type="integer" grid="sl" version="sl:2022-11-04.576376">
-        <param type="string" name="keyname"/>
+        <param type="string" name="name"/>
+        <description lang="en">
+            Removes an unprotected name:value pair from the linkset's datastore.
+        </description>
     </function>
 
     <function name="llLinksetDataDeleteProtected" type="integer" grid="sl" version="sl:2022-11-04.576376">
-        <param type="string" name="keyname"/>
+        <param type="string" name="name"/>
         <param type="string" name="password"/>
+        <description lang="en">
+            Removes a protected name:value pair from the linkset's datastore.
+        </description>
     </function>
 
     <function name="llLinksetDataFindKeys" type="list" grid="sl" version="sl:2022-11-04.576376">
         <param type="string" name="pattern"/>
         <param type="integer" name="start"/>
         <param type="integer" name="count"/>
+        <description lang="en">
+            Returns a list of up to count keys from the datastore that match pattern, starting at the one indicated by start.
+        </description>
     </function>
 
     <function name="llLinksetDataListKeys" type="list" grid="sl" version="sl:2022-11-04.576376">
         <param type="integer" name="start"/>
         <param type="integer" name="count"/>
+        <description lang="en">
+            Returns a list of up to count keys in the datastore, starting at the one indicated by start.
+        </description>
+    </function>
+
+    <function name="llLinksetDataCountFound" type="integer" grid="sl" version="sl:2023-07-14.581036">
+        <param type="string" name="pattern"/>
+        <description lang="en">
+            Returns the number of keys in the linkset datastore that match the pattern supplied in the pattern.
+        </description>
+    </function>
+
+    <function name="llLinksetDataDeleteFound" type="list" grid="sl" version="sl:2023-07-14.581036">
+        <param type="string" name="pattern"/>
+        <param type="string" name="pass"/>
+        <description lang="en">
+            Finds and attempts to delete all keys in the data store that match pattern. This function will delete protected key-value pairs only if the matching pass phrase is passed in the pass parameter. The function returns a list, the first entry in the list is the number of keys deleted, the second entry in the list is the number of keys that could not be deleted due to a non-matching pass phrase. If this function successfully deletes any keys from the datastore it will trigger a linkset_data event with the type of LINKSET_DATA_MULTIDELETE, the key name will consist of a comma separated list of the key names removed from the datastore.
+        </description>
+    </function>
+
+    <function name="llGetRenderMaterial" type="string" grid="sl" version="sl:2023-11-07.6790647783">
+        <param type="integer" name="face"/>
+        <description lang="en">
+            Returns a string that is the Material on face.
+        </description>
+    </function>
+
+    <function name="llSetRenderMaterial" grid="sl" version="sl:2023-11-07.6790647783">
+        <param type="string" name="material"/>
+        <param type="integer" name="face"/>
+        <description lang="en">
+            Sets the material of this prim's face. This function will clear most PRIM_GLTF_* properties on the face, with the exceptions of repeats, offsets, and rotation_in_radians.
+        </description>
+    </function>
+
+    <function name="llSetLinkRenderMaterial" grid="sl" version="sl:2023-11-07.6790647783">
+        <param type="integer" name="link"/>
+        <param type="string" name="material"/>
+        <param type="integer" name="face"/>
+        <description lang="en">
+            If a prim exists in the link set at link, set material on face of that prim. This function will clear most PRIM_GLTF_* properties on the face, with the exceptions of repeats, offsets, and rotation_in_radians.
+        </description>
     </function>
 
     <!-- Version unsure - could be later -->
@@ -10325,25 +10675,40 @@ This constant has no use for keyframed motion.
         <param type="string" name="sound"/>
         <param type="float" name="volume"/>
         <param type="integer" name="flags"/>
+        <description lang="en">
+            Plays attached sound once at volume.
+        </description>
     </function>
 
     <function name="llLinkStopSound" grid="sl" version="sl:2023-01-11.577595">
         <param type="integer" name="link"/>
+        <description lang="en">
+            Stops the attached sound(s) currently playing, if they were started by llLoopSound.
+        </description>
     </function>
 
     <function name="llLinkAdjustSoundVolume" delay="0.1" grid="sl" version="sl:2023-01-11.577595">
         <param type="integer" name="link"/>
         <param type="float" name="volume"/>
+        <description lang="en">
+            Adjusts volume of attached sound (0.0 - 1.0).
+        </description>
     </function>
 
     <function name="llLinkSetSoundQueueing" grid="sl" version="sl:2023-01-11.577595">
         <param type="integer" name="link"/>
         <param type="integer" name="queue"/>
+        <description lang="en">
+            Set whether attached sounds wait for the current sound to finish. If queue is TRUE, queuing is enabled, if FALSE queuing is disabled. Sound queuing is disabled by default.
+        </description>
     </function>
 
     <function name="llLinkSetSoundRadius" grid="sl" version="sl:2023-01-11.577595">
         <param type="integer" name="link"/>
         <param type="float" name="radius"/>
+        <description lang="en">
+            Establishes a hard cut-off radius for audibility of scripted sounds (both attached and triggered).
+        </description>
     </function>
 
     <!-- These functions were present in a previous version, but they seemed inactive. -->
@@ -10351,28 +10716,72 @@ This constant has no use for keyframed motion.
         <param type="string" name="authkey"/>
         <param type="string" name="message"/>
         <param type="string" name="hashalg"/>
+        <description lang="en">
+            Returns a string that is the Base64-encoded HMAC hash of msg when using hash algorithm algorithm and secret key private_key. This function supports md5, sha1, sha224, sha256, sha384, sha512 for algorithm.
+        </description>
     </function>
 
     <function name="llSignRSA" type="string" grid="sl" version="sl:2023-02-21.578370">
-        <param type="string" name="privkey"/>
-        <param type="string" name="message"/>
-        <param type="string" name="hashalg"/>
+        <param type="string" name="private_key"/>
+        <param type="string" name="msg"/>
+        <param type="string" name="algorithm"/>
+        <description lang="en">
+            Returns a string that is the Base64-encoded RSA signature of msg when using hash algorithm algorithm and secret key private_key. Can be paired with llVerifyRSA to pass verifiable messages. This function supports md5, sha1, sha224, sha256, sha384, sha512 for algorithm.
+        </description>
     </function>
 
     <function name="llVerifyRSA" type="integer" grid="sl" version="sl:2023-02-21.578370">
-        <param type="string" name="pubkey"/>
-        <param type="string" name="message"/>
+        <param type="string" name="public_key"/>
+        <param type="string" name="msg"/>
         <param type="string" name="signature"/>
-        <param type="string" name="hashalg"/>
+        <param type="string" name="algorithm"/>
+        <description lang="en">
+            Returns an integer indicating whether the RSA signature is valid for msg when using hash algorithm algorithm and public RSA key public_key. Returns TRUE if the signature is verified, and FALSE otherwise. Can be paired with llSignRSA to validate the authenticity of messages from other LSL scripts. This function supports md5, sha1, sha224, sha256, sha384, sha512 for algorithm.
+        </description>
     </function>
 
     <!-- This function's exact appearance version is unknown. The version
        specified is the one where it was first seen by the maintainer. -->
     <function name="llReplaceSubString" type="string" grid="sl" version="sl:2023-03-24.579022">
-        <param type="string" name="source"/>
-        <param type="string" name="search"/>
-        <param type="string" name="replace"/>
+        <param type="string" name="src"/>
+        <param type="string" name="pattern"/>
+        <param type="string" name="replacement_pattern"/>
         <param type="integer" name="count"/>
+        <description lang="en">
+            Returns a string that is the result of replacing the first count matching instances pattern in src with replacement_pattern.
+        </description>
+    </function>
+
+    <function name="llList2ListSlice" type="list" grid="sl" version="sl:2023-04-03.579248">
+        <param type="list" name="src"/>
+        <param type="integer" name="start"/>
+        <param type="integer" name="end"/>
+        <param type="integer" name="stride"/>
+        <param type="integer" name="slice_index"/>
+        <description lang="en">
+            Returns a list of the slice_index'th element of every stride in strided list whose index is a multiple of stride in the range start to end.
+        </description>
+    </function>
+
+    <function name="llListSortStrided" type="list" grid="sl" version="sl:2023-04-03.579248">
+        <param type="list" name="src"/>
+        <param type="integer" name="stride"/>
+        <param type="integer" name="stride_index"/>
+        <param type="integer" name="ascending"/>
+        <description lang="en">
+            llListSortStrided is llListSort with the added parameter of stride_index, adding the flexibility to sort by any item in the stride. These routines use the same underlying code and have the same computational complexity.
+        </description>
+    </function>
+
+    <function name="llListFindStrided" type="integer" grid="sl" version="sl:2023-04-03.579248">
+        <param type="list" name="src"/>
+        <param type="list" name="test"/>
+        <param type="integer" name="start"/>
+        <param type="integer" name="end"/>
+        <param type="integer" name="stride"/>
+        <description lang="en">
+            Returns the integer index of the first instance of test in src matching conditions.
+        </description>
     </function>
 
     <!-- OpenSim/Aurora-specific functions -->
@@ -13312,7 +13721,7 @@ This constant has no use for keyframed motion.
         </description>
     </event>
 
-    <event name="remote_data">
+    <event name="remote_data" status="deprecated">
         <param type="integer" name="event_type"/>
         <param type="key"     name="channel"   />
         <param type="key"     name="message_id"/>
