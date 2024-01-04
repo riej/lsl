@@ -22,7 +22,7 @@ class LslInvalidAssignmentTypeInspection : LocalInspectionTool() {
         PsiTreeUtil.collectElementsOfType(file, LslExpressionAssignment::class.java)
             .filter { !it.textRange.isEmpty }
             .forEach {
-                val variableType = it.lValue?.variable?.lslType ?: return@forEach
+                val variableType = it.lValue?.lslType ?: return@forEach
                 val expressionType = it.expression?.lslType ?: LslPrimitiveType.INVALID
 
                 if (expressionType != LslPrimitiveType.INVALID && variableType.operationTo(
