@@ -38,7 +38,7 @@ class LslCompletionContributor : CompletionContributor() {
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslStatement::class.java))
 
     fun functionCallInsideExpressionScopePlace(): PsiElementPattern.Capture<PsiElement> =
-        psiElement(LslTypes.IDENTIFIER).inside(LslExpression::class.java).andNot(psiElement().inside(LslLValue::class.java))
+        psiElement(LslTypes.IDENTIFIER).inside(LslExpression::class.java).andNot(psiElement().afterLeaf(psiElement(LslTypes.DOT)))
 
     fun lValueIdentifierScopePlace(): PsiElementPattern.Capture<PsiElement> =
         psiElement(LslTypes.IDENTIFIER).atStartOf(psiElement(LslLValue::class.java))
